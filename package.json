@@ -9,10 +9,13 @@
     "build-creator-node": "./mk_min.sh"
   },
   "dependencies": {
+    "bootstrap": "^5.2.2",
+    "bootstrap-vue": "^2.22.0",
     "colors": "^1.4.0",
     "jshint": "^2.13.5",
     "readline-sync": "^1.4.10",
     "terser": "^5.15.0",
+    "vue": "^3.2.40",
     "yargs": "^17.6.0"
   }
 }

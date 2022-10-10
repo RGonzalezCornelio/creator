@@ -30,7 +30,8 @@
                   notification_time:      { type: Number,  required: true },
                   instruction_help_size:  { type: Number,  required: true },
                   dark:                   { type: Boolean, required: true },
-                  c_debug:                { type: Boolean, required: true }
+                  c_debug:                { type: Boolean, required: true },
+                  cache:                  { type: Boolean, required: true }
                 },
 
     methods:    {
@@ -350,6 +351,16 @@
                   '       </b-form-checkbox>' +
                   '     </b-list-group-item>' +
                   '   </b-list-group>' +
+                  ' ' +
+                  '     <b-list-group-item class="d-flex justify-content-between align-items-center m-1">' +
+                  '       <label for="range-7">Cache simulator:</label>' +
+                  '       <b-form-checkbox id="range-7"' +
+                  '                        name="check-button"' +
+                  '                        switch size="lg"' +
+                  '                        v-model="dark" ' +
+                  '                        @change="change_dark_mode">' +
+                  '       </b-form-checkbox>' +
+                  '     </b-list-group-item>' +
                   ' ' +
                   ' </b-modal>'
 
