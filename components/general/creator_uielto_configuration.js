@@ -18,6 +18,8 @@
  *
  */
 
+const { VueElement } = require("vue");
+
 
   /* jshint esversion: 6 */
 
