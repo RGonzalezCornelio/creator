@@ -18,7 +18,7 @@
  *
  */
 
-const { VueElement } = require("vue");
+
 
 
   /* jshint esversion: 6 */
@@ -231,6 +231,18 @@ const { VueElement } = require("vue");
                     //Google Analytics
                     creator_ga('configuration', 'configuration.debug_mode', 'configuration.debug_mode.' + this._props.c_debug);
                   },
+
+                  //Cache Mode
+                  change_cache_mode()
+                  {
+                    this._props.cache= !this._props.cache;
+                    app._data.cache = this._props.cache; 
+               
+                    localStorage.setItem("cache", this._props.cache);
+                
+                    //Google Analytics
+                    creator_ga('configuration', 'configuration.cache_mode', 'configuration.cache_mode.' + this._props.cache);
+                  },
                 },
 
     template:     ' <b-modal  :id ="id" ' +
@@ -357,10 +369,10 @@ const { VueElement } = require("vue");
                   '     <b-list-group-item class="d-flex justify-content-between align-items-center m-1">' +
                   '       <label for="range-7">Cache simulator:</label>' +
                   '       <b-form-checkbox id="range-7"' +
+                  '                        v-model="cache"' +
                   '                        name="check-button"' +
                   '                        switch size="lg"' +
-                  '                        v-model="dark" ' +
-                  '                        @change="change_dark_mode">' +
+                  '                        @change="change_cache_mode">' +
                   '       </b-form-checkbox>' +
                   '     </b-list-group-item>' +
                   ' ' +
