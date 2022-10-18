@@ -46,7 +46,7 @@
     template:   '<div class="col-lg-12 col-sm-12 row cacheDefinitionDiv  mx-0 px-0">' +
                 '' +
                 '  <div class="col-lg-12 col-sm-12">' +
-                '    <span class="h6">Cache definition:</span>' +
+                '    <span class="h6">Cache Definition:</span>' +
                 '    <div class="col-lg-12 col-sm-12 row">' +
                 '      <div class="compMenu">' +
                 '        <b-button class="btn btn-outline-secondary btn-sm buttonBackground h-100 w-100" ' +
@@ -68,74 +68,74 @@
                 '' +
                 '  <div class="col-lg-3 col-sm-12 "></div>' +
                 '' +
-                '  <!-- Cache definition sketch -->' +
+                '  <!-- Cache Definition sketch -->' +
                 '  <div class="col-lg-6 col-sm-12 ">' +
                 '    <b-list-group class="cacheDefinition">' +
                 '      <b-list-group horizontal>' +
-                '        <b-list-group-item variant="info" class="cacheDefintion">' +
+                '        <b-list-group-item variant="info" class="cacheDefinition">' +
                 '          <br>' +
                 '          .text' +
                 '          <br>' +
                 '          <br>' +
                 '        </b-list-group-item>' +
-                '        <b-list-group-item class="memoryLayout noBorder left">' +
-                '          <span class="h6" v-if="memory_layout.length > 0">' +
-                '            {{memory_layout[0].value}}' +
+                '        <b-list-group-item class="cacheDefinition noBorder left">' +
+                '          <span class="h6" v-if="cache_definition.length > 0">' +
+                '            {{cache_definition[0].value}}' +
                 '          </span>' +
                 '          <br>' +
                 '          <br>' +
-                '          <span class="h6" v-if="memory_layout.length > 0">' +
-                '            {{memory_layout[1].value}}' +
+                '          <span class="h6" v-if="cache_definition.length > 0">' +
+                '            {{cache_definition[1].value}}' +
                 '          </span>' +
                 '        </b-list-group-item>' +
                 '      </b-list-group>' +
                 '' +
                 '      <b-list-group horizontal>' +
-                '        <b-list-group-item variant="warning" class="memoryLayout">' +
+                '        <b-list-group-item variant="warning" class="cacheDefinition">' +
                 '          <br>' +
                 '          .data' +
                 '          <br>' +
                 '          <br>' +
                 '        </b-list-group-item>' +
-                '        <b-list-group-item class="memoryLayout noBorder left">' +
-                '          <span class="h6" v-if="memory_layout.length > 0">' +
-                '            {{memory_layout[2].value}}' +
+                '        <b-list-group-item class="cacheDefinition noBorder left">' +
+                '          <span class="h6" v-if="cache_definition.length > 0">' +
+                '            {{cache_definition[2].value}}' +
                 '          </span>' +
                 '          <br>' +
                 '          <br>' +
-                '          <span class="h6" v-if="memory_layout.length > 0">' +
-                '            {{memory_layout[3].value}}' +
+                '          <span class="h6" v-if="cache_definition.length > 0">' +
+                '            {{cache_definition[3].value}}' +
                 '          </span>' +
                 '        </b-list-group-item>' +
                 '      </b-list-group>' +
                 '' +
                 '      <b-list-group horizontal>' +
-                '        <b-list-group-item variant="secondary" class="memoryLayout">' +
+                '        <b-list-group-item variant="secondary" class="cacheDefinition">' +
                 '          <br>' +
                 '          ...' +
                 '          <br>' +
                 '          <br>' +
                 '        </b-list-group-item>' +
-                '        <b-list-group-item class="memoryLayout noBorder">' +
+                '        <b-list-group-item class="cacheDefinition noBorder">' +
                 '          ' +
                 '        </b-list-group-item>' +
                 '      </b-list-group>' +
                 '' +
                 '      <b-list-group horizontal>' +
-                '        <b-list-group-item variant="success" class="memoryLayout">' +
+                '        <b-list-group-item variant="success" class="cacheDefinition">' +
                 '          <br>' +
                 '          stack' +
                 '          <br>' +
                 '          <br>' +
                 '        </b-list-group-item>' +
-                '        <b-list-group-item class="memoryLayout noBorder left">' +
-                '          <span class="h6" v-if="memory_layout.length > 0">' +
-                '            {{memory_layout[4].value}}' +
+                '        <b-list-group-item class="cacheDefinition noBorder left">' +
+                '          <span class="h6" v-if="cache_definition.length > 0">' +
+                '            {{cache_definition[4].value}}' +
                 '          </span>' +
                 '          <br>' +
                 '          <br>' +
-                '          <span class="h6" v-if="memory_layout.length > 0">' +
-                '            {{memory_layout[5].value}}' +
+                '          <span class="h6" v-if="cache_definition.length > 0">' +
+                '            {{cache_definition[5].value}}' +
                 '          </span>' +
                 '        </b-list-group-item>' +
                 '      </b-list-group>' +

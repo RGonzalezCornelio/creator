@@ -21,7 +21,7 @@
 
   /* jshint esversion: 6 */
 
-  var uielto_memory_layout_form = {
+  var uielto_cache_definition_form = {
 
     props:      {
                   id:                             { type: String, required: true }
@@ -29,32 +29,32 @@
 
     data:       function () {
                   return {
-                    memory_layout: ["", "", "", "", "", ""],
+                    cache_definition: ["", "", "", "", "", ""],
 
-                    //Modals memory layout
+                    //Modals cache definition
                     show_modal: false,
                   }
                 },
 
     methods:    {
-                  //Check de memory layout changes
-                  verify_edit_memory_layout(evt)
+                  //Check de cache definition changes
+                  verify_edit_cache_definition(evt)
                   {
                     evt.preventDefault();
 
-                    for(var i = 0; i < this.memory_layout.length; i++)
+                    for(var i = 0; i < this.cache_definition.length; i++)
                     {
-                      if (!this.memory_layout[i].value)
+                      if (!this.cache_definition[i].value)
                       {
                         show_notification('Please complete all fields', 'danger') ;
                         return;
                       }
 
-                      if(this.memory_layout[i].value != "" && this.memory_layout[i].value != null)
+                      if(this.cache_definition[i].value != "" && this.cache_definition[i].value != null)
                       {
-                        if(!isNaN(parseInt(this.memory_layout[i].value)))
+                        if(!isNaN(parseInt(this.cache_definition[i].value)))
                         {
-                          if (parseInt(this.memory_layout[i].value) < 0) 
+                          if (parseInt(this.cache_definition[i].value) < 0) 
                           {
                             show_notification('The value can not be negative', 'danger') ;
                             return;
@@ -67,9 +67,9 @@
                         }
                       }
 
-                      for (var j = i+1; j < this.memory_layout.length; j++)
+                      for (var j = i+1; j < this.cache_definition.length; j++)
                       {
-                        if (parseInt(this.memory_layout[i].value) >= parseInt(this.memory_layout[j].value))
+                        if (parseInt(this.cache_definition[i].value) >= parseInt(this.cache_definition[j].value))
                         {
                           show_notification('The segment can not be overlap', 'danger') ;
                           return;
@@ -77,20 +77,20 @@
                       }
                     }
 
-                    this.edit_memory_layout();
+                    this.edit_cache_definition();
                   },
 
-                  //Edit memory layout
-                  edit_memory_layout()
+                  //Edit cache definition
+                  edit_cache_definition()
                   {
                     this.show_modal = false;
 
-                    architecture.memory_layout = structuredClone(this.memory_layout);
+                    architecture.cache_definition = structuredClone(this.cache_definition);
 
-                    backup_stack_address = architecture.memory_layout[4].value;
-                    backup_data_address = architecture.memory_layout[3].value;
+                    backup_stack_address = architecture.cache_definition[4].value;
+                    backup_data_address = architecture.cache_definition[3].value;
 
-                    show_notification('Memory layout correctly modified', 'success') ;
+                    show_notification('cache definition correctly modified', 'success') ;
                   },
 
                   //Form validator
@@ -112,67 +112,67 @@
                 },
 
     template:   '<b-modal :id ="id" ' +
-                '         title="Change memory layout" ' +
+                '         title="Change cache definition" ' +
                 '         ok-title="Change" ' +
-                '         @ok="verify_edit_memory_layout($event)"' +
+                '         @ok="verify_edit_cache_definition($event)"' +
                 '         v-model="show_modal"> ' +
                 '  <b-form>' +
                 '    <b-form-group label=".text Start:">' +
                 '      <b-form-input type="text" ' +
-                '                v-model="memory_layout[0].value" ' +
-                '                :state="valid(memory_layout[0].value)" ' +
+                '                v-model="cache_definition[0].value" ' +
+                '                :state="valid(cache_definition[0].value)" ' +
                 '                required ' +
                 '                size="sm" ' +
-                '                class="memoryLayoutForm">' +
+                '                class="cacheDefinitionForm">' +
                 '      </b-form-input>' +
                 '    </b-form-group>' +
                 '' +
                 '    <b-form-group label=".text End:">' +
                 '      <b-form-input type="text" ' +
-                '                v-model="memory_layout[1].value" ' +
-                '                :state="valid(memory_layout[1].value)" ' +
+                '                v-model="cache_definition[1].value" ' +
+                '                :state="valid(cache_definition[1].value)" ' +
                 '                required ' +
                 '                size="sm" ' +
-                '                class="memoryLayoutForm">' +
+                '                class="cacheDefinitionForm">' +
                 '      </b-form-input>' +
                 '    </b-form-group>' +
                 '' +
                 '    <b-form-group label=".data Start:">' +
                 '      <b-form-input type="text" ' +
-                '                v-model="memory_layout[2].value" ' +
-                '                :state="valid(memory_layout[2].value)" ' +
+                '                v-model="cache_definition[2].value" ' +
+                '                :state="valid(cache_definition[2].value)" ' +
                 '                required ' +
                 '                size="sm" ' +
-                '                class="memoryLayoutForm">' +
+                '                class="cacheDefinitionForm">' +
                 '      </b-form-input>' +
                 '    </b-form-group>' +
                 '' +
                 '    <b-form-group label=".data End:">' +
                 '      <b-form-input type="text" ' +
-                '                v-model="memory_layout[3].value" ' +
-                '                :state="valid(memory_layout[3].value)" ' +
+                '                v-model="cache_definition[3].value" ' +
+                '                :state="valid(cache_definition[3].value)" ' +
                 '                required ' +
                 '                size="sm" ' +
-                '                class="memoryLayoutForm">' +
+                '                class="cacheDefinitionForm">' +
                 '      </b-form-input>' +
                 '    </b-form-group>' +
                 '' +
                 '    <b-form-group label=".stack End:">' +
                 '      <b-form-input type="text" ' +
-                '                v-model="memory_layout[4].value" ' +
-                '                :state="valid(memory_layout[4].value)" ' +
+                '                v-model="cache_definition[4].value" ' +
+                '                :state="valid(cache_definition[4].value)" ' +
                 '                required ' +
                 '                size="sm" ' +
-                '                class="memoryLayoutForm">' +
+                '                class="cacheDefinitionForm">' +
                 '      </b-form-input>' +
                 '    </b-form-group>' +
                 '' +
                 '    <b-form-group label=".stack Start:">' +
                 '      <b-form-input type="text" ' +
-                '                v-model="memory_layout[5].value"' +
-                '                :state="valid(memory_layout[5].value)" ' +
+                '                v-model="cache_definition[5].value"' +
+                '                :state="valid(cache_definition[5].value)" ' +
                 '                required size="sm" ' +
-                '                class="memoryLayoutForm">' +
+                '                class="cacheDefinitionForm">' +
                 '      </b-form-input>' +
                 '    </b-form-group>' +
                 '  </b-form>' +
@@ -180,4 +180,4 @@
 
   }
 
-  Vue.component('memory-layout-edit', uielto_memory_layout_form) ;
+  Vue.component('cache-definition-edit', uielto_cache_definition_form) ;
