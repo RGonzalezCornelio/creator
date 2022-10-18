@@ -287,13 +287,13 @@
                         <memory-layout-reset id="reset_memory_layout"
                                              :architecture_name="architecture_name">
                         </memory-layout-reset>
-
+                      
                       </b-tab>
 
 
                       <!-- Register File -->
                       <b-tab title="Register File">
-
+                      
                         <register-file-arch :register_file="architecture.components"></register-file-arch>
 
                         <!-- Register File modals -->
@@ -461,6 +461,25 @@
                                             :title="modal_delete_directive.title"
                                             :index="modal_delete_directive.index">
                         </directives-delete>
+
+                      </b-tab>
+
+                      <!-- Cache Definition -->
+                      <b-tab title="Cache Definition">
+                        
+                        <cache-definition  :cache_definition="architecture.cache_definition"></cache-definition>
+
+                        <!-- Cache definition modals -->
+
+                        <!-- Edit cache definition -->
+                        <cache-definition-edit id="cache_definition_edit"
+                                            ref="cache_definition_edit">
+                        </cache-definition-edit>
+
+                        <!-- Reset cache definition -->
+                        <cache-definition-reset id="reset_cache_definition"
+                                             :architecture_name="architecture_name">
+                        </cache-reset>
 
                       </b-tab>
                     </b-tabs>
