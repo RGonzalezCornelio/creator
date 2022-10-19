@@ -45,105 +45,27 @@
 
     template:   '<div class="col-lg-12 col-sm-12 row cacheDefinitionDiv  mx-0 px-0">' +
                 '' +
-                '  <div class="col-lg-12 col-sm-12">' +
-                '    <span class="h6">Cache Definition:</span>' +
-                '    <div class="col-lg-12 col-sm-12 row">' +
-                '      <div class="compMenu">' +
-                '        <b-button class="btn btn-outline-secondary btn-sm buttonBackground h-100 w-100" ' +
-                '                  @click.stop="edit_cache_definition_modal($event.target)">' +
-                '          <span class="fas fa-exchange-alt"></span> ' +
-                '          Change Cache Definition' +
-                '        </b-button>' +
-                '      </div>' +
-                '      <div class="compMenu">' +
-                '        <b-button class="btn btn-outline-danger btn-sm buttonBackground h-100 w-100" ' +
-                '                  v-b-modal.reset_cache_definition> ' +
-                '          <span class="fas fa-power-off"></span>' +
-                '          Reset Cache Definition' +
-                '        </b-button>' +
-                '      </div>' +
-                '    </div>' +
-                '    <br>' +
-                '  </div>' +
-                '' +
-                '  <div class="col-lg-3 col-sm-12 "></div>' +
-                '' +
-                '  <!-- Cache Definition sketch -->' +
-                '  <div class="col-lg-6 col-sm-12 ">' +
-                '    <b-list-group class="cacheDefinition">' +
-                '      <b-list-group horizontal>' +
-                '        <b-list-group-item variant="info" class="cacheDefinition">' +
-                '          <br>' +
-                '          .text' +
-                '          <br>' +
-                '          <br>' +
-                '        </b-list-group-item>' +
-                '        <b-list-group-item class="cacheDefinition noBorder left">' +
-                '          <span class="h6" v-if="cache_definition.length > 0">' +
-                '            {{cache_definition[0].value}}' +
-                '          </span>' +
-                '          <br>' +
-                '          <br>' +
-                '          <span class="h6" v-if="cache_definition.length > 0">' +
-                '            {{cache_definition[1].value}}' +
-                '          </span>' +
-                '        </b-list-group-item>' +
-                '      </b-list-group>' +
-                '' +
-                '      <b-list-group horizontal>' +
-                '        <b-list-group-item variant="warning" class="cacheDefinition">' +
-                '          <br>' +
-                '          .data' +
-                '          <br>' +
-                '          <br>' +
-                '        </b-list-group-item>' +
-                '        <b-list-group-item class="cacheDefinition noBorder left">' +
-                '          <span class="h6" v-if="cache_definition.length > 0">' +
-                '            {{cache_definition[2].value}}' +
-                '          </span>' +
-                '          <br>' +
-                '          <br>' +
-                '          <span class="h6" v-if="cache_definition.length > 0">' +
-                '            {{cache_definition[3].value}}' +
-                '          </span>' +
-                '        </b-list-group-item>' +
-                '      </b-list-group>' +
-                '' +
-                '      <b-list-group horizontal>' +
-                '        <b-list-group-item variant="secondary" class="cacheDefinition">' +
-                '          <br>' +
-                '          ...' +
-                '          <br>' +
-                '          <br>' +
-                '        </b-list-group-item>' +
-                '        <b-list-group-item class="cacheDefinition noBorder">' +
-                '          ' +
-                '        </b-list-group-item>' +
-                '      </b-list-group>' +
-                '' +
-                '      <b-list-group horizontal>' +
-                '        <b-list-group-item variant="success" class="cacheDefinition">' +
-                '          <br>' +
-                '          stack' +
-                '          <br>' +
-                '          <br>' +
-                '        </b-list-group-item>' +
-                '        <b-list-group-item class="cacheDefinition noBorder left">' +
-                '          <span class="h6" v-if="cache_definition.length > 0">' +
-                '            {{cache_definition[4].value}}' +
-                '          </span>' +
-                '          <br>' +
-                '          <br>' +
-                '          <span class="h6" v-if="cache_definition.length > 0">' +
-                '            {{cache_definition[5].value}}' +
-                '          </span>' +
-                '        </b-list-group-item>' +
-                '      </b-list-group>' +
-                '    </b-list-group>' +
-                '  </div>' +
-                '' +
-                '  <div class="col-lg-3 col-sm-12 "></div>' +
-                '' +
+                ' <div class="col-lg-12 col-sm-12">' +
+                '   <span class="h6">Cache definition:</span>' +
+                '   <div class="col-lg-12 col-sm-12 row">'+
+                '     <div class="compMenu">'+
+                '       <b-button class="btn btn-outline-secondary btn-sm buttonBackground h-100 w-100"'+
+                '           @click.stop="">'+
+                '         <span class="fas fa-exchange-alt"></span>'+
+                '         Change Cache Definition'+
+                '       </b-button>'+
+                '     </div>'+
+                '     <div class="compMenu">'+
+                '       <b-button class="btn btn-outline-danger btn-sm buttonBackground h-100 w-100"'+
+                '             >'+
+                '         <span class="fas fa-power-off"></span>'+
+                '         Reset Cache Definition'+
+                '       </b-button>'+
+                '     </div>'+
+                '   </div>'+
+                '   <br>'+
+                ' </div>' +
+
                 '</div>'
 
   }

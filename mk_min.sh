@@ -83,6 +83,9 @@ cat js/creator_bigint.js \
     components/architecture/directives/creator_uielto_directives_reset.js \
     components/architecture/directives/creator_uielto_directives_edit.js \
     components/architecture/directives/creator_uielto_directives_delete.js \
+    components/architecture/cache_definition/creator_uielto_cache_definition.js \
+    components/architecture/cache_definition/creator_uielto_cache_definition_edit.js \
+    components/architecture/cache_definition/creator_uielto_cache_definition_reset.js \
     \
     components/assembly/creator_uielto_load_assembly.js \
     components/assembly/creator_uielto_save_assembly.js \

@@ -21,7 +21,7 @@
 
   /* jshint esversion: 6 */
 
-  var uielto_cache_definition_reset = {
+  var uielto_memory_layout_reset = {
 
     props:      {
                   id:                             { type: String, required: true },
@@ -35,8 +35,8 @@
                 },
 
     methods:    {
-                  //Reset the cache definition
-                  reset_cache_definition(arch)
+                  //Reset the memory layout
+                  reset_memory_layout(arch)
                   {
                     show_loading();
 
@@ -47,11 +47,11 @@
                         var aux_arch = JSON.parse(load_architectures[i].architecture);
                         var aux_architecture = register_value_deserialize(aux_arch);
 
-                        architecture.cache_definition = aux_architecture.cache_definition;
+                        architecture.memory_layout = aux_architecture.memory_layout;
                         app._data.architecture = architecture;
 
                         hide_loading();
-                        show_notification('The cache definition has been reset correctly', 'success') ;
+                        show_notification('The memory layout has been reset correctly', 'success') ;
 
                         return;
                       }
@@ -61,24 +61,24 @@
                       var aux_architecture = cfg;
 
                       var aux_architecture_2 = register_value_deserialize(aux_architecture);
-                      architecture.cache_definition = aux_architecture_2.cache_definition;
+                      architecture.memory_layout = aux_architecture_2.memory_layout;
                       app._data.architecture = architecture;
 
                       hide_loading();
-                      show_notification('The cache definition has been reset correctly', 'success') ;
+                      show_notification('The memory layout has been reset correctly', 'success') ;
                     });
                   }
                 },
 
     template:   '<b-modal :id ="id" ' +
-                '         title="Reset cache definition"' +
+                '         title="Reset memory layout"' +
                 '         ok-variant="danger" ' +
                 '         ok-title="Reset" ' +
-                '         @ok="reset_cache_definition(architecture_name)">' +
-                '  <span class="h6">Are you sure you want to reset the cache definition set?</span>' +
+                '         @ok="reset_memory_layout(architecture_name)">' +
+                '  <span class="h6">Are you sure you want to reset the mememory layout set?</span>' +
                 '</b-modal >'
 
 
   }
 
-  Vue.component('cache-definition-reset', uielto_cache_definition_reset) ;
+  Vue.component('memory-layout-reset', uielto_memory_layout_reset) ;
