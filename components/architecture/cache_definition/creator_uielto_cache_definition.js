@@ -46,15 +46,10 @@
     template:   '<div class="col-lg-12 col-sm-12 row cacheDefinitionDiv  mx-0 px-0">' +
                 '' +
                 ' <div class="col-lg-12 col-sm-12">' +
+                '   <br>'+
                 '   <span class="h6">Cache definition:</span>' +
                 '   <div class="col-lg-12 col-sm-12 row">'+
-                '     <div class="compMenu">'+
-                '       <b-button class="btn btn-outline-secondary btn-sm buttonBackground h-100 w-100"'+
-                '           @click.stop="">'+
-                '         <span class="fas fa-exchange-alt"></span>'+
-                '         Change Cache Definition'+
-                '       </b-button>'+
-                '     </div>'+
+
                 '     <div class="compMenu">'+
                 '       <b-button class="btn btn-outline-danger btn-sm buttonBackground h-100 w-100"'+
                 '             >'+
@@ -64,6 +59,26 @@
                 '     </div>'+
                 '   </div>'+
                 '   <br>'+
+
+                '   <span class="h6">Número de niveles de caché:</span>'+
+                '     <b-container fluid align-h="center" class="mx-0 px-0">'+
+                '       <b-row>'+
+                '         <b-col class="menu" id="cacheLevels">'+
+                '           <b-tabs>'+
+                '             <b-tab title="1 Nivel de Cache" active>'+
+
+                '             </b-tab>'+
+                '             <b-tab title="2 Niveles de Cache" active>'+
+
+                '             </b-tab>'+
+                '             <b-tab title="3 Niveles de Cache" active>'+
+
+                '             </b-tab>'+
+                '           </b-tabs>'+
+                '         </b-col>'+
+                '       </b-row>'+
+                '     </b-container>'+
+
                 ' </div>' +
 
                 '</div>'
