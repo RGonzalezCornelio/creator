@@ -66,7 +66,7 @@
                 '   </div>'+
                 '   <br>'+
 
-                '   <span class="h6">Number of Cache Levels:</span>'+
+                '   <span class="h6">Number of Cache Level:</span>'+
                 '' +
                 '   <div class="col-lg-12 col-sm-12">' +
                 '     <div class="compMenu">' +
