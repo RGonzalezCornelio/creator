@@ -71,11 +71,60 @@
                 '   <div class="col-lg-12 col-sm-12">' +
                 '     <div class="compMenu">' +
                 '       <b-button class="btn btn-outline-secondary btn-sm buttonBackground h-100" ' +
-                '                id="newComponentBtn" ' +
-                '                v-b-modal.cache_level_one_configuration> ' +
+                '                id="newComponentBtn" v-b-modal.modal_cache_definition_level_one> ' +
                 '        1 Cache Level' +
                 '       </b-button>' +
+
+                '       <b-modal id="modal_cache_definition_level_one" title="Level One Cache Configuration">'+
+                '         <span class="h6">Level 1</span>'+
+                '         <b-form-radio-group id="radio_group_tipo_cache">'+
+                '           <b-form-radio name="tipo_cache" value="unificada">Unificada</b-form-radio>'+
+                '           <b-form-radio name="tipo_cache" value="no_unificada">No unificada</b-form-radio>'+
+                '         </b-form-radio-group>'+
+
+                '         <b-form-input-group>'+
+                '           <b-col sm="auto">Tamaño de la Cache de Instrucciones:</b-col>'+
+                '           <b-col sm="auto">'+
+                '             <b-form-input type="number" id="cache_instrucciones" placeholder="KB" size="sm"></b-form-input>'+
+                '           </b-col>'+
+
+                '           <b-col sm="auto">Tamaño de la Cache de Datos:</b-col>'+
+                '           <b-col sm="auto">'+
+                '             <b-form-input type="number" id="cache_datos" placeholder="KB" size="sm"></b-form-input>'+
+                '           </b-col>'+
+
+                '           <b-col sm="auto">Tamaño de la Linea:</b-col>'+
+                '           <b-col sm="auto">'+
+                '             <b-form-input type="number" id="tamaño_linea" placeholder="KB" size="sm"></b-form-input>'+
+                '           </b-col>'+
+                '         </b-form-input-group>'+
+
+                '         </span class="h4">Politica de Correspondencia:</span>'+
+                '         <b-form-radio name="politica_correspondencia" value="correspondencia_directa">Correspondencia Directa</b-form-radio>'+
+                '         <b-form-radio name="politica_correspondencia" value="correspondencia_asociativa">Correspondencia Asociativa</b-form-radio>'+
+                '         <b-form-radio name="politica_correspondencia" value="asociativa_conjuntos">Asociativa por Conjuntos'+
+
+                '           <b-form-input-group>'+
+                '             <b-col sm="auto">Lineas por Conjunto (Cache Instrucciones):</b-col>'+
+                '             <b-col sm="auto">'+
+                '               <b-form-input type="number" id="linea_conjunto_cache_instrucciones" size="sm"></b-form-input>'+
+                '             </b-col>'+
+
+                '             <b-col sm="auto">Lineas por Conjunto (Cache de Datos):</b-col>'+
+                '             <b-col sm="auto">'+
+                '               <b-form-input type="number" id="linea_conjunto_cache_datos" size="sm"></b-form-input>'+
+                '             </b-col>'+
+
+                '           </b-form-input-group>'+
+                '         </b-form-radio>'+
+
+
+                '       </b-modal>'+
  
+
+
+
+
                 '' +
                 '       <b-button class="btn btn-outline-secondary btn-sm buttonBackground h-100" ' +
                 '                id="newComponentBtn" ' +
