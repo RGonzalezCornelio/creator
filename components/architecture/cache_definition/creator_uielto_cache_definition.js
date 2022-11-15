@@ -50,7 +50,9 @@
                   //Verified all fields of Cache Definition
                   verify_cache_definition(evt)
                   {
-                    if(!this.instruction_cache || !this.data_cache || !this.unified_cache_size)
+                    //evt.preventDefault();
+
+                    if(!this.cache_line)
                     {
                       show_notification('Please complete all fields', 'danger');
                       
