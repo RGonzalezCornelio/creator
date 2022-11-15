@@ -29,7 +29,7 @@
 
     data:       function () {
                   return {
-                    
+                    cache_type: "unificada"
                   }
                 },
 
@@ -77,12 +77,12 @@
 
                 '       <b-modal id="modal_cache_definition_level_one" title="Level One Cache Configuration">'+
                 '         <span class="h6">Level 1</span>'+
-                '         <b-form-radio-group id="radio_group_tipo_cache">'+
-                '           <b-form-radio name="tipo_cache" value="unificada">Unificada</b-form-radio>'+
-                '           <b-form-radio name="tipo_cache" value="no_unificada">No unificada</b-form-radio>'+
+                '         <b-form-radio-group v-model="cache_type" id="radio_group_tipo_cache">'+
+                '           <b-form-radio name="cache_type" value="unificada">Unificada</b-form-radio>'+
+                '           <b-form-radio name="cache_type" value="no_unificada">No unificada</b-form-radio>'+
                 '         </b-form-radio-group>'+
 
-                '         <b-form-input-group>'+
+                '         <b-form-input-group v-if="cache_type==\'no_unificada\'">'+
                 '           <b-col sm="auto">Tamaño de la Cache de Instrucciones:</b-col>'+
                 '           <b-col sm="auto">'+
                 '             <b-form-input type="number" id="cache_instrucciones" placeholder="KB" size="sm"></b-form-input>'+
