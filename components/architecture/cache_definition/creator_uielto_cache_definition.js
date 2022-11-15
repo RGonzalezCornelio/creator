@@ -198,9 +198,9 @@
                 '         </span class="h4">Cache Policy:</span>'+
 
                 
-                '         <b-form-radio name="cache_policy" value="direct_mapped">Direct Mapped</b-form-radio>'+
-                '         <b-form-radio name="cache_policy" value="fully_associative">Fully Associative</b-form-radio>'+
-                '         <b-form-radio name="cache_policy" value="set_associative">Set Associative'+
+                '         <b-form-radio v-model="cache_policy" name="cache_policy" value="direct_mapped">Direct Mapped</b-form-radio>'+
+                '         <b-form-radio v-model="cache_policy" name="cache_policy" value="fully_associative">Fully Associative</b-form-radio>'+
+                '         <b-form-radio v-model="cache_policy" name="cache_policy" value="set_associative">Set Associative'+
 
                 '           <b-form-group v-if="cache_type==\'split\'">'+
                 '             <b-col sm="auto">Blocks (lines) per Set (Instruction Cache):</b-col>'+
