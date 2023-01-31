@@ -88,6 +88,10 @@
                   //app.$refs['stack_modal'].show(); // TODO: vue bidirectional updates
                   this.$root.$emit('bv::show::modal', 'stack_modal');
                 }
+
+                if(this.memory_segment == "memory_access"){
+                  return
+                }
               },
 
               change_space_view()
@@ -145,7 +149,7 @@
             ' ' +
             '   <b-container fluid align-h="between" class="mx-0 px-0">' +
             '     <b-row align-v="start" cols="1">' +
-            '       <b-col class="mx-0 pl-0 pr-2" style="min-height:35vh !important;">' +
+            '       <b-col class="mx-0 pl-0 pr-2" style="min-height:auto !important;">' +
             ' ' +
             '         <b-table sticky-header ' +
             '                 striped ' +
@@ -256,6 +260,28 @@
             '         </div>' +
             ' ' +
             '       </b-col>' +
+
+            
+
+            ' ' +
+            '         <div class="col-lg-12 col-sm-12 row mx-0 px-2 border" v-if="memory_segment == \'memory_access\'">' + // TODO: only in stack' +
+
+            '           <span class="col-lg-12 col-sm-12 my-1 px-2 border">' +
+            '             Total of memory accesses: {{show_memory_access()}}'+
+            '           </span>' +
+          
+            '           <span class="col-lg-12 col-sm-12 my-1 px-2 border">' +
+            '             Memory write accesses: {{show_memory_write_access()}}' +
+            '           </span>' +
+      
+            '           <span class="col-lg-12 col-sm-12 my-1 px-2 border">' +
+            '             Memory read accesses: {{show_memory_read_access()}}' +
+            '           </span>' +
+
+            '         </div>' +
+
+
+
             '     </b-row>' +
             '   </b-container>' +
             ' ' +
@@ -281,6 +307,8 @@
             '     <b-form-radio v-model="selected_stack_view" value="char">Char</b-form-radio>' +
             '   </b-modal>' +
             ' ' +
+
+
             '  </div>'
   }
 

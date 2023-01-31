@@ -38,7 +38,8 @@
                 mem_representation_options: [
                   { text: 'Data', value: 'data_memory' },
                   { text: 'Text', value: 'instructions_memory' },
-                  { text: 'Stack', value: 'stack_memory'}
+                  { text: 'Stack', value: 'stack_memory'},
+                  { text: 'Memory Access', value: 'memory_access'}
                 ]
               }
             },

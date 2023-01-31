@@ -23,6 +23,12 @@
  * Global variables *
  ********************/
 
+var memory_read_counter = 0;
+var memory_write_counter = -1;
+
+var memory_access_counter = -1;
+
+
 var word_size_bits  = 32 ;
     // TODO: load from architecture
 
@@ -728,11 +734,37 @@ function writeMemory ( value, addr, type )
 
         // update view
         creator_memory_updaterow(addr);
+
+        //Counter access
+        memory_write_counter++;
+        memory_access_counter++;
 }
 
 function readMemory ( addr, type )
 {
+        //Counter access
+        memory_read_counter++;
+        memory_access_counter++;
+
         return main_memory_read_bydatatype(addr, type) ;
+
+        
+}
+
+//To show in the template "memory_table" the memory accesses
+function show_memory_access()
+{
+        return memory_access_counter;
+}
+//To show in the template "memory_table" the memory write accesses
+function show_memory_write_access()
+{
+        return memory_write_counter;
+}
+//To show in the template "memory_table" the memory read accesses
+function show_memory_read_access()
+{
+        return memory_read_counter;
 }
 
 function creator_memory_reset ( )
@@ -741,6 +773,11 @@ function creator_memory_reset ( )
 
         // update view
         creator_memory_updateall() ;
+
+        // reset memory access counter
+        memory_access_counter = 0;
+        memory_read_counter = 0;
+        memory_write_counter = 0;
 }
 
 function creator_memory_clear ( )
