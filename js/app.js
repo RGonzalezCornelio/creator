@@ -329,6 +329,14 @@ try
 
 
       //
+      //Memory Access
+      //
+
+      memory_read_counter: memory_read_counter,
+      memory_write_counter: memory_write_counter,
+      memory_access_counter: memory_access_counter,
+
+      //
       //Stats
       //
 

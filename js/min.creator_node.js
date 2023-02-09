@@ -2825,6 +2825,8 @@ function writeMemory ( value, addr, type )
         //Counter access
         memory_write_counter++;
         memory_access_counter++;
+        app._data.memory_write_counter++;
+        app._data.memory_access_counter++;
 }
 
 function readMemory ( addr, type )
@@ -2832,6 +2834,9 @@ function readMemory ( addr, type )
         //Counter access
         memory_read_counter++;
         memory_access_counter++;
+
+        app._data.memory_read_counter++;
+        app._data.memory_access_counter++;
 
         return main_memory_read_bydatatype(addr, type) ;
 
@@ -2862,9 +2867,9 @@ function creator_memory_reset ( )
         creator_memory_updateall() ;
 
         // reset memory access counter
-        memory_access_counter = 0;
-        memory_read_counter = 0;
-        memory_write_counter = 0;
+        app._data.memory_access_counter = 0;
+        app._data.memory_read_counter = 0;
+        app._data.memory_write_counter = 0;
 }
 
 function creator_memory_clear ( )

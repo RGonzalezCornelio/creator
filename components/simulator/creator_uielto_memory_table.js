@@ -28,7 +28,10 @@
               memory_segment:     { type: String, required: true },
               track_stack_names:  { type: Array,  required: true }, // TODO: optional
               callee_subrutine:   { type: String, required: true }, // TODO: optional
-              caller_subrutine:   { type: String, required: true }  // TODO: optional
+              caller_subrutine:   { type: String, required: true },  // TODO: optional
+              memory_access_counter:     { type: Number, required: true },
+              memory_read_counter:     { type: Number, required: true },
+              memory_write_counter:     { type: Number, required: true }
             },
 
   data:     function () {
@@ -267,15 +270,15 @@
             '         <div class="col-lg-12 col-sm-12 row mx-0 px-2 border" v-if="memory_segment == \'memory_access\'">' + // TODO: only in stack' +
 
             '           <span class="col-lg-12 col-sm-12 my-1 px-2 border">' +
-            '             Total of memory accesses: {{show_memory_access()}}'+
+            '             Total of memory accesses: {{memory_access_counter}}'+
             '           </span>' +
           
             '           <span class="col-lg-12 col-sm-12 my-1 px-2 border">' +
-            '             Memory write accesses: {{show_memory_write_access()}}' +
+            '             Memory write accesses: {{memory_write_counter}}' +
             '           </span>' +
       
             '           <span class="col-lg-12 col-sm-12 my-1 px-2 border">' +
-            '             Memory read accesses: {{show_memory_read_access()}}' +
+            '             Memory read accesses: {{memory_read_counter}}' +
             '           </span>' +
 
             '         </div>' +
