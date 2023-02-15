@@ -25,7 +25,10 @@
 
   props:      {
                 stats:       { type: Array,  required: true },
-                stats_value: { type: Number, required: true }
+                stats_value: { type: Number, required: true },
+                memory_access_counter:     { type: Number, required: true },
+                memory_read_counter:     { type: Number, required: true },
+                memory_write_counter:     { type: Number, required: true }
               },
 
   data:       function () {
@@ -34,7 +37,11 @@
       stat_representation_options:  [
                                       { text: 'Graphic', value: 'graphic' },
                                       { text: 'Table', value: 'table' }
-                                    ]
+                                    ],
+     
+      stat_representation_options_cache: [
+                                            {text: 'Cache', value: 'cache'}
+                                         ]
     }
   },
 
@@ -42,7 +49,7 @@
               '   <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">' +
               '     <b-col align-h="center" class="px-2">' +
               '       <div class="border m-1 py-1 px-2">' +
-              '         <b-badge variant="light" class="h6 groupLabelling border mx-2 my-0">Stats view</b-badge>' +
+              '         <b-badge variant="light" class="h6 groupLabelling border mx-2 my-0">Instruction Stats</b-badge>' +
               '         <b-form-group class="mb-2" v-slot="{ ariaDescribedby }">' +
               '           <b-form-radio-group' +
               '             id="btn-radios-1"' +
@@ -59,13 +66,52 @@
               '       </div >' +
               '     </b-col>' +
               '' +
-              '     <b-col></b-col>' +
+              '     <b-col>' +
+              '       <div class="border m-1 py-1 px-2">' +
+              '         <b-badge variant="light" class="h6 groupLabelling border mx-2 my-0">Cache Stats</b-badge>' +
+              '         <b-form-group class="mb-2" v-slot="{ ariaDescribedby }">' +
+              '           <b-form-radio-group' +
+              '             id="btn-radios-1"' +
+              '             class="w-100"' +
+              '             v-model="stat_representation"' +
+              '             :options="stat_representation_options_cache"' +
+              '             button-variant="outline-secondary"' +
+              '             size="sm"' +
+              '             :aria-describedby="ariaDescribedby"' +
+              '             name="radios-btn-default"' +
+              '             buttons' +
+              '           ></b-form-radio-group>' +
+              '         </b-form-group>' +
+              '       </div >' +
+              '     </b-col>' +
               '   </b-row>' +
               '' +
               '   <b-row cols="1">' +
               '     <b-col align-h="center" class="px-2 my-2">' +
               '       <plot-stats :stats_value="stats_value" v-if="stat_representation == \'graphic\'"></plot-stats>  ' +
               '       <table-stats :stats="stats" v-if="stat_representation == \'table\'"></table-stats> ' +
+              '       <cache-stats :stats="stats" v-if="stat_representation == \'cache\'" >'+
+
+              //Esto hay que meterlo en creator_uielto_stats_cache
+
+              '         <div class="col-lg-12 col-sm-12 row mx-0 px-2 border">' + // TODO: only in stack' +
+              
+
+              '           <span class="col-lg-12 col-sm-12 my-1 px-2 border">' +
+              '             Total of memory accesses: {{memory_access_counter}}'+
+              '           </span>' +
+          
+              '           <span class="col-lg-12 col-sm-12 my-1 px-2 border">' +
+              '             Memory write accesses: {{memory_write_counter}}' +
+              '           </span>' +
+      
+              '           <span class="col-lg-12 col-sm-12 my-1 px-2 border">' +
+              '             Memory read accesses: {{memory_read_counter}}' +
+              '           </span>' +
+
+              '         </div>' +
+
+              '       </cache-stats>'+
               '     </b-col>' +
               '   </b-row>' +
               ' </b-container>'

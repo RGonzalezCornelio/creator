@@ -28,10 +28,7 @@
               memory_segment:     { type: String, required: true },
               track_stack_names:  { type: Array,  required: true }, // TODO: optional
               callee_subrutine:   { type: String, required: true }, // TODO: optional
-              caller_subrutine:   { type: String, required: true },  // TODO: optional
-              memory_access_counter:     { type: Number, required: true },
-              memory_read_counter:     { type: Number, required: true },
-              memory_write_counter:     { type: Number, required: true }
+              caller_subrutine:   { type: String, required: true }  // TODO: optional
             },
 
   data:     function () {
@@ -41,8 +38,8 @@
                 mem_representation_options: [
                   { text: 'Data', value: 'data_memory' },
                   { text: 'Text', value: 'instructions_memory' },
-                  { text: 'Stack', value: 'stack_memory'},
-                  { text: 'Memory Access', value: 'memory_access'}
+                  { text: 'Stack', value: 'stack_memory'}
+   
                 ]
               }
             },
@@ -82,12 +79,7 @@
             '                  :memory_segment="mem_representation"' +
             '                  :track_stack_names="track_stack_names" ' +
             '                  :callee_subrutine="callee_subrutine" ' +
-            '                  :caller_subrutine="caller_subrutine"' +
-            '                  :memory_access_counter="memory_access_counter"' +
-            '                  :memory_read_counter="memory_read_counter"' +
-            '                  :memory_write_counter="memory_write_counter">' +
-
-
+            '                  :caller_subrutine="caller_subrutine">' +
 
             '       </table-mem>' +
             '     </b-col>' +

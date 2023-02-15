@@ -328,13 +328,7 @@ try
       end_callee: 0,
 
 
-      //
-      //Memory Access
-      //
-
-      memory_read_counter: memory_read_counter,
-      memory_write_counter: memory_write_counter,
-      memory_access_counter: memory_access_counter,
+    
 
       //
       //Stats
@@ -344,6 +338,12 @@ try
       stats: stats,
       //Stats Graph values
       stats_value: stats_value,
+
+      //Cache Memory
+
+      memory_read_counter: memory_read_counter,
+      memory_write_counter: memory_write_counter,
+      memory_access_counter: memory_access_counter,
 
 
       //

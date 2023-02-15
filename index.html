@@ -643,9 +643,7 @@
                             :track_stack_names="track_stack_names" 
                             :callee_subrutine="callee_subrutine" 
                             :caller_subrutine="caller_subrutine"
-                            :memory_access_counter="memory_access_counter" 
-                            :memory_read_counter="memory_read_counter" 
-                            :memory_write_counter="memory_write_counter" 
+                        
                             v-if="data_mode == 'memory'">
                     </memory>
 
@@ -653,7 +651,13 @@
                     <!-- Stats view--->
                     <stats  :stats="stats" 
                             :stats_value="stats_value"
+
+                            :memory_access_counter="memory_access_counter" 
+                            :memory_read_counter="memory_read_counter" 
+                            :memory_write_counter="memory_write_counter" 
+
                             v-if="data_mode == 'stats'">  
+                            
                     </stats>
 
 
