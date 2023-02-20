@@ -664,6 +664,10 @@ function stats_update ( type )
   }
 }
 
+function show_totalStats(){
+    return totalStats;
+}
+
 function stats_reset ( )
 {
   totalStats = 0 ;
