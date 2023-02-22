@@ -27,7 +27,7 @@
                 stats:       { type: Array,  required: true },
                 stats_value: { type: Number, required: true },
 
-                totalStats:  { type: Number, required: true },
+                totalStats:              { type: Number, required: true },
                 memory_access_counter:   { type: Number, required: true },
                 memory_read_counter:     { type: Number, required: true },
                 memory_write_counter:    { type: Number, required: true }
@@ -92,7 +92,7 @@
               '     <b-col align-h="center" class="px-2 my-2">' +
               '       <plot-stats :stats_value="stats_value" v-if="stat_representation == \'graphic\'"></plot-stats>  ' +
               '       <table-stats :stats="stats" v-if="stat_representation == \'table\'"></table-stats> ' +
-              '       <cache-stats :totalStats="totalStats" v-if="stat_representation == \'cache\'" >'+
+              '       <cache-stats v-if="stat_representation == \'cache\'" >'+
 
               //Esto hay que meterlo en creator_uielto_stats_cache
 
@@ -105,7 +105,7 @@
 
               '             <tr>'+
               '               <td></td>'+
-              '               <td>Instruction Total Access: {{totalStats}}</td>'+
+              '               <td>Instruction Total Access: {{app._data.totalStats}}</td>'+ //TO DO queda pendiente de ver
               '             </tr>'+
 
               '             <tr>'+
