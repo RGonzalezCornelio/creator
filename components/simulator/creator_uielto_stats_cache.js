@@ -21,92 +21,76 @@
 
   /* jshint esversion: 6 */
 
-  var uielto_stats_plot = {
+  var uielto_stats_cache = {
 
-    /*Import Graph component*/
-    components: {
-                  apexchart: VueApexCharts,
-    },
+   
   
     props:      {
-                  stats_value: { type: Number, required: true }
+                  totalStats:              { type: Number, required: true },
+                  memory_access_counter:   { type: Number, required: true },
+                  memory_read_counter:     { type: Number, required: true },
+                  memory_write_counter:    { type: Number, required: true }
                 },
                 
     data:       function () {
                   return {
-                    
-                    /*Stats Graph configure*/
-                    chartOptions: {
-                      colors:['red', 'blue', 'yellow', 'purple', 'green', 'orange', 'gray', 'pink', 'teal', 'black', 'lime', 'indigo', 'cyan'],
-                      chart: {
-                        id: 'graphic',
-                        type: 'donut',
-                      },
-                      labels: ["Arithmetic integer", "Arithmetic floating point", "Logic", "Transfer between registers", "Memory access", "Comparison", "I/O", "Syscall", "Control", "Function call", "Conditional bifurcation", "Unconditional bifurcation", "Other"],
-                      dataLabels: {
-                        enabled: true
-                      },
-                      donut: {
-                        labels: {
-                          show: true,
-                          total: {
-                            show: true,
-                            showAlways: true,
-                            label: "Total",
-                          },
-                        },
-                      },
-                      fill: {
-                        type: 'gradient',
-                        gradient: {
-                          shade: 'dark',
-                          type: "horizontal",
-                          shadeIntensity: 0.5,
-                          gradientToColors: undefined, // optional, if not defined - uses the shades of same color in series
-                          inverseColors: true,
-                          opacityFrom: 1,
-                          opacityTo: 1,
-                          stops: [0, 50, 100],
-                          colorStops: []
-                        },
-                        colors: ['red', 'blue', 'yellow', 'purple', 'green', 'orange', 'gray', 'pink', 'teal', 'black', 'lime', 'indigo', 'cyan'],
-                      },
-                      legend: {
-                        formatter: function(val, opts) {
-                          return val + " - " + opts.w.globals.series[opts.seriesIndex]
-                        }
-                      },
-                      plotOptions: {
-                        pie: {
-                          donut: {
-                            labels: {
-                              show: true,
-                              total: {
-                                show: true,
-                                showAlways: true,
-                                color: 'black',
-                                formatter: function (w) {
-                                  return w.globals.seriesTotals.reduce((a, b) => {
-                                    return a + b
-                                  }, 0)
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
-                    },
                   }
+                    
                 },
   
-    template:   ' <div id="stat_plot" class="stats px-0">' +
-                '   <apexchart id="graphic" ' +
-                '              type="donut" ' +
-                '              :options="chartOptions" ' +
-                '              :series="stats_value" ' +
-                '              height="150%" >' +
-                '   </apexchart>' +
-                ' </div>'
+    template:   ' <div >' +  //TODO: VER QUE PASA CON LAS VARIABLES, POR QUE NO SE PASAN LOS VALORES
+
+                '   <table class="col-lg-12 col-sm-12 border" style="border:hidden">'+
+
+                '     <tr>'+
+                '       <td><h6>Instructions</h6></td>'+
+                '     </tr>'+  
+
+                '     <tr>'+
+                '       <td></td>'+
+                '       <td>Instruction Total Access: {{app._data.totalStats}}</td>'+ //TO DO queda pendiente de ver
+                '     </tr>'+
+
+                '     <tr>'+
+                '       <td></td>'+
+                '       <td>Hit Ratio:</td>'+
+                '     </tr>'+
+
+                '   </table>'+
+
+                '             '+
+              
+                
+
+                '   <table class="col-lg-12 col-sm-12  border" style="border:hidden">'+
+
+                '     <tr>'+
+                '       <td><h6>Data</h6></td>'+
+                '     </tr>'+    
+
+                '     <tr>'+
+                '       <td></td>'+
+                '       <td>Data Total Access: {{app._data.memory_access_counter}}</td>'+
+                '     </tr>'+
+
+                '     <tr>'+
+                '       <td></td>'+
+                '       <td>Write accesses: {{app._data.memory_write_counter}}</td>'+
+                '     </tr>'+
+
+                '     <tr>'+
+                '       <td></td>'+
+                '       <td>Read accesses: {{app._data.memory_read_counter}}</td>'+
+                '     </tr>'+
+
+                '     <tr>'+
+                '       <td></td>'+
+                '       <td>Hit Ratio:</td>'+
+                '     </tr>'+
+
+                '   </table>'+
+
+                ' </div>' 
   
     }
   

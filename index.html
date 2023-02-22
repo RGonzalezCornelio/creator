@@ -651,15 +651,22 @@
                     <!-- Stats view--->
                     <stats  :stats="stats" 
                             :stats_value="stats_value"
-                            
+
                             :totalStats="totalStats"
                             :memory_access_counter="memory_access_counter" 
                             :memory_read_counter="memory_read_counter" 
                             :memory_write_counter="memory_write_counter" 
-
+                            
                             v-if="data_mode == 'stats'">  
                             
                     </stats>
+
+
+                    <!--Cache Stats view
+                    <cache-stats  
+                                  v-if="data_mode == 'cache-stats'">
+
+                    </cache-stats>-->
 
 
                     <!-- Power Consumption view--->

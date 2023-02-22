@@ -90,63 +90,11 @@
               '' +
               '   <b-row cols="1">' +
               '     <b-col align-h="center" class="px-2 my-2">' +
+
               '       <plot-stats :stats_value="stats_value" v-if="stat_representation == \'graphic\'"></plot-stats>  ' +
               '       <table-stats :stats="stats" v-if="stat_representation == \'table\'"></table-stats> ' +
-              '       <cache-stats v-if="stat_representation == \'cache\'" >'+
-
-              //Esto hay que meterlo en creator_uielto_stats_cache
-
-              '         <div class="col-lg-12 col-sm-12 row mx-0 px-2 border">' + // TODO: only in stack' +
-
-              '           <table style="border:hidden">'+
-              '             <tr>'+
-              '               <td><h6>Instructions</h6></td>'+
-              '             </tr>'+  
-
-              '             <tr>'+
-              '               <td></td>'+
-              '               <td>Instruction Total Access: {{app._data.totalStats}}</td>'+ //TO DO queda pendiente de ver
-              '             </tr>'+
-
-              '             <tr>'+
-              '               <td></td>'+
-              '               <td>Hit Ratio:</td>'+
-              '             </tr>'+
-
-              '           </table>'+
-
-              '             '+
-             
-              '         </div>'+
-
-              '         <div class="col-lg-12 col-sm-12 row mx-0 px-2 border">'+
-              '           <table style="border:hidden">'+
-              '             <tr>'+
-              '               <td><h6>Data</h6></td>'+
-              '             </tr>'+              
-              '             <tr>'+
-              '               <td></td>'+
-              '               <td>Data Total Access: {{memory_access_counter}}</td>'+
-              '             </tr>'+
-              '             <tr>'+
-              '               <td></td>'+
-              '               <td>Write accesses: {{memory_write_counter}}</td>'+
-              '             </tr>'+
-              '             <tr>'+
-              '               <td></td>'+
-              '               <td>Read accesses: {{memory_read_counter}}</td>'+
-              '             </tr>'+
-
-              '             <tr>'+
-              '               <td></td>'+
-              '               <td>Hit Ratio:</td>'+
-              '             </tr>'+
-
-              '           </table>'+
-
-              '         </div>' +
-
-              '       </cache-stats>'+
+              '       <cache-stats :stats="stats" v-if="stat_representation == \'cache\'"></cache-stats>'+
+              
               '     </b-col>' +
               '   </b-row>' +
               ' </b-container>'
