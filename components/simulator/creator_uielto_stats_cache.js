@@ -26,7 +26,7 @@
    
   
     props:      {
-                  totalStats:              { type: Number, required: true },
+                  total_stats:              { type: Number, required: true },
                   memory_access_counter:   { type: Number, required: true },
                   memory_read_counter:     { type: Number, required: true },
                   memory_write_counter:    { type: Number, required: true }
@@ -48,7 +48,7 @@
 
                 '     <tr>'+
                 '       <td></td>'+
-                '       <td>Instruction Total Access: {{app._data.totalStats}}</td>'+ //TO DO queda pendiente de ver
+                '       <td>Instruction Total Access: {{total_stats}}</td>'+ //TO DO queda pendiente de ver
                 '     </tr>'+
 
                 '     <tr>'+
@@ -70,17 +70,17 @@
 
                 '     <tr>'+
                 '       <td></td>'+
-                '       <td>Data Total Access: {{app._data.memory_access_counter}}</td>'+
+                '       <td>Data Total Access: {{memory_access_counter}}</td>'+
                 '     </tr>'+
 
                 '     <tr>'+
                 '       <td></td>'+
-                '       <td>Write accesses: {{app._data.memory_write_counter}}</td>'+
+                '       <td>Write accesses: {{memory_write_counter}}</td>'+
                 '     </tr>'+
 
                 '     <tr>'+
                 '       <td></td>'+
-                '       <td>Read accesses: {{app._data.memory_read_counter}}</td>'+
+                '       <td>Read accesses: {{memory_read_counter}}</td>'+
                 '     </tr>'+
 
                 '     <tr>'+
