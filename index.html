@@ -467,19 +467,26 @@
                       <!-- Cache Definition -->
                       <b-tab title="Cache Definition">
                         
-                        <cache-definition  :cache_definition="architecture.cache_definition"></cache-definition>
+                        <cache-definition  :cache_definition="architecture.cache_definition"
+                                           :number_cache_levels="number_cache_levels">
+
+                        </cache-definition>
+
+                        <cache-definition-one id="cache_definition_one_level"
+                                              :architecture_name="architecture_name">
+                        </cache-definition-one>
+
+                        <cache-definition-two id="cache_definition_two_level"
+                                              :architecture_name="architecture_name">
+                        </cache-definition-two>
+
+                        <cache-definition-three id="cache_definition_three_level"
+                                              :architecture_name="architecture_name">
+                        </cache-definition-three>
 
                         <!-- Cache definition modals -->
 
-                        <!-- Edit Cache definition >
-                        <cache-definition-edit id="cache_definition_edit"
-                                            ref="cache_definition_edit">
-                        </cache-definition-edit>
-
-                        <!-- Reset cache definition >
-                        <cache-definition-reset id="reset_cache_definition"
-                                             :architecture_name="architecture_name">
-                        </cache-definition-reset-->
+                       
                       
                       </b-tab>
                     </b-tabs>

@@ -22,7 +22,7 @@
 
   /* jshint esversion: 6 */
 
-  var uielto_cache_definition_one_level = {
+  var uielto_cache_definition_two_level = {
 
     props:      {
                   id:   {type: String, required: true}
@@ -108,13 +108,13 @@
                 },
   
     template:   '<b-modal    :id="id"'+
-            '                title="Level One Cache Definition"'+
+            '                title="Level Two Cache Definition"'+
             '                ok-title="Save"'+
             '                @ok="verify_cache_definition($event)"'+
             '                v-model="show_modal"'+
             '                @hidden="clean_form">'+
 
-                '         <span class="h6">Level 1</span>'+
+                '         <span class="h6">Level 2</span>'+
                 '         <b-form-radio-group v-model="cache_type" id="radio_group_tipo_cache">'+
                 '           <b-form-radio name="cache_type" value="unified">Unified Cache</b-form-radio>'+
                 '           <b-form-radio name="cache_type" value="split">Split Cache</b-form-radio>'+
@@ -225,4 +225,4 @@
  
   }
 
-  Vue.component('cache-definition-one', uielto_cache_definition_one_level) ;
+  Vue.component('cache-definition-two', uielto_cache_definition_two_level) ;

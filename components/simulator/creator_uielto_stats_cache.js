@@ -26,7 +26,7 @@
    
   
     props:      {
-                  total_stats:              { type: Number, required: true },
+                  total_stats:             { type: Number, required: true },
                   memory_access_counter:   { type: Number, required: true },
                   memory_read_counter:     { type: Number, required: true },
                   memory_write_counter:    { type: Number, required: true }

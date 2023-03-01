@@ -242,8 +242,16 @@ try
         index: null
       },
 
+
+      //Cache Definition
+      number_cache_levels:3,
+
       
       
+
+
+
+
       /************/
       /* Assembly */
       /************/
