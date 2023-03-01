@@ -32,7 +32,7 @@
                   return {
                     //Default Types
                     cache_type: "unified",
-                    cache_policy: "direct_mapped",
+                    cache_policy_level_three: "direct_mapped",
 
                     instruction_cache: '',
                     data_cache: '',
@@ -114,112 +114,76 @@
             '                v-model="show_modal"'+
             '                @hidden="clean_form">'+
 
-                '         <span class="h6">Level 3</span>'+
-                '         <b-form-radio-group v-model="cache_type" id="radio_group_tipo_cache">'+
-                '           <b-form-radio name="cache_type" value="unified">Unified Cache</b-form-radio>'+
-                '           <b-form-radio name="cache_type" value="split">Split Cache</b-form-radio>'+
-                '         </b-form-radio-group>'+
+            '         <span class="h6">Level 3</span>'+
+            '         <b-form-group>'+
+            '           <b-col sm="auto">Cache Size</b-col>'+
+            '           <b-col sm="auto">'+
+            '             <b-form-input type="number" '+
+            '                           v-model="unified_cache_size"'+
+            '                           placeholder="KB"'+
+            '                           :state=valid(unified_cache_size)'+
+            '                           size="sm"'+
+            '                           title="Unified Cache Size">'+
+            '             </b-form-input>'+
+            '           </b-col>'+
+            '         </b-form-group>'+
 
+            '         <b-col sm="auto">Cache Line Size:</b-col>'+
+            '         <b-col sm="auto">'+
+            '           <b-form-input type="number"'+
+            '                         v-model="cache_line"'+
+            '                         placeholder="KB"'+
+            '                         :state="valid(cache_line)"'+
+            '                         size="sm"'+
+            '                         required '+
+            '                         title="Cache Line">'+
+            '           </b-form-input>'+
+            '         </b-col>'+
 
+            '         <br>'+
 
-                '         <b-form-group v-if="cache_type==\'unified\'">'+
-                '           <b-col sm="auto">Cache Size</b-col>'+
-                '           <b-col sm="auto">'+
-                '             <b-form-input type="number" '+
-                '                           v-model="unified_cache_size"'+
-                '                           placeholder="KB"'+
-                '                           :state=valid(unified_cache_size)'+
-                '                           size="sm"'+
-                '                           title="Unified Cache Size">'+
-                '             </b-form-input>'+
-                '           </b-col>'+
-                '         </b-form-group>'+
+            '         </span class="h4">Cache Policy:</span>'+
 
+            '         <b-form-radio v-model="cache_policy_level_three" name="cache_policy_level_three" value="direct_mapped">Direct Mapped</b-form-radio>'+
+            '         <b-form-radio v-model="cache_policy_level_three" name="cache_policy_level_three" value="fully_associative">Fully Associative</b-form-radio>'+
+            '         <b-form-radio v-model="cache_policy_level_three" name="cache_policy_level_three" value="set_associative">Set Associative'+
 
-                '         <b-form-group v-if="cache_type==\'split\'">'+
-                '           <b-col sm="auto">Instruction Cache Size:</b-col>'+
-                '           <b-col sm="auto">'+
-                '             <b-form-input type="number" '+
-                '                           v-model="instruction_cache"'+
-                '                           placeholder="KB"'+
-                '                           :state="valid(instruction_cache)"'+
-                '                           size="sm"'+
-                '                           title="Instruction Cache Size">'+
-                '             </b-form-input>'+
-                '           </b-col>'+
+            '           <b-form-group v-if="cache_type==\'split\'">'+
+            '             <b-col sm="auto">Blocks (lines) per Set (Instruction Cache):</b-col>'+
+            '             <b-col sm="auto">'+
+            '               <b-form-input type="number"'+
+            '                             v-model="lines_set_instruction_cache"'+
+            '                             :state="valid(lines_set_instruction_cache)"'+
+            '                             size="sm"'+
+            '                             title="Lines Set Instruction Cache">'+
+            '               </b-form-input>'+
 
-                '           <b-col sm="auto">Data Cache Size:</b-col>'+
-                '           <b-col sm="auto">'+
-                '             <b-form-input type="number"'+
-                '                           v-model="data_cache"'+
-                '                           placeholder="KB"'+
-                '                           :state="valid(data_cache)"'+
-                '                           size="sm"'+
-                '                           title="Data Cache Size">'+
-                '             </b-form-input>'+
+            '             </b-col>'+
 
-                '           </b-col>'+
+            '             <b-col sm="auto">Blocks (lines) per Set (Data Cache):</b-col>'+
+            '             <b-col sm="auto">'+
+            '               <b-form-input type="number"'+
+            '                             v-model="lines_set_data_cache"'+
+            '                             :state="valid(lines_set_data_cache)"'+
+            '                             size="sm"'+
+            '                             title="Lines Set Data Cache">'+
+            '               </b-form-input>'+
+            '             </b-col>'+
 
-                '         </b-form-group>'+
+            '           </b-form-group>'+
 
+            '           <b-form-input-group v-if="cache_type==\'unified\'">'+
+            '             <b-col sm="auto">Blocks (lines) per Set</b-col>'+
+            '             <b-col sm="auto">'+
+            '               <b-form-input type="number"'+
+            '                             v-model="unified_lines_set"'+
+            '                             :state="valid(unified_lines_set)"'+
+            '                             size="sm"'+
+            '                             title="Unified Lines Set">'+
+            '               </b-form-input>'+
+            '             </b-col>'+
 
-                '         <b-col sm="auto">Cache Line Size:</b-col>'+
-                '         <b-col sm="auto">'+
-                '           <b-form-input type="number"'+
-                '                         v-model="cache_line"'+
-                '                         placeholder="KB"'+
-                '                         :state="valid(cache_line)"'+
-                '                         size="sm"'+
-                '                         required '+
-                '                         title="Cache Line">'+
-                '           </b-form-input>'+
-                '         </b-col>'+
-
-
-
-                '         </span class="h4">Cache Policy:</span>'+
-
-                
-                '         <b-form-radio v-model="cache_policy" name="cache_policy" value="direct_mapped">Direct Mapped</b-form-radio>'+
-                '         <b-form-radio v-model="cache_policy" name="cache_policy" value="fully_associative">Fully Associative</b-form-radio>'+
-                '         <b-form-radio v-model="cache_policy" name="cache_policy" value="set_associative">Set Associative'+
-
-                '           <b-form-group v-if="cache_type==\'split\'">'+
-                '             <b-col sm="auto">Blocks (lines) per Set (Instruction Cache):</b-col>'+
-                '             <b-col sm="auto">'+
-                '               <b-form-input type="number"'+
-                '                             v-model="lines_set_instruction_cache"'+
-                '                             :state="valid(lines_set_instruction_cache)"'+
-                '                             size="sm"'+
-                '                             title="Lines Set Instruction Cache">'+
-                '               </b-form-input>'+
-
-                '             </b-col>'+
-
-                '             <b-col sm="auto">Blocks (lines) per Set (Data Cache):</b-col>'+
-                '             <b-col sm="auto">'+
-                '               <b-form-input type="number"'+
-                '                             v-model="lines_set_data_cache"'+
-                '                             :state="valid(lines_set_data_cache)"'+
-                '                             size="sm"'+
-                '                             title="Lines Set Data Cache">'+
-                '               </b-form-input>'+
-                '             </b-col>'+
-
-                '           </b-form-group>'+
-
-                '           <b-form-input-group v-if="cache_type==\'unified\'">'+
-                '             <b-col sm="auto">Blocks (lines) per Set</b-col>'+
-                '             <b-col sm="auto">'+
-                '               <b-form-input type="number"'+
-                '                             v-model="unified_lines_set"'+
-                '                             :state="valid(unified_lines_set)"'+
-                '                             size="sm"'+
-                '                             title="Unified Lines Set">'+
-                '               </b-form-input>'+
-                '             </b-col>'+
-
-                '         </b-form-radio>'+
+            '         </b-form-radio>'+
 
                 '</b-modal>'
  
