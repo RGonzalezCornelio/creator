@@ -18,6 +18,8 @@
  *
  */
 
+//const { number } = require("yargs");
+
 
 /********************
  * Global variables *
@@ -125,6 +127,65 @@ var data_tag = [];
 var code_binary = '';
 var update_binary = '';
 var load_binary = false;
+
+
+
+/*Cache definition */
+ 
+//* 
+//VAMOS A HACER LAS FUNCIONES PARA EL ALGORTIMO DEL LRU DE CACHE
+//*
+
+var cache_size = 64; //Este numero esta en KB, asi que en la funcion lo multiplicaremos por 1024 (2^10) y se dividira entre line_size
+var line_size = 64;
+
+//Esta funcion nos devuelve un array inicializado a -1
+function array_length(cache_size, line_size)
+{
+  cache_size = cache_size * 1024;
+  const array = new Array(cache_size/line_size).fill(-1);
+
+  return array;
+}
+
+function pasarDireccionA32Bits ( direc ) 
+{
+  const tamaño_offset = Math.log2(line_size);
+  const tamaño_linea = Math.log2((cache_size*1024)/line_size);
+  const tamaño_tag = 32 - tamaño_linea - tamaño_offset;
+
+  var dirA32Bits = parseInt(direc, 16).toString(2).padStart(32, '0');
+
+  //Para separar el String de 32 bits, lo paso a un array y voy cogiendo 1 a 1
+  var array_bits = dirA32Bits.split("");
+
+  var array_tag = array_bits.slice(0,tamaño_tag);
+  var array_line = array_bits.slice(tamaño_tag,(tamaño_linea + tamaño_tag));
+  var array_offset = array_bits.slice((tamaño_linea + tamaño_tag), array_bits.length);
+
+  var etiqueta = array_tag.join('');
+  var linea = array_line.join('');
+  var offset = array_offset.join('');
+
+  return linea;
+}
+
+const tamaño_offset = Math.log2(line_size);
+const tamaño_linea = Math.log2((cache_size*1024)/line_size);
+const tamaño_tag = 32 - tamaño_linea - tamaño_offset;
+
+
+function LRU()
+{
+  
+} 
+
+
+
+
+
+
+
 /*Stats*/
 var totalStats = 0;
 var stats_value = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]

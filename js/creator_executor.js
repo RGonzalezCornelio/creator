@@ -1032,4 +1032,3 @@ function execute_binary ( index, instructionExecParts, auxDef )
 
   return auxDef;
 }
-
