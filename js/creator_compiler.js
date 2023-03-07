@@ -136,14 +136,18 @@ var load_binary = false;
 //VAMOS A HACER LAS FUNCIONES PARA EL ALGORTIMO DEL LRU DE CACHE
 //*
 
-var cache_size = 64; //Este numero esta en KB, asi que en la funcion lo multiplicaremos por 1024 (2^10) y se dividira entre line_size
+var cache_size = 1; //Este numero esta en KB, asi que en la funcion lo multiplicaremos por 1024 (2^10) y se dividira entre line_size
 var line_size = 64;
+
+var etiqueta = 0;
+var linea = 0;
+var offset = 0;
 
 //Esta funcion nos devuelve un array inicializado a -1
 function array_length(cache_size, line_size)
 {
   cache_size = cache_size * 1024;
-  const array = new Array(cache_size/line_size).fill(-1);
+  const array = new Array(cache_size/line_size).fill("-1");
 
   return array;
 }
@@ -163,22 +167,61 @@ function pasarDireccionA32Bits ( direc )
   var array_line = array_bits.slice(tamaño_tag,(tamaño_linea + tamaño_tag));
   var array_offset = array_bits.slice((tamaño_linea + tamaño_tag), array_bits.length);
 
-  var etiqueta = array_tag.join('');
-  var linea = array_line.join('');
-  var offset = array_offset.join('');
+  etiqueta = array_tag.join('');
+  linea = array_line.join('');
+  offset = array_offset.join('');
 
-  return linea;
+  return etiqueta;
 }
 
 const tamaño_offset = Math.log2(line_size);
 const tamaño_linea = Math.log2((cache_size*1024)/line_size);
 const tamaño_tag = 32 - tamaño_linea - tamaño_offset;
 
+var hit = 0;
+var miss = 0;
+var direccion = 0;
 
 function LRU()
 {
-  
+  var L1 = array_length(cache_size, line_size);
+  var j = 0;
+
+  for(var i = 0; i < instructions.length; i++)
+  {
+    var direccion = instructions[i].Address; 
+    var tag = pasarDireccionA32Bits(direccion);
+
+    if(j == L1.length){
+      j = 0;
+    }
+
+    if(L1[j] == tag)
+    {
+      hit++;
+      j++;
+      
+    }else{
+      miss++;
+      L1[j] = tag;
+      j++;
+    }
+
+    console_log(hit);
+    console_log(miss);
+    console_log(i);
+
+    document.write(" contador = "+i);
+    document.write(" hits: " + hit);
+    document.write(" misses: " + miss + " ------- ");
+    document.write();
+  }
+
+  return L1;
 } 
+
+
+
 
 
 
