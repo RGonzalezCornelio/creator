@@ -2822,9 +2822,12 @@ function writeMemory ( value, addr, type )
         // update view
         creator_memory_updaterow(addr);
 
+        console.log("Write -->  value: " + value + " addr: " + addr + " type: " + type);
+
         //Counter access
         memory_write_counter++;
         memory_access_counter++;
+
         app._data.memory_write_counter++;
         app._data.memory_access_counter++;
 }
@@ -2835,6 +2838,11 @@ function readMemory ( addr, type )
         memory_read_counter++;
         memory_access_counter++;
 
+        var ret = main_memory_read_bydatatype ( addr, type )
+
+        console.log("Read -->  addr: " + addr + " type: " + type + " ret: " + ret);
+
+
         app._data.memory_read_counter++;
         app._data.memory_access_counter++;
 
@@ -2843,21 +2851,6 @@ function readMemory ( addr, type )
         
 }
 
-//To show in the template "memory_table" the memory accesses
-function show_memory_access()
-{
-        return memory_access_counter;
-}
-//To show in the template "memory_table" the memory write accesses
-function show_memory_write_access()
-{
-        return memory_write_counter;
-}
-//To show in the template "memory_table" the memory read accesses
-function show_memory_read_access()
-{
-        return memory_read_counter;
-}
 
 function creator_memory_reset ( )
 {
@@ -3082,106 +3075,6 @@ var data_tag = [];
 var code_binary = '';
 var update_binary = '';
 var load_binary = false;
-
-
-
-/*Cache definition */
- 
-//* 
-//VAMOS A HACER LAS FUNCIONES PARA EL ALGORTIMO DEL LRU DE CACHE
-//*
-
-var cache_size = 1; //Este numero esta en KB, asi que en la funcion lo multiplicaremos por 1024 (2^10) y se dividira entre line_size
-var line_size = 64;
-
-var etiqueta = 0;
-var linea = 0;
-var offset = 0;
-
-//Esta funcion nos devuelve un array inicializado a -1
-function array_length(cache_size, line_size)
-{
-  cache_size = cache_size * 1024;
-  const array = new Array(cache_size/line_size).fill("-1");
-
-  return array;
-}
-
-function pasarDireccionA32Bits ( direc ) 
-{
-  const tamaño_offset = Math.log2(line_size);
-  const tamaño_linea = Math.log2((cache_size*1024)/line_size);
-  const tamaño_tag = 32 - tamaño_linea - tamaño_offset;
-
-  var dirA32Bits = parseInt(direc, 16).toString(2).padStart(32, '0');
-
-  //Para separar el String de 32 bits, lo paso a un array y voy cogiendo 1 a 1
-  var array_bits = dirA32Bits.split("");
-
-  var array_tag = array_bits.slice(0,tamaño_tag);
-  var array_line = array_bits.slice(tamaño_tag,(tamaño_linea + tamaño_tag));
-  var array_offset = array_bits.slice((tamaño_linea + tamaño_tag), array_bits.length);
-
-  etiqueta = array_tag.join('');
-  linea = array_line.join('');
-  offset = array_offset.join('');
-
-  return etiqueta;
-}
-
-const tamaño_offset = Math.log2(line_size);
-const tamaño_linea = Math.log2((cache_size*1024)/line_size);
-const tamaño_tag = 32 - tamaño_linea - tamaño_offset;
-
-var hit = 0;
-var miss = 0;
-var direccion = 0;
-
-function LRU()
-{
-  var L1 = array_length(cache_size, line_size);
-  var j = 0;
-
-  for(var i = 0; i < instructions.length; i++)
-  {
-    var direccion = instructions[i].Address; 
-    var tag = pasarDireccionA32Bits(direccion);
-
-    if(j == L1.length){
-      j = 0;
-    }
-
-    if(L1[j] == tag)
-    {
-      hit++;
-      j++;
-      
-    }else{
-      miss++;
-      L1[j] = tag;
-      j++;
-    }
-
-    console.log(hit);
-    console.log(miss);
-    console.log(i);
-
-    // document.write(" contador = "+i + ";");
-    // document.write(" hits: " + hit);
-    // document.write(" misses: " + miss + " ------- ");
-    // document.write();
-  }
-
-  return L1;
-} 
-
-
-
-
-
-
-
-
 
 
 /*Stats*/
@@ -6759,6 +6652,91 @@ var iter1 = 1;
 var execution_init = 1;
 
 
+/*Cache definition */
+ 
+//* 
+//VAMOS A HACER LAS FUNCIONES PARA EL ALGORTIMO DEL LRU DE CACHE
+//*
+
+var cache_size = 1; //Este numero esta en KB, asi que en la funcion lo multiplicaremos por 1024 (2^10) y se dividira entre line_size
+var line_size = 64;
+
+var etiqueta = 0;
+var linea = 0;
+var offset = 0;
+
+//Esta funcion nos devuelve un array inicializado a -1
+function array_length(cache_size, line_size)
+{
+  cache_size = cache_size * 1024;
+  const array = new Array(cache_size/line_size).fill("-1");
+
+  return array;
+}
+
+function pasarDireccionA32Bits ( direc ) 
+{
+  const tamaño_offset = Math.log2(line_size);
+  const tamaño_linea = Math.log2((cache_size*1024)/line_size);
+  const tamaño_tag = 32 - tamaño_linea - tamaño_offset;
+
+  var dirA32Bits = parseInt(direc, 16).toString(2).padStart(32, '0');
+
+  //Para separar el String de 32 bits, lo paso a un array y voy cogiendo 1 a 1
+  var array_bits = dirA32Bits.split("");
+
+  var array_tag = array_bits.slice(0,tamaño_tag);
+  var array_line = array_bits.slice(tamaño_tag,(tamaño_linea + tamaño_tag));
+  var array_offset = array_bits.slice((tamaño_linea + tamaño_tag), array_bits.length);
+
+  etiqueta = array_tag.join('');
+  linea = array_line.join('');
+  offset = array_offset.join('');
+
+  return etiqueta;
+}
+
+const tamaño_offset = Math.log2(line_size);
+const tamaño_linea = Math.log2((cache_size*1024)/line_size);
+const tamaño_tag = 32 - tamaño_linea - tamaño_offset;
+
+var hit = 0;
+var miss = 0;
+var L1 = array_length(cache_size, line_size);
+var contador_LRU = 0;
+
+function LRU(direccion) //212
+{
+  var tag = pasarDireccionA32Bits(direccion);
+
+  if(contador_LRU == L1.length){
+    contador_LRU = 0;
+  }
+
+  if(L1[contador_LRU] == tag)
+  {
+    hit++;
+    contador_LRU++;
+  }else{
+    miss++;
+    L1[contador_LRU] = tag;
+    contador_LRU++;
+    
+  }
+  
+  console.log("Contador: " + contador_LRU);
+  console.log("EXECUTION INDEX: " + execution_index);
+  console.log("Hit: " + hit);
+  console.log("Miss: " +miss);
+  console.log("-----------------");
+    
+  
+  return L1;
+} 
+
+
+
+
 /*
  * Execution
  */
@@ -6852,6 +6830,14 @@ function execute_instruction ( )
 
     var instructionExec = instructions[execution_index].loaded;
     var instructionExecParts = instructionExec.split(' ');
+
+    //Cache LRU
+    console.log("execIndex: " + execution_index + " address: " + instructions[execution_index].Address + " instExecParts: " + instructionExecParts);
+    LRU(instructions[execution_index].Address);
+
+    
+
+
 
     var signatureDef;
     var signatureParts;
@@ -7200,6 +7186,13 @@ function reset ()
   execution_index = 0;
   execution_init = 1;
 
+
+  //CACHE DEFINTION
+  miss = 0;
+  hit = 0;
+  contador_LRU = 0;
+
+
   // Reset stats
   stats_reset();
 
@@ -7394,9 +7387,6 @@ function stats_update ( type )
   }
 }
 
-function show_totalStats(){
-    return totalStats;
-}
 
 function stats_reset ( )
 {

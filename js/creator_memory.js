@@ -735,9 +735,12 @@ function writeMemory ( value, addr, type )
         // update view
         creator_memory_updaterow(addr);
 
+        console.log("Write -->  value: " + value + " addr: " + addr + " type: " + type);
+
         //Counter access
         memory_write_counter++;
         memory_access_counter++;
+
         app._data.memory_write_counter++;
         app._data.memory_access_counter++;
 }
@@ -748,6 +751,11 @@ function readMemory ( addr, type )
         memory_read_counter++;
         memory_access_counter++;
 
+        var ret = main_memory_read_bydatatype ( addr, type )
+
+        console.log("Read -->  addr: " + addr + " type: " + type + " ret: " + ret);
+
+
         app._data.memory_read_counter++;
         app._data.memory_access_counter++;
 
@@ -756,21 +764,6 @@ function readMemory ( addr, type )
         
 }
 
-//To show in the template "memory_table" the memory accesses
-function show_memory_access()
-{
-        return memory_access_counter;
-}
-//To show in the template "memory_table" the memory write accesses
-function show_memory_write_access()
-{
-        return memory_write_counter;
-}
-//To show in the template "memory_table" the memory read accesses
-function show_memory_read_access()
-{
-        return memory_read_counter;
-}
 
 function creator_memory_reset ( )
 {
