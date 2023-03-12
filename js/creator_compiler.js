@@ -207,14 +207,14 @@ function LRU()
       j++;
     }
 
-    console_log(hit);
-    console_log(miss);
-    console_log(i);
+    console.log(hit);
+    console.log(miss);
+    console.log(i);
 
-    document.write(" contador = "+i);
-    document.write(" hits: " + hit);
-    document.write(" misses: " + miss + " ------- ");
-    document.write();
+    // document.write(" contador = "+i + ";");
+    // document.write(" hits: " + hit);
+    // document.write(" misses: " + miss + " ------- ");
+    // document.write();
   }
 
   return L1;
