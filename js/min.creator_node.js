@@ -6658,6 +6658,11 @@ var execution_init = 1;
 //VAMOS A HACER LAS FUNCIONES PARA EL ALGORTIMO DEL LRU DE CACHE
 //*
 
+
+//Esta variable es la direccion que se va a mostrar en el creator en la pestaña de memory
+var instruction_address = 0x0;
+
+
 var cache_size = 1; //Este numero esta en KB, asi que en la funcion lo multiplicaremos por 1024 (2^10) y se dividira entre line_size
 var line_size = 64;
 
@@ -6832,8 +6837,12 @@ function execute_instruction ( )
     var instructionExecParts = instructionExec.split(' ');
 
     //Cache LRU
-    console.log("execIndex: " + execution_index + " address: " + instructions[execution_index].Address + " instExecParts: " + instructionExecParts);
-    LRU(instructions[execution_index].Address);
+
+    instruction_address = instructions[execution_index].Address;
+    app._data.instruction_address = instruction_address;
+
+    console.log("execIndex: " + execution_index + " address: " + instruction_address + " instExecParts: " + instructionExecParts);
+    LRU(instruction_address);
 
     
 

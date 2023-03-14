@@ -28,7 +28,9 @@
               memory_segment:     { type: String, required: true },
               track_stack_names:  { type: Array,  required: true }, // TODO: optional
               callee_subrutine:   { type: String, required: true }, // TODO: optional
-              caller_subrutine:   { type: String, required: true }  // TODO: optional
+              caller_subrutine:   { type: String, required: true },  // TODO: optional
+
+              instruction_address:{ type: String, required: true }
             },
 
   data:     function () {
@@ -68,6 +70,15 @@
             '         </b-form-group>' +
             '       </div >' +
             '     </b-col>' +
+
+            '     <b-col>'+
+            '       <div class="border m-1 py-1 px-2">'+
+            '         Last Instruction Address: {{instruction_address}}'+
+            '         Last Data Address: '+
+            '       </div >' +
+            '     </b-col>'+
+
+
             '' +
             '     <b-col></b-col>' +
             '   </b-row>' +
