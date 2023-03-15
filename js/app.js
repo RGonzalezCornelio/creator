@@ -326,6 +326,7 @@ try
       main_memory: {},
 
       instruction_address: instruction_address,
+      data_address: data_address,
 
 
 

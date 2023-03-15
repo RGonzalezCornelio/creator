@@ -87,7 +87,7 @@ var miss = 0;
 var L1 = array_length(cache_size, line_size);
 var contador_LRU = 0;
 
-function LRU(direccion) //212
+function LRU_instrucciones(direccion) //212
 {
   var tag = pasarDireccionA32Bits(direccion);
 
@@ -219,7 +219,7 @@ function execute_instruction ( )
     app._data.instruction_address = instruction_address;
 
     console.log("execIndex: " + execution_index + " address: " + instruction_address + " instExecParts: " + instructionExecParts);
-    LRU(instruction_address);
+    LRU_instrucciones(instruction_address);
 
     
 

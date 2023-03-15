@@ -30,7 +30,8 @@
               callee_subrutine:   { type: String, required: true }, // TODO: optional
               caller_subrutine:   { type: String, required: true },  // TODO: optional
 
-              instruction_address:{ type: String, required: true }
+              instruction_address:{ type: String, required: true },
+              data_address:       { type: String, required: true}
             },
 
   data:     function () {
@@ -74,7 +75,7 @@
             '     <b-col>'+
             '       <div class="border m-1 py-1 px-2">'+
             '         Last Instruction Address: {{instruction_address}}'+
-            '         Last Data Address: '+
+            '         Last Data Address: {{data_address}}'+
             '       </div >' +
             '     </b-col>'+
 
