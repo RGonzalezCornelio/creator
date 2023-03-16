@@ -73,10 +73,14 @@
             '     </b-col>' +
 
             '     <b-col>'+
-            '       <div class="border m-1 py-1 px-2">'+
-            '         Last Instruction Address: {{instruction_address}}'+
-            '         Last Data Address: {{data_address}}'+
-            '       </div >' +
+            '         <div class="border m-1 py-1 px-4">'+
+            '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">' +
+            '             Last Instruction Address: {{instruction_address}}'+
+            '           </b-row>'+
+            '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+            '             Last Data Address: 0x00{{data_address}}'+
+            '           </b-row>'+
+            '         </div >' +
             '     </b-col>'+
 
 
