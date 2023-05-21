@@ -29,95 +29,6 @@ var iter1 = 1;
 var execution_init = 1;
 
 
-/*Cache definition */
- 
-//* 
-//VAMOS A HACER LAS FUNCIONES PARA EL ALGORTIMO DEL LRU DE CACHE
-//*
-
-
-//Esta variable es la direccion que se va a mostrar en el creator en la pestaña de memory
-var instruction_address = 0x0;
-
-
-var cache_size = 1; //Este numero esta en KB, asi que en la funcion lo multiplicaremos por 1024 (2^10) y se dividira entre line_size
-var line_size = 64;
-
-var etiqueta = 0;
-var linea = 0;
-var offset = 0;
-
-//Esta funcion nos devuelve un array inicializado a -1
-function array_length(cache_size, line_size)
-{
-  cache_size = cache_size * 1024;
-  const array = new Array(cache_size/line_size).fill("-1");
-
-  return array;
-}
-
-function pasarDireccionA32Bits ( direc ) 
-{
-  const tamaño_offset = Math.log2(line_size);
-  const tamaño_linea = Math.log2((cache_size*1024)/line_size);
-  const tamaño_tag = 32 - tamaño_linea - tamaño_offset;
-
-  var dirA32Bits = parseInt(direc, 16).toString(2).padStart(32, '0');
-
-  //Para separar el String de 32 bits, lo paso a un array y voy cogiendo 1 a 1
-  var array_bits = dirA32Bits.split("");
-
-  var array_tag = array_bits.slice(0,tamaño_tag);
-  var array_line = array_bits.slice(tamaño_tag,(tamaño_linea + tamaño_tag));
-  var array_offset = array_bits.slice((tamaño_linea + tamaño_tag), array_bits.length);
-
-  etiqueta = array_tag.join('');
-  linea = array_line.join('');
-  offset = array_offset.join('');
-
-  return etiqueta;
-}
-
-const tamaño_offset = Math.log2(line_size);
-const tamaño_linea = Math.log2((cache_size*1024)/line_size);
-const tamaño_tag = 32 - tamaño_linea - tamaño_offset;
-
-var hit = 0;
-var miss = 0;
-var L1 = array_length(cache_size, line_size);
-var contador_LRU = 0;
-
-function LRU_instrucciones(direccion) //212
-{
-  var tag = pasarDireccionA32Bits(direccion);
-
-  if(contador_LRU == L1.length){
-    contador_LRU = 0;
-  }
-
-  if(L1[contador_LRU] == tag)
-  {
-    hit++;
-    contador_LRU++;
-  }else{
-    miss++;
-    L1[contador_LRU] = tag;
-    contador_LRU++;
-    
-  }
-  
-  console.log("Contador: " + contador_LRU);
-  console.log("EXECUTION INDEX: " + execution_index);
-  console.log("Hit: " + hit);
-  console.log("Miss: " +miss);
-  console.log("-----------------");
-    
-  
-  return L1;
-} 
-
-
-
 
 /*
  * Execution
@@ -218,8 +129,9 @@ function execute_instruction ( )
     instruction_address = instructions[execution_index].Address;
     app._data.instruction_address = instruction_address;
 
-    console.log("execIndex: " + execution_index + " address: " + instruction_address + " instExecParts: " + instructionExecParts);
-    LRU_instrucciones(instruction_address);
+    // console.log("execIndex: " + execution_index + " address: " + instruction_address + " instExecParts: " + instructionExecParts);
+    //DM_LRU_instrucciones(instruction_address);
+    FA_LRU_instrucciones(instruction_address);
 
     
 

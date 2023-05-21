@@ -30,6 +30,8 @@ cat js/creator_bigint.js \
     js/creator_memory.js \
     js/creator_compiler.js \
     js/creator_executor.js \
+    js/creator_cache_functions_instructions.js \
+    js/creator_cache_functions_data.js \
     \
     components/general/creator_uielto_loading.js \
     components/general/creator_uielto_supported_browser.js \
@@ -135,6 +137,8 @@ cat js/creator_bigint.js \
     js/creator_memory.js \
     js/creator_compiler.js \
     js/creator_executor.js \
+    js/creator_cache_functions_instructions.js \
+    js/creator_cache_functions_data.js \
     \
     js/creator_node.js > js/min.creator_node.js
 
