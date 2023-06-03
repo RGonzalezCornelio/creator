@@ -35,6 +35,9 @@
                 tag_size_address:   { type: Number, required: true },
                 line_size_address:  { type: Number, required: true },
                 offset_size_address:{ type: Number, required: true },
+                tag:                { type: String, required: true },
+                line:               { type: String, required: true },
+                offset:             { type: String, required: true },
                 
                 data_address:       { type: String, required: true}
               },
@@ -86,13 +89,13 @@
               '             ADDRESS 32 BITS: {{address_32_bits}}'+
               '           </b-row>'+
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
-              '             TAG SIZE: {{tag_size_address}} bits'+
+              '             TAG SIZE: {{tag_size_address}} bits ({{tag}})'+
               '           </b-row>'+
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
-              '             LINE SIZE: {{line_size_address}} bits'+
+              '             LINE SIZE: {{line_size_address}} bits ({{line}})'+
               '           </b-row>'+
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
-              '             OFFSET SIZE: {{offset_size_address}} bits'+
+              '             OFFSET SIZE: {{offset_size_address}} bits ({{offset}})'+
               '           </b-row>'+
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
               '             Last Data Address: 0x00{{data_address}}'+

@@ -6760,6 +6760,15 @@ function execute_instruction ( )
     instruction_address = instructions[execution_index].Address;
     address_32_bits = parseInt(instruction_address, 16).toString(2).padStart(32, '0');
 
+    array_32_bits = address_32_bits.split("");
+    tag_array = array_32_bits.slice(0, tag_size_address);
+    line_array = array_32_bits.slice(tag_size_address, (line_size_address + tag_size_address));
+    offset_array = array_32_bits.slice((line_size_address + tag_size_address), (array_32_bits.length));
+
+    tag = tag_array.join('');
+    line = line_array.join('');
+    offset = offset_array.join('');
+
     app._data.instruction_address = instruction_address;
     app._data.address_32_bits = address_32_bits;
 
@@ -6768,6 +6777,9 @@ function execute_instruction ( )
     app._data.line_size_address = line_size_address;
     app._data.tag_size_address = tag_size_address;
 
+    app._data.tag = tag;
+    app._data.line = line;
+    app._data.offset = offset;
 
 
     printAddress(instruction_address);
@@ -7720,11 +7732,19 @@ var cache_size = 1; //Este numero esta en KB, asi que en la funcion lo multiplic
 var line_size = 64;
 
 var address_32_bits = '00000000000000000000000000000000';
+
 var offset_size_address = Math.log2(line_size);
 var line_size_address = Math.log2((cache_size*1024)/line_size);
 var tag_size_address = 32 - line_size_address - offset_size_address;
 
+var array_32_bits = 0;
+var tag_array = 0;
+var line_array = 0;
+var offset_array = 0;
 
+var tag = 0;
+var line = 0;
+var offset = 0;
 
 
 var hit = 0;
@@ -7745,10 +7765,7 @@ function pasarDireccionA32Bits ( direc )
   tamaño_linea = Math.log2((cache_size*1024)/line_size);
   tamaño_tag = 32 - tamaño_linea - tamaño_offset;
 
-  
   dirA32Bits = parseInt(direc, 16).toString(2).padStart(32, '0');
-  
-
 
   //Para separar el String de 32 bits, lo paso a un array y voy cogiendo 1 a 1
   var array_bits = dirA32Bits.split("");

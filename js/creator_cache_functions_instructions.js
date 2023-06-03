@@ -32,7 +32,14 @@ var offset_size_address = Math.log2(line_size);
 var line_size_address = Math.log2((cache_size*1024)/line_size);
 var tag_size_address = 32 - line_size_address - offset_size_address;
 
+var array_32_bits = 0;
+var tag_array = 0;
+var line_array = 0;
+var offset_array = 0;
 
+var tag = 0;
+var line = 0;
+var offset = 0;
 
 
 var hit = 0;

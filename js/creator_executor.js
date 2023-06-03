@@ -129,6 +129,15 @@ function execute_instruction ( )
     instruction_address = instructions[execution_index].Address;
     address_32_bits = parseInt(instruction_address, 16).toString(2).padStart(32, '0');
 
+    array_32_bits = address_32_bits.split("");
+    tag_array = array_32_bits.slice(0, tag_size_address);
+    line_array = array_32_bits.slice(tag_size_address, (line_size_address + tag_size_address));
+    offset_array = array_32_bits.slice((line_size_address + tag_size_address), (array_32_bits.length));
+
+    tag = tag_array.join('');
+    line = line_array.join('');
+    offset = offset_array.join('');
+
     app._data.instruction_address = instruction_address;
     app._data.address_32_bits = address_32_bits;
 
@@ -137,6 +146,9 @@ function execute_instruction ( )
     app._data.line_size_address = line_size_address;
     app._data.tag_size_address = tag_size_address;
 
+    app._data.tag = tag;
+    app._data.line = line;
+    app._data.offset = offset;
 
 
     printAddress(instruction_address);
