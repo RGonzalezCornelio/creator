@@ -7144,6 +7144,12 @@ function reset ()
   hit = 0;
   contador_LRU = 0;
 
+  app._data.instruction_address = 0x0;
+  app._data.address_32_bits = '00000000000000000000000000000000'
+  app._data.tag = 0;
+  app._data.line = 0;
+  app._data.offset = 0;
+
 
   // Reset stats
   stats_reset();
