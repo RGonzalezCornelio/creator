@@ -127,7 +127,16 @@ function execute_instruction ( )
     //Cache LRU
 
     instruction_address = instructions[execution_index].Address;
+    address_32_bits = parseInt(instruction_address, 16).toString(2).padStart(32, '0');
+
     app._data.instruction_address = instruction_address;
+    app._data.address_32_bits = address_32_bits;
+
+
+    app._data.offset_size_address = offset_size_address;
+    app._data.line_size_address = line_size_address;
+    app._data.tag_size_address = tag_size_address;
+
 
 
     printAddress(instruction_address);

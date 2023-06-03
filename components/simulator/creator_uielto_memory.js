@@ -23,87 +23,103 @@
 
   var uielto_memory = {
 
-  props:    {
-              main_memory:        { type: Array,  required: true },
-              memory_segment:     { type: String, required: true },
-              track_stack_names:  { type: Array,  required: true }, // TODO: optional
-              callee_subrutine:   { type: String, required: true }, // TODO: optional
-              caller_subrutine:   { type: String, required: true },  // TODO: optional
-
-              instruction_address:{ type: String, required: true },
-              data_address:       { type: String, required: true}
-            },
-
-  data:     function () {
-              return {
-                //Memory view
-                mem_representation: "data_memory",
-                mem_representation_options: [
-                  { text: 'Data', value: 'data_memory' },
-                  { text: 'Text', value: 'instructions_memory' },
-                  { text: 'Stack', value: 'stack_memory'}
-   
-                ]
-              }
-            },
-
-  methods:  {
-                   
-            },
-
-  template: ' <b-container fluid align-h="center" class="mx-0 my-3 px-2">' +
-            '   <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">' +
-            '     <b-col align-h="center" class="px-2">' +
-            '       <div class="border m-1 py-1 px-2">' +
-            '         <b-badge variant="light" class="h6 groupLabelling border mx-2 my-0">Main memory segment</b-badge>' +
-            '         <b-form-group class="mb-2" v-slot="{ ariaDescribedby }" >' +
-            '           <b-form-radio-group' +
-            '             id="btn-radios-1"' +
-            '             class="w-100"' +
-            '             v-model="mem_representation"' +
-            '             :options="mem_representation_options"' +
-            '             button-variant="outline-secondary"' +
-            '             size="sm"' +
-            '             :aria-describedby="ariaDescribedby"' +
-            '             name="radios-btn-default"' +
-            '             buttons' +
-            '           ></b-form-radio-group>' +
-            '         </b-form-group>' +
-            '       </div >' +
-            '     </b-col>' +
-
-            '     <b-col>'+
-            '         <div class="border m-1 py-1 px-4">'+
-            '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">' +
-            '             Last Instruction Address: {{instruction_address}}'+
-            //'             OFFSET SIZE: {{offset_size_address}}'+
-            '           </b-row>'+
-            '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
-            '             Last Data Address: 0x00{{data_address}}'+
-            '           </b-row>'+
-            '         </div >' +
-            '     </b-col>'+
-
-
-            '' +
-            '     <b-col></b-col>' +
-            '   </b-row>' +
-            '' +
-            '   <b-row cols="1">' +
-            '     <b-col align-h="center" class="px-2">' +
-            '       <table-mem class="my-2"' +
-            '                  :main_memory="main_memory"' +
-            '                  :memory_segment="mem_representation"' +
-            '                  :track_stack_names="track_stack_names" ' +
-            '                  :callee_subrutine="callee_subrutine" ' +
-            '                  :caller_subrutine="caller_subrutine">' +
-
-            '       </table-mem>' +
-            '     </b-col>' +
-            '   </b-row>' +
-            '' +
-            ' </b-container>'
-  }
-
-  Vue.component('memory', uielto_memory) ;
-
+    props:    {
+                main_memory:        { type: Array,  required: true },
+                memory_segment:     { type: String, required: true },
+                track_stack_names:  { type: Array,  required: true }, // TODO: optional
+                callee_subrutine:   { type: String, required: true }, // TODO: optional
+                caller_subrutine:   { type: String, required: true },  // TODO: optional
+  
+                instruction_address:{ type: String, required: true },
+                address_32_bits:    { type: String, required: true },
+                tag_size_address:   { type: Number, required: true },
+                line_size_address:  { type: Number, required: true },
+                offset_size_address:{ type: Number, required: true },
+                
+                data_address:       { type: String, required: true}
+              },
+  
+    data:     function () {
+                return {
+                  //Memory view
+                  mem_representation: "data_memory",
+                  mem_representation_options: [
+                    { text: 'Data', value: 'data_memory' },
+                    { text: 'Text', value: 'instructions_memory' },
+                    { text: 'Stack', value: 'stack_memory'}
+     
+                  ]
+                }
+              },
+  
+    methods:  {
+                     
+              },
+  
+    template: ' <b-container fluid align-h="center" class="mx-0 my-3 px-2">' +
+              '   <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">' +
+              '     <b-col align-h="center" class="px-2">' +
+              '       <div class="border m-1 py-1 px-2">' +
+              '         <b-badge variant="light" class="h6 groupLabelling border mx-2 my-0">Main memory segment</b-badge>' +
+              '         <b-form-group class="mb-2" v-slot="{ ariaDescribedby }" >' +
+              '           <b-form-radio-group' +
+              '             id="btn-radios-1"' +
+              '             class="w-100"' +
+              '             v-model="mem_representation"' +
+              '             :options="mem_representation_options"' +
+              '             button-variant="outline-secondary"' +
+              '             size="sm"' +
+              '             :aria-describedby="ariaDescribedby"' +
+              '             name="radios-btn-default"' +
+              '             buttons' +
+              '           ></b-form-radio-group>' +
+              '         </b-form-group>' +
+              '       </div >' +
+              '     </b-col>' +
+  
+              '     <b-col>'+
+              '         <div class="border m-1 py-1 px-4">'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">' +
+              '             Last Instruction Address: {{instruction_address}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             ADDRESS 32 BITS: {{address_32_bits}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             TAG SIZE: {{tag_size_address}} bits'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             LINE SIZE: {{line_size_address}} bits'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             OFFSET SIZE: {{offset_size_address}} bits'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             Last Data Address: 0x00{{data_address}}'+
+              '           </b-row>'+
+              '         </div >' +
+              '     </b-col>'+
+  
+  
+              '' +
+              '     <b-col></b-col>' +
+              '   </b-row>' +
+              '' +
+              '   <b-row cols="1">' +
+              '     <b-col align-h="center" class="px-2">' +
+              '       <table-mem class="my-2"' +
+              '                  :main_memory="main_memory"' +
+              '                  :memory_segment="mem_representation"' +
+              '                  :track_stack_names="track_stack_names" ' +
+              '                  :callee_subrutine="callee_subrutine" ' +
+              '                  :caller_subrutine="caller_subrutine">' +
+  
+              '       </table-mem>' +
+              '     </b-col>' +
+              '   </b-row>' +
+              '' +
+              ' </b-container>'
+    }
+  
+    Vue.component('memory', uielto_memory) ;
+  

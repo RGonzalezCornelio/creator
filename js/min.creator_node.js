@@ -6758,7 +6758,16 @@ function execute_instruction ( )
     //Cache LRU
 
     instruction_address = instructions[execution_index].Address;
+    address_32_bits = parseInt(instruction_address, 16).toString(2).padStart(32, '0');
+
     app._data.instruction_address = instruction_address;
+    app._data.address_32_bits = address_32_bits;
+
+
+    app._data.offset_size_address = offset_size_address;
+    app._data.line_size_address = line_size_address;
+    app._data.tag_size_address = tag_size_address;
+
 
 
     printAddress(instruction_address);
@@ -7682,8 +7691,7 @@ function execute_binary ( index, instructionExecParts, auxDef )
   }
 
   return auxDef;
-}
-/*
+}/*
  *  Copyright 2018-2022 Felix Garcia Carballeira, Alejandro Calderon Mateos, Diego Camarmas Alonso
  *
  *  This file is part of CREATOR.
@@ -7708,9 +7716,14 @@ function execute_binary ( index, instructionExecParts, auxDef )
 var instruction_address = 0x0; //Esta variable es la direccion que se va a mostrar en el creator en la pestaña de memory
 
 
-
 var cache_size = 1; //Este numero esta en KB, asi que en la funcion lo multiplicaremos por 1024 (2^10) y se dividira entre line_size
 var line_size = 64;
+
+var address_32_bits = '00000000000000000000000000000000';
+var offset_size_address = Math.log2(line_size);
+var line_size_address = Math.log2((cache_size*1024)/line_size);
+var tag_size_address = 32 - line_size_address - offset_size_address;
+
 
 
 
@@ -7728,11 +7741,14 @@ function array_length(cache_size, line_size)
 
 function pasarDireccionA32Bits ( direc ) 
 {
-  var tamaño_offset = Math.log2(line_size);
-  var tamaño_linea = Math.log2((cache_size*1024)/line_size);
-  var tamaño_tag = 32 - tamaño_linea - tamaño_offset;
+  tamaño_offset = Math.log2(line_size);
+  tamaño_linea = Math.log2((cache_size*1024)/line_size);
+  tamaño_tag = 32 - tamaño_linea - tamaño_offset;
 
-  var dirA32Bits = parseInt(direc, 16).toString(2).padStart(32, '0');
+  
+  dirA32Bits = parseInt(direc, 16).toString(2).padStart(32, '0');
+  
+
 
   //Para separar el String de 32 bits, lo paso a un array y voy cogiendo 1 a 1
   var array_bits = dirA32Bits.split("");
@@ -7755,7 +7771,7 @@ function pasarDireccionA32Bits ( direc )
 function printAddress( direc )
 {
   var dirA32Bits = parseInt(direc, 16).toString(2).padStart(32, '0');
-  var address_32_bits = parseInt(dirA32Bits);
+  //var address_32_bits = parseInt(dirA32Bits);
 
   
 
@@ -7774,18 +7790,6 @@ function printAddress( direc )
   offset = array_offset.join('');
 
   //Vamos a pasar las variables a app._data para mostrarlas en el simulador
-  app._data.address_32_bits =  address_32_bits;
-
-  app._data.offset_size_address = tamaño_offset;
-  app._data.line_size_address = tamaño_linea;
-  app._data.tag_size_address = tamaño_tag;
-
-  app._data.tag = etiqueta;
-  app._data.line = linea
-  app._data.offset = offset;
-
-
-
 
 
   console.log("DIRECCION DE 32 BITS: " + dirA32Bits);
@@ -7915,7 +7919,6 @@ function FA_LRU_instrucciones(direccion)
 //Tiene que ser asociativa por vias, daremos las opciones de 2, 4 u 8 vias ya que los programas no seran tan grandes
 //En nuestro caso, comenzaremos por un array de instrucciones de 16 lineas, donde las agruparemos en conjuntos de 4
 //Es decir, 4 conjuntos de 4 vias
-
 /*
  *  Copyright 2018-2022 Felix Garcia Carballeira, Alejandro Calderon Mateos, Diego Camarmas Alonso
  *

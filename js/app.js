@@ -327,7 +327,10 @@ try
 
       instruction_address: instruction_address,
 
-      //offset_size_address: offset_size_address,
+      address_32_bits: address_32_bits,
+      tag_size_address:tag_size_address,
+      line_size_address:line_size_address,
+      offset_size_address: offset_size_address,
 
       data_address: data_address,
 
