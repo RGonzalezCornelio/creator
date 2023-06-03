@@ -129,6 +129,8 @@ function execute_instruction ( )
     instruction_address = instructions[execution_index].Address;
     app._data.instruction_address = instruction_address;
 
+
+    printAddress(instruction_address);
     // console.log("execIndex: " + execution_index + " address: " + instruction_address + " instExecParts: " + instructionExecParts);
     //DM_LRU_instrucciones(instruction_address);
     FA_LRU_instrucciones(instruction_address);

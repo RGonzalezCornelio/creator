@@ -23,12 +23,10 @@
 var instruction_address = 0x0; //Esta variable es la direccion que se va a mostrar en el creator en la pestaña de memory
 
 
+
 var cache_size = 1; //Este numero esta en KB, asi que en la funcion lo multiplicaremos por 1024 (2^10) y se dividira entre line_size
 var line_size = 64;
 
-var etiqueta = 0;
-var linea = 0;
-var offset = 0;
 
 
 var hit = 0;
@@ -45,9 +43,9 @@ function array_length(cache_size, line_size)
 
 function pasarDireccionA32Bits ( direc ) 
 {
-  const tamaño_offset = Math.log2(line_size);
-  const tamaño_linea = Math.log2((cache_size*1024)/line_size);
-  const tamaño_tag = 32 - tamaño_linea - tamaño_offset;
+  var tamaño_offset = Math.log2(line_size);
+  var tamaño_linea = Math.log2((cache_size*1024)/line_size);
+  var tamaño_tag = 32 - tamaño_linea - tamaño_offset;
 
   var dirA32Bits = parseInt(direc, 16).toString(2).padStart(32, '0');
 
@@ -62,9 +60,56 @@ function pasarDireccionA32Bits ( direc )
   linea = array_line.join('');
   offset = array_offset.join('');
 
+
   return etiqueta;
 }
 
+
+
+
+function printAddress( direc )
+{
+  var dirA32Bits = parseInt(direc, 16).toString(2).padStart(32, '0');
+  var address_32_bits = parseInt(dirA32Bits);
+
+  
+
+  const tamaño_offset = Math.log2(line_size);
+  const tamaño_linea = Math.log2((cache_size*1024)/line_size);
+  const tamaño_tag = 32 - tamaño_linea - tamaño_offset;
+
+  var array_bits = dirA32Bits.split("");
+
+  var array_tag = array_bits.slice(0,tamaño_tag);
+  var array_line = array_bits.slice(tamaño_tag,(tamaño_linea + tamaño_tag));
+  var array_offset = array_bits.slice((tamaño_linea + tamaño_tag), array_bits.length);
+
+  etiqueta = array_tag.join('');
+  linea = array_line.join('');
+  offset = array_offset.join('');
+
+  //Vamos a pasar las variables a app._data para mostrarlas en el simulador
+  app._data.address_32_bits =  address_32_bits;
+
+  app._data.offset_size_address = tamaño_offset;
+  app._data.line_size_address = tamaño_linea;
+  app._data.tag_size_address = tamaño_tag;
+
+  app._data.tag = etiqueta;
+  app._data.line = linea
+  app._data.offset = offset;
+
+
+
+
+
+  console.log("DIRECCION DE 32 BITS: " + dirA32Bits);
+  console.log("TAG: " + etiqueta);
+  console.log("LINEA: " + linea);
+  console.log("OFFSET: " + offset); 
+  console.log(" ");
+  
+}
 
 
 
@@ -95,6 +140,7 @@ function DM_LRU_instrucciones(direccion) //212
     DM_contador_LRU++;
     
   }
+  
   
   console.log("Contador: " + DM_contador_LRU);
   console.log("EXECUTION INDEX: " + execution_index);
@@ -148,7 +194,8 @@ function FA_LRU_instrucciones(direccion)
     }
     
     var fecha = new Date();
-    var tiempoUnix = Math.floor(fecha.getTime() / 1000);
+    //var tiempoUnix = Math.floor(fecha.getTime());
+    var tiempoUnix = fecha.getTime();
     L1_time[posicion] = tiempoUnix;
     FA_L1[posicion] = tag;
 
@@ -158,7 +205,8 @@ function FA_LRU_instrucciones(direccion)
     miss++;
     FA_L1[FA_contador_LRU] = tag;
     var fecha = new Date();
-    var tiempoUnix = Math.floor(fecha.getTime() / 1000);
+    //var tiempoUnix = Math.floor(fecha.getTime() / 1000);
+    var tiempoUnix = fecha.getTime();
     L1_time[FA_contador_LRU] = tiempoUnix;
     FA_contador_LRU++;
     
@@ -174,3 +222,12 @@ function FA_LRU_instrucciones(direccion)
   return FA_L1;
 
 }
+
+
+
+//--------------------------- FULLY SET ASSOCIATIVE --------------------------------------
+
+//Tiene que ser asociativa por vias, daremos las opciones de 2, 4 u 8 vias ya que los programas no seran tan grandes
+//En nuestro caso, comenzaremos por un array de instrucciones de 16 lineas, donde las agruparemos en conjuntos de 4
+//Es decir, 4 conjuntos de 4 vias
+
