@@ -89,14 +89,15 @@
               '             ADDRESS 32 BITS: {{address_32_bits}}'+
               '           </b-row>'+
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
-              '             TAG SIZE: {{tag_size_address}} bits ({{tag}})'+
+              '             TAG: {{tag_size_address}} bits  ({{tag}})'+
               '           </b-row>'+
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
-              '             LINE SIZE: {{line_size_address}} bits ({{line}})'+
+              '             LINE: {{line_size_address}} bits ({{line}})'+
               '           </b-row>'+
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
-              '             OFFSET SIZE: {{offset_size_address}} bits ({{offset}})'+
+              '             OFFSET: {{offset_size_address}} bits ({{offset}})'+
               '           </b-row>'+
+  
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
               '             Last Data Address: 0x00{{data_address}}'+
               '           </b-row>'+

@@ -2113,7 +2113,7 @@ function updateSimple ( comp, elem )
 var memory_read_counter = 0;
 var memory_write_counter = -1;
 
-var memory_access_counter = -1;
+var memory_access_counter = 0;
 
 
 var word_size_bits  = 32 ;
@@ -6754,6 +6754,7 @@ function execute_instruction ( )
 
     var instructionExec = instructions[execution_index].loaded;
     var instructionExecParts = instructionExec.split(' ');
+    
 
     //Cache LRU
 
@@ -6782,10 +6783,11 @@ function execute_instruction ( )
     app._data.offset = offset;
 
 
-    printAddress(instruction_address);
+    //printAddress(instruction_address);
     // console.log("execIndex: " + execution_index + " address: " + instruction_address + " instExecParts: " + instructionExecParts);
     //DM_LRU_instrucciones(instruction_address);
-    FA_LRU_instrucciones(instruction_address);
+    //FA_LRU_instrucciones(instruction_address);
+    FSA_LRU_instrucciones(instruction_address);
 
     
 
@@ -7752,6 +7754,8 @@ var tag = 0;
 var line = 0;
 var offset = 0;
 
+var setToDecimal = 0;
+
 
 var hit = 0;
 var miss = 0;
@@ -7822,7 +7826,6 @@ function printAddress( direc )
   console.log(" ");
   
 }
-
 
 
 //--------------------------- DIRECT MAPPED --------------------------------------
@@ -7939,9 +7942,92 @@ function FA_LRU_instrucciones(direccion)
 
 //--------------------------- FULLY SET ASSOCIATIVE --------------------------------------
 
-//Tiene que ser asociativa por vias, daremos las opciones de 2, 4 u 8 vias ya que los programas no seran tan grandes
-//En nuestro caso, comenzaremos por un array de instrucciones de 16 lineas, donde las agruparemos en conjuntos de 4
-//Es decir, 4 conjuntos de 4 vias
+// | TAG | SET (set size) | OFFSET (offset_size_address)|
+
+function FSA_pasarDireccionA32Bits ( direc ) 
+{
+  tamaño_offset = Math.log2(line_size);
+  tamaño_set = Math.log2(numero_conjuntos);
+  tamaño_tag = 32 - tamaño_set - tamaño_offset;
+
+  dirA32Bits = parseInt(direc, 16).toString(2).padStart(32, '0');
+
+  //Para separar el String de 32 bits, lo paso a un array y voy cogiendo 1 a 1
+  var array_bits = dirA32Bits.split("");
+
+  var array_tag = array_bits.slice(0,tamaño_tag);
+  var array_set = array_bits.slice(tamaño_tag,(tamaño_set + tamaño_tag));
+  var array_offset = array_bits.slice((tamaño_set + tamaño_tag), array_bits.length);
+
+  etiqueta = array_tag.join('');
+  set = array_set.join('');
+  offset = array_offset.join('');
+
+
+  return etiqueta;
+}
+
+
+
+//Ponemos el numero de conjuntos (esto sera un parametro que introducira el alumno)
+var numero_conjuntos = 4;
+var set_size = Math.log2(numero_conjuntos);
+
+//Ahora sustituiremos el array que sacabamos de la funcion array_length y usaremos tantos arrays como necesitemos para la configuracion
+//Habra que hace un array de arrays 
+
+var FSA_L1 = []
+
+//Creamos los arrays para introducirlos en el array y crear asi un array de arrays
+
+cache_size = cache_size * 1024;
+var FSA_Length = cache_size/line_size;
+
+var array_set_size = FSA_Length / numero_conjuntos; 
+
+for(var i = 0; i < array_set_size; i++){
+  var array = [];
+  for(var j = 0; j < numero_conjuntos; j++){
+    array.push("-1");
+  }
+  FSA_L1.push(array);
+}
+
+//Para llevar la cuenta, usare un array de contadores, tendra tantas posiciones como "subarrays" se hayan creado
+var FSA_counter_array = new Array(array_set_size).fill(0);
+var FSA_contador = 0;
+
+//Aqui empieza el algoritmo
+function FSA_LRU_instrucciones(direccion){
+  var tag = FSA_pasarDireccionA32Bits(direccion);
+
+  //Gracias a set sabemos a que conjunto va la instruccion
+  setToDecimal = parseInt(set, 2);
+ 
+  if(FSA_counter_array[setToDecimal] == FSA_L1[setToDecimal].length){
+    FSA_counter_array[setToDecimal] = 0;
+    FSA_contador = 0;
+  }
+
+  if(FSA_L1[setToDecimal][FSA_contador] == tag){
+    hit++;
+    FSA_counter_array[setToDecimal]+= 1;
+    FSA_contador ++;
+  }else{
+    miss++;
+    FSA_L1[setToDecimal][FSA_contador] = tag;
+    FSA_counter_array[setToDecimal]+=1;
+    FSA_contador ++;
+  }
+    
+  
+  console.log("Hit: " + hit);
+  console.log("Miss: " +miss);
+  console.log("-----------------");
+    
+  
+  return FSA_L1;
+}
 /*
  *  Copyright 2018-2022 Felix Garcia Carballeira, Alejandro Calderon Mateos, Diego Camarmas Alonso
  *
@@ -8012,9 +8098,9 @@ function pasarDireccionA32Bits ( numero )
 }
 
 var hit_data = 0;
-var miss_data = 0;
+var miss_data = -1;
 var L1_data = array_length_datos(cache_size_data, line_size_data);
-var contador_LRU_data = 0;
+var contador_LRU_data = -1;
 
 function LRU_datos(direccion){
 

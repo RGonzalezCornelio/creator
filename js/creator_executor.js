@@ -123,6 +123,7 @@ function execute_instruction ( )
 
     var instructionExec = instructions[execution_index].loaded;
     var instructionExecParts = instructionExec.split(' ');
+    
 
     //Cache LRU
 
@@ -151,10 +152,11 @@ function execute_instruction ( )
     app._data.offset = offset;
 
 
-    printAddress(instruction_address);
+    //printAddress(instruction_address);
     // console.log("execIndex: " + execution_index + " address: " + instruction_address + " instExecParts: " + instructionExecParts);
     //DM_LRU_instrucciones(instruction_address);
-    FA_LRU_instrucciones(instruction_address);
+    //FA_LRU_instrucciones(instruction_address);
+    FSA_LRU_instrucciones(instruction_address);
 
     
 

@@ -26,7 +26,7 @@
 var memory_read_counter = 0;
 var memory_write_counter = -1;
 
-var memory_access_counter = -1;
+var memory_access_counter = 0;
 
 
 var word_size_bits  = 32 ;
