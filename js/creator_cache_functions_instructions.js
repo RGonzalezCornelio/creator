@@ -284,6 +284,17 @@ for(var i = 0; i < array_set_size; i++){
 var FSA_counter_array = new Array(array_set_size).fill(0);
 var FSA_contador = 0;
 
+//Como estamos usando aqui LRU, haremos otra estructura de datos igual a la del FSA pero para guardar el tiempo UNIX y
+//ver cual es la instruccion que lleva mas tiempo en el array
+var FSA_L1_time = []
+for(var i = 0; i < array_set_size; i++){
+  var array_time = [];
+  for(var j = 0; j < numero_conjuntos; j++){
+    array_time.push(0);
+  }
+  FSA_L1_time.push(array_time);
+}
+
 //Aqui empieza el algoritmo
 function FSA_LRU_instrucciones(direccion){
   var tag = FSA_pasarDireccionA32Bits(direccion);
@@ -295,8 +306,27 @@ function FSA_LRU_instrucciones(direccion){
     FSA_counter_array[setToDecimal] = 0;
     FSA_contador = 0;
   }
+  var minimo = 0;
+  var posicion = 0;
 
   if(FSA_L1[setToDecimal][FSA_contador] == tag){
+
+    //Buscamos en el array_time el tiempo unix mas bajo 
+    minimo = FSA_L1_time[setToDecimal][0];
+    posicion = 0;
+    for(var i = 0; i < FSA_L1_time[setToDecimal].length; i++){
+      if(FSA_L1_time[setToDecimal][i] < minimo){
+        minimo = FSA_L1_time[setToDecimal][i];
+        posicion = i;
+      }
+    }
+
+    var fecha = new Date();
+    var tiempoUnix = Math.floor(fecha.getTime());
+    FSA_L1_time[setToDecimal][posicion] = tiempoUnix;
+    FSA_L1[setToDecimal][posicion] = tag;
+
+
     hit++;
     FSA_counter_array[setToDecimal]+= 1;
     FSA_contador ++;
@@ -310,6 +340,10 @@ function FSA_LRU_instrucciones(direccion){
   
   console.log("Hit: " + hit);
   console.log("Miss: " +miss);
+  console.log("Posicion: " + posicion);
+  console.log("TiempoUnix: " + tiempoUnix);
+  console.log("Minimo: " + minimo); 
+
   console.log("-----------------");
     
   
