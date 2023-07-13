@@ -7769,7 +7769,14 @@ function array_length(cache_size, line_size)
   return array;
 }
 
-function pasarDireccionA32Bits ( direc ) 
+
+//--------------------------- DIRECT MAPPED --------------------------------------
+
+// const tamaño_offset = Math.log2(line_size);
+// const tamaño_linea = Math.log2((cache_size*1024)/line_size);
+// const tamaño_tag = 32 - tamaño_linea - tamaño_offset;
+
+function DM_pasarDireccionA32Bits ( direc ) 
 {
   tamaño_offset = Math.log2(line_size);
   tamaño_linea = Math.log2((cache_size*1024)/line_size);
@@ -7792,54 +7799,12 @@ function pasarDireccionA32Bits ( direc )
   return etiqueta;
 }
 
-
-
-
-function printAddress( direc )
-{
-  var dirA32Bits = parseInt(direc, 16).toString(2).padStart(32, '0');
-  //var address_32_bits = parseInt(dirA32Bits);
-
-  
-
-  const tamaño_offset = Math.log2(line_size);
-  const tamaño_linea = Math.log2((cache_size*1024)/line_size);
-  const tamaño_tag = 32 - tamaño_linea - tamaño_offset;
-
-  var array_bits = dirA32Bits.split("");
-
-  var array_tag = array_bits.slice(0,tamaño_tag);
-  var array_line = array_bits.slice(tamaño_tag,(tamaño_linea + tamaño_tag));
-  var array_offset = array_bits.slice((tamaño_linea + tamaño_tag), array_bits.length);
-
-  etiqueta = array_tag.join('');
-  linea = array_line.join('');
-  offset = array_offset.join('');
-
-  //Vamos a pasar las variables a app._data para mostrarlas en el simulador
-
-
-  console.log("DIRECCION DE 32 BITS: " + dirA32Bits);
-  console.log("TAG: " + etiqueta);
-  console.log("LINEA: " + linea);
-  console.log("OFFSET: " + offset); 
-  console.log(" ");
-  
-}
-
-
-//--------------------------- DIRECT MAPPED --------------------------------------
-
-// const tamaño_offset = Math.log2(line_size);
-// const tamaño_linea = Math.log2((cache_size*1024)/line_size);
-// const tamaño_tag = 32 - tamaño_linea - tamaño_offset;
-
 var DM_L1 = array_length(cache_size, line_size);
 var DM_contador_LRU = 0;
 
 function DM_LRU_instrucciones(direccion) //212
 {
-  var tag = pasarDireccionA32Bits(direccion);
+  var tag = DM_pasarDireccionA32Bits(direccion);
 
   if(DM_contador_LRU == DM_L1.length){
     DM_contador_LRU = 0;
@@ -7873,6 +7838,28 @@ function DM_LRU_instrucciones(direccion) //212
 
 //Para este tipo de direciconamiento necesitamos introducir el tiempo en el que fue introducido la direccion
 //Para ello, ademas del array, habrá otro en el que llevemos el tiempo. 
+function FA_pasarDireccionA32Bits ( direc ) 
+{
+  tamaño_offset = Math.log2(line_size);
+  tamaño_linea = Math.log2((cache_size*1024)/line_size);
+  tamaño_tag = 32 - tamaño_linea - tamaño_offset;
+
+  dirA32Bits = parseInt(direc, 16).toString(2).padStart(32, '0');
+
+  //Para separar el String de 32 bits, lo paso a un array y voy cogiendo 1 a 1
+  var array_bits = dirA32Bits.split("");
+
+  var array_tag = array_bits.slice(0,tamaño_tag);
+  var array_line = array_bits.slice(tamaño_tag,(tamaño_linea + tamaño_tag));
+  var array_offset = array_bits.slice((tamaño_linea + tamaño_tag), array_bits.length);
+
+  etiqueta = array_tag.join('');
+  linea = array_line.join('');
+  offset = array_offset.join('');
+
+
+  return etiqueta;
+}
 
 function array_length_time(cache_size, line_size)
 {
@@ -7890,7 +7877,7 @@ var FA_contador_LRU = 0;
 
 function FA_LRU_instrucciones(direccion)
 {
-  var tag = pasarDireccionA32Bits(direccion);
+  var tag = FA_pasarDireccionA32Bits(direccion);
 
   if(FA_contador_LRU == FA_L1.length){
     FA_contador_LRU = 0;
@@ -7929,6 +7916,7 @@ function FA_LRU_instrucciones(direccion)
   
   console.log("Contador: " + FA_contador_LRU);
   console.log("EXECUTION INDEX: " + execution_index);
+  console.log("Posicion :" + posicion);
   console.log("Hit: " + hit);
   console.log("Miss: " +miss);
   console.log("-----------------");
@@ -7997,6 +7985,17 @@ for(var i = 0; i < array_set_size; i++){
 var FSA_counter_array = new Array(array_set_size).fill(0);
 var FSA_contador = 0;
 
+//Para llevar la cuenta de los miss y los hits, hay que crear una estructura de tantas posiciones como subarrays hay, y dentro un array de 2 posiciones
+//indicando los hit y los miss. Los hit seran la posicion 0 y los miss la posicion 1
+var FSA_arrayHM = [];
+for(var k = 0; k < array_set_size; k++){
+  var arrayHM_posiciones = [];
+  for(var m = 0; m < 2; m++){
+    arrayHM_posiciones.push(0);
+  }
+  FSA_arrayHM.push(arrayHM_posiciones);
+}
+
 //Como estamos usando aqui LRU, haremos otra estructura de datos igual a la del FSA pero para guardar el tiempo UNIX y
 //ver cual es la instruccion que lleva mas tiempo en el array
 var FSA_L1_time = []
@@ -8017,16 +8016,16 @@ function FSA_LRU_instrucciones(direccion){
  
   if(FSA_counter_array[setToDecimal] == FSA_L1[setToDecimal].length){
     FSA_counter_array[setToDecimal] = 0;
-    FSA_contador = 0;
+    //FSA_contador = 0;
   }
-  var minimo = 0;
-  var posicion = 0;
+  console.log("SET TO DECIMAL: " + setToDecimal);
+  console.log("SET : " + set);
 
-  if(FSA_L1[setToDecimal][FSA_contador] == tag){
+  if(FSA_L1[setToDecimal][FSA_counter_array[setToDecimal]] == tag){
 
     //Buscamos en el array_time el tiempo unix mas bajo 
-    minimo = FSA_L1_time[setToDecimal][0];
-    posicion = 0;
+    var minimo = FSA_L1_time[setToDecimal][0];
+    var posicion = 0;
     for(var i = 0; i < FSA_L1_time[setToDecimal].length; i++){
       if(FSA_L1_time[setToDecimal][i] < minimo){
         minimo = FSA_L1_time[setToDecimal][i];
@@ -8040,28 +8039,69 @@ function FSA_LRU_instrucciones(direccion){
     FSA_L1[setToDecimal][posicion] = tag;
 
 
-    hit++;
-    FSA_counter_array[setToDecimal]+= 1;
-    FSA_contador ++;
+
+    //hit++;
+    FSA_counter_array[setToDecimal]++;
+    //hit = FSA_counter_array[setToDecimal];
+    //FSA_contador ++;
+    FSA_arrayHM[setToDecimal][0]++;
+    
   }else{
-    miss++;
-    FSA_L1[setToDecimal][FSA_contador] = tag;
-    FSA_counter_array[setToDecimal]+=1;
-    FSA_contador ++;
+    //miss++;
+    FSA_L1[setToDecimal][FSA_counter_array[setToDecimal]] = tag;
+    FSA_counter_array[setToDecimal]++;
+
+    FSA_arrayHM[setToDecimal][1]++;
+    //miss = FSA_counter_array[setToDecimal];
+    //FSA_contador ++;
   }
     
   
-  console.log("Hit: " + hit);
-  console.log("Miss: " +miss);
+  console.log("Hit: " + FSA_arrayHM[setToDecimal][0]);
+  console.log("Miss: " +FSA_arrayHM[setToDecimal][1]);
   console.log("Posicion: " + posicion);
   console.log("TiempoUnix: " + tiempoUnix);
   console.log("Minimo: " + minimo); 
+  
 
   console.log("-----------------");
     
   
   return FSA_L1;
 }
+
+
+/*function printAddress( direc )
+{
+  var dirA32Bits = parseInt(direc, 16).toString(2).padStart(32, '0');
+  //var address_32_bits = parseInt(dirA32Bits);
+
+  
+
+  const tamaño_offset = Math.log2(line_size);
+  const tamaño_linea = Math.log2((cache_size*1024)/line_size);
+  const tamaño_tag = 32 - tamaño_linea - tamaño_offset;
+
+  var array_bits = dirA32Bits.split("");
+
+  var array_tag = array_bits.slice(0,tamaño_tag);
+  var array_line = array_bits.slice(tamaño_tag,(tamaño_linea + tamaño_tag));
+  var array_offset = array_bits.slice((tamaño_linea + tamaño_tag), array_bits.length);
+
+  etiqueta = array_tag.join('');
+  linea = array_line.join('');
+  offset = array_offset.join('');
+
+  //Vamos a pasar las variables a app._data para mostrarlas en el simulador
+
+
+  console.log("DIRECCION DE 32 BITS: " + dirA32Bits);
+  console.log("TAG: " + etiqueta);
+  console.log("LINEA: " + linea);
+  console.log("OFFSET: " + offset); 
+  console.log(" ");
+  
+}*/
 /*
  *  Copyright 2018-2022 Felix Garcia Carballeira, Alejandro Calderon Mateos, Diego Camarmas Alonso
  *
