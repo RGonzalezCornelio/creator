@@ -467,15 +467,21 @@
                       <!-- Cache Definition -->
                       <b-tab title="Cache Definition">
                         
-                        <cache-definition  :cache_definition="architecture.cache_definition"
+                       <cache-definition  :cache_definition="architecture.cache_definition"
                                            :number_cache_levels="number_cache_levels">
+                                           
 
                         </cache-definition>
 
                         <cache-definition-one id="cache_definition_one_level"
+                                              :cache_definition_L1="architecture.cache_definition_L1"
                                               :architecture_name="architecture_name">
                         </cache-definition-one>
 
+
+
+
+                        
                         <cache-definition-two id="cache_definition_two_level"
                                               :architecture_name="architecture_name">
                         </cache-definition-two>

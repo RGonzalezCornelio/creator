@@ -25,7 +25,8 @@
   var uielto_cache_definition_one_level = {
 
     props:      {
-                  id:   {type: String, required: true}
+                  id:   {type: String, required: true},
+                  cache_definition_L1: {type: Array, required: true}
                 },
 
     data:       function () {
@@ -34,13 +35,13 @@
                     cache_type: "unified",
                     cache_policy: "direct_mapped",
 
-                    instruction_cache: '',
-                    data_cache: '',
-                    unified_cache_size: '',
-                    cache_line: '',
-                    lines_set_instruction_cache: '',
-                    lines_set_data_cache: '',
-                    unified_lines_set: '',
+                    unified_cache_size: architecture.cache_definition_L1[0].value,
+                    unified_lines_set: architecture.cache_definition_L1[1].value,
+                    instruction_cache: architecture.cache_definition_L1[2].value,
+                    data_cache: architecture.cache_definition_L1[3].value,
+                    lines_set_instruction_cache: architecture.cache_definition_L1[4].value,
+                    lines_set_data_cache: architecture.cache_definition_L1[5].value,
+                    cache_line: architecture.cache_definition_L1[6].value,
                     
                     //Modal directives
                     show_modal: false,
@@ -93,7 +94,7 @@
                         
 
                     },
-                    //Clean cache definition
+                    //Clean cache definition, lo he quitado de @hidden y se me mantienen los datos
                     clean_form()
                     {
                     this.instruction_cache = '';
@@ -113,7 +114,7 @@
             '                ok-title="Save"'+
             '                @ok="verify_cache_definition($event)"'+
             '                v-model="show_modal"'+
-            '                @hidden="clean_form">'+
+            '                @hidden="">'+
 
                 '         <span class="h6">Level 1</span>'+
                 '         <b-form-radio-group v-model="cache_type" id="radio_group_tipo_cache">'+

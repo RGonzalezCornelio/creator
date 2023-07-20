@@ -739,7 +739,9 @@ function writeMemory ( value, addr, type )
 
         data_address = pasarDireccionAHexadecimal(addr);
         app._data.data_address = data_address;
-        LRU_datos(addr);
+        //DM_LRU_datos(addr);
+        //FA_LRU_Datos(addr);
+        FSA_LRU_datos(addr);
 
         //Counter access
         memory_write_counter++;
@@ -761,7 +763,9 @@ function readMemory ( addr, type )
         data_address = pasarDireccionAHexadecimal(addr);
         app._data.data_address = data_address;
 
-        LRU_datos(addr);
+        //DM_LRU_datos(addr);
+        //FA_LRU_Datos(addr);
+        FSA_LRU_datos(addr);
 
 
         app._data.memory_read_counter++;
