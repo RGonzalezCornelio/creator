@@ -21,11 +21,28 @@
 //Algoritmo LRU datos
 
 var cache_size_data = 1; //Este numero esta en KB, asi que en la funcion lo multiplicaremos por 1024 (2^10) y se dividira entre line_size
-var line_size_data = 64;
+var line_size_data = 32;
 
-var etiqueta_data = 0;
+/*var etiqueta_data = 0;
 var linea_data = 0;
+var offset_data = 0;*/
+
+
+var address_32_bits_data = '00000000000000000000000000000000';
+
+var offset_size_address_data = Math.log2(line_size_data);
+var line_size_address_data = Math.log2((cache_size_data*1024)/line_size_data);
+var tag_size_address_data = 32 - line_size_address_data - offset_size_address_data;
+
+var array_32_bits_data = 0;
+var tag_array_data = 0;
+var line_array_data = 0;
+var offset_array_data = 0;
+
+var tag_data = 0;
+var line_data = 0;
 var offset_data = 0;
+
 
 //Esta funcion nos devuelve un array inicializado a -1
 function array_length_datos(cache_size_data, line_size_data)

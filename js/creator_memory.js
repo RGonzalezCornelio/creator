@@ -739,6 +739,36 @@ function writeMemory ( value, addr, type )
 
         data_address = pasarDireccionAHexadecimal(addr);
         app._data.data_address = data_address;
+
+        address_32_bits_data = addr.toString(2).padStart(32, '0');
+
+        array_32_bits_data = address_32_bits_data.split("");
+        tag_array_data = array_32_bits_data.slice(0, tag_size_address_data);
+        line_array_data = array_32_bits_data.slice(tag_size_address_data, (line_size_address_data + tag_size_address_data));
+        offset_array_data = array_32_bits_data.slice((line_size_address_data + tag_size_address_data), (array_32_bits_data.length));
+    
+        tag_data = tag_array_data.join('');
+        line_data = line_array_data.join('');
+        offset_data = offset_array_data.join('');
+    
+        
+        app._data.address_32_bits_data = address_32_bits_data;
+    
+    
+        app._data.offset_size_address_data = offset_size_address_data;
+        app._data.line_size_address_data = line_size_address_data;
+        app._data.tag_size_address_data = tag_size_address_data;
+    
+        app._data.tag_data = tag_data;
+        app._data.line_data = line_data;
+        app._data.offset_data = offset_data;
+
+
+
+
+
+
+
         //DM_LRU_datos(addr);
         //FA_LRU_Datos(addr);
         FSA_LRU_datos(addr);
@@ -762,6 +792,36 @@ function readMemory ( addr, type )
         console.log("Read -->  addr: " + addr + " type: " + type + " ret: " + ret);
         data_address = pasarDireccionAHexadecimal(addr);
         app._data.data_address = data_address;
+
+        //Pasar esa direccion de numero a binario
+
+        address_32_bits_data = addr.toString(2).padStart(32, '0');
+        console.log("addr: " + addr + "data_addres: " + data_address + "address_32_bit: " + address_32_bits_data);
+
+        array_32_bits_data = address_32_bits_data.split("");
+        tag_array_data = array_32_bits_data.slice(0, tag_size_address_data);
+        line_array_data = array_32_bits_data.slice(tag_size_address_data, (line_size_address_data + tag_size_address_data));
+        offset_array_data = array_32_bits_data.slice((line_size_address_data + tag_size_address_data), (array_32_bits_data.length));
+    
+        tag_data = tag_array_data.join('');
+        line_data = line_array_data.join('');
+        offset_data = offset_array_data.join('');
+    
+        
+        app._data.address_32_bits_data = address_32_bits_data;
+    
+    
+        app._data.offset_size_address_data = offset_size_address_data;
+        app._data.line_size_address_data = line_size_address_data;
+        app._data.tag_size_address_data = tag_size_address_data;
+    
+        app._data.tag_data = tag_data;
+        app._data.line_data = line_data;
+        app._data.offset_data = offset_data;
+
+
+
+
 
         //DM_LRU_datos(addr);
         //FA_LRU_Datos(addr);

@@ -337,7 +337,17 @@ try
       line: line,
       offset: offset,
 
+
       data_address: data_address,
+      address_32_bits_data: address_32_bits_data,
+
+      tag_size_address_data:tag_size_address_data,
+      line_size_address_data:line_size_address_data,
+      offset_size_address_data: offset_size_address_data,
+
+      tag_data: tag_data,
+      line_data: line_data,
+      offset_data: offset_data,
 
 
 
