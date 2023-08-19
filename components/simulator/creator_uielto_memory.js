@@ -46,7 +46,13 @@
                 offset_size_address_data:{ type: Number, required: true },
                 tag_data:                { type: String, required: true },
                 line_data:               { type: String, required: true },
-                offset_data:             { type: String, required: true }
+                offset_data:             { type: String, required: true },
+
+                hit:                     { type: Number, required: true },
+                miss:                    { type: Number, required: true },
+
+                hit_data:                { type: Number, required: true },
+                miss_data:               { type: Number, required: true }
 
               },
   
@@ -88,6 +94,9 @@
               '       </div >' +
               '     </b-col>' +
   
+
+              
+
               '     <b-col>'+
               '         <div class="border m-1 py-1 px-4">'+
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">' +
@@ -105,7 +114,15 @@
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
               '             OFFSET: {{offset_size_address}} bits ({{offset}})'+
               '           </b-row>'+
-  
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             Hit: {{hit}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             Miss: {{miss}}'+
+              '           </b-row>'+
+              '          </div>'+
+
+              '         <div class="border m-1 py-1 px-4">'+
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
               '             Last Data Address: 0x0{{data_address}}'+
               '           </b-row>'+
@@ -121,8 +138,15 @@
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
               '             OFFSET: {{offset_size_address_data}} bits ({{offset_data}})'+
               '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             Hit Data: {{hit_data}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             Miss Data: {{miss_data}}'+
+              '           </b-row>'+
               '         </div >' +
               '     </b-col>'+
+
   
   
               '' +

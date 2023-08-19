@@ -2115,6 +2115,39 @@ var memory_write_counter = -1;
 
 var memory_access_counter = 0;
 
+var hit_ratio = 0;
+
+function address_hit_ratio (hit, miss){
+
+        var hit_rt = 0;
+
+        if((hit + miss) == 0){
+                hit_rt = 0;
+        }else{
+                hit_rt = (hit / (hit + miss)) * 100;
+                hit_rt = hit_rt.toFixed(2);
+        }
+        
+
+        return hit_rt;
+}
+
+var hit_ratio_data = 0;
+function address_hit_ratio_data (hit_data, miss_data){
+
+        var hit_rt_data = 0;
+
+        if((hit_data + miss_data) == 0){
+                hit_rt_data = 0;
+        }else{
+                hit_rt_data = (hit_data / (hit_data + miss_data)) * 100;
+                hit_rt_data = hit_rt_data.toFixed(2);
+        }
+        
+
+        return hit_rt_data;
+}
+
 
 var word_size_bits  = 32 ;
     // TODO: load from architecture
@@ -2857,8 +2890,8 @@ function writeMemory ( value, addr, type )
 
 
         //DM_LRU_datos(addr);
-        //FA_LRU_Datos(addr);
-        FSA_LRU_datos(addr);
+        FA_LRU_Datos(addr);
+        //FSA_LRU_datos(addr);
 
         //Counter access
         memory_write_counter++;
@@ -2911,8 +2944,8 @@ function readMemory ( addr, type )
 
 
         //DM_LRU_datos(addr);
-        //FA_LRU_Datos(addr);
-        FSA_LRU_datos(addr);
+        FA_LRU_Datos(addr);
+        //FSA_LRU_datos(addr);
 
 
         app._data.memory_read_counter++;
@@ -6725,6 +6758,8 @@ var execution_init = 1;
 
 
 
+
+
 /*
  * Execution
  */
@@ -6846,12 +6881,14 @@ function execute_instruction ( )
     app._data.line = line;
     app._data.offset = offset;
 
+    
+
 
     //printAddress(instruction_address);
     // console.log("execIndex: " + execution_index + " address: " + instruction_address + " instExecParts: " + instructionExecParts);
     //DM_LRU_instrucciones(instruction_address);
-    //FA_LRU_instrucciones(instruction_address);
-    FSA_LRU_instrucciones(instruction_address);
+    FA_LRU_instrucciones(instruction_address);
+    //FSA_LRU_instrucciones(instruction_address);
 
     
 
@@ -7206,15 +7243,24 @@ function reset ()
 
 
   //CACHE DEFINTION
-  miss = 0;
-  hit = 0;
-  contador_LRU = 0;
+  
 
   app._data.instruction_address = 0x0;
   app._data.address_32_bits = '00000000000000000000000000000000'
   app._data.tag = 0;
   app._data.line = 0;
   app._data.offset = 0;
+
+
+  //RESET CACHE POLICIES
+
+  //----- Direct Mapped ------
+  //DM = array_length (cache_size, line_size);
+  //DM_contador_LRU = 0;
+  //execution_index = 0;
+
+
+
 
 
   // Reset stats
@@ -7824,11 +7870,15 @@ var setToDecimal = 0;
 var hit = 0;
 var miss = 0;
 
+
+
+
+
 //Esta funcion nos devuelve un array inicializado a -1
 function array_length(cache_size, line_size)
 {
   cache_size = cache_size * 1024;
-  const array = new Array(cache_size/line_size).fill("-1");
+  var array = new Array(cache_size/line_size).fill("-1");
 
   return array;
 }
@@ -7863,7 +7913,12 @@ function DM_pasarDireccionA32Bits ( direc )
   return etiqueta;
 }
 
+//var DM_L1 = array_length(cache_size, line_size);
+//var DM_L1 = new Array(16).fill("-1");
+
 var DM_L1 = array_length(cache_size, line_size);
+
+
 var DM_contador_LRU = 0;
 
 function DM_LRU_instrucciones(direccion) //212
@@ -7884,12 +7939,17 @@ function DM_LRU_instrucciones(direccion) //212
     DM_contador_LRU++;
     
   }
-  
-  
+
+  hit_ratio = address_hit_ratio(hit, miss);
+  app._data.hit = hit;
+  app._data.miss = miss;
+  app._data.hit_ratio = hit_ratio;
+
   console.log("Contador: " + DM_contador_LRU);
   console.log("EXECUTION INDEX: " + execution_index);
   console.log("Hit: " + hit);
   console.log("Miss: " +miss);
+  console.log("Hit Ratio: " + hit_ratio);
   console.log("-----------------");
     
   
@@ -7977,12 +8037,18 @@ function FA_LRU_instrucciones(direccion)
     FA_contador_LRU++;
     
   }
+
+  hit_ratio = address_hit_ratio(hit, miss);
+  app._data.hit = hit;
+  app._data.miss = miss;
+  app._data.hit_ratio = hit_ratio;
   
   console.log("Contador: " + FA_contador_LRU);
   console.log("EXECUTION INDEX: " + execution_index);
   console.log("Posicion :" + posicion);
   console.log("Hit: " + hit);
   console.log("Miss: " +miss);
+  console.log("Hit Ratio: " + hit_ratio);
   console.log("-----------------");
     
   
@@ -8037,6 +8103,8 @@ var FSA_Length = cache_size/line_size;
 
 var array_set_size = FSA_Length / numero_conjuntos; 
 
+
+
 for(var i = 0; i < array_set_size; i++){
   var array = [];
   for(var j = 0; j < numero_conjuntos; j++){
@@ -8044,6 +8112,8 @@ for(var i = 0; i < array_set_size; i++){
   }
   FSA_L1.push(array);
 }
+
+
 
 //Para llevar la cuenta, usare un array de contadores, tendra tantas posiciones como "subarrays" se hayan creado
 var FSA_counter_array = new Array(array_set_size).fill(0);
@@ -8133,6 +8203,9 @@ function FSA_LRU_instrucciones(direccion){
   
   return FSA_L1;
 }
+
+
+
 
 
 /*function printAddress( direc )
@@ -8281,11 +8354,17 @@ function DM_LRU_datos(direccion){
     contador_LRU_data++;
     
   }
+
+  hit_ratio_data = address_hit_ratio_data(hit_data, miss_data);
+  app._data.hit_data = hit_data;
+  app._data.miss_data = miss_data;
+  app._data.hit_ratio_data = hit_ratio_data;
       
   console.log("Contador DATA: " + contador_LRU_data);
   console.log("EXECUTION INDEX: " + execution_index);
   console.log("Hit DATA: " + hit_data);
   console.log("Miss DATA: " +miss_data);
+  console.log("Hit Ratio DATA: " + hit_ratio_data);
   console.log("-----------------");
         
       
@@ -8373,15 +8452,21 @@ function FA_LRU_Datos(direccion)
     //var tiempoUnix = Math.floor(fecha.getTime() / 1000);
     var tiempoUnix = fecha.getTime();
     L1_Data_time[FA_Data_contador_LRU] = tiempoUnix;
-    FA_contador_LRU++;
+    FA_Data_contador_LRU++;
     
   }
+
+  hit_ratio_data = address_hit_ratio_data(hit_data, miss_data);
+  app._data.hit_data = hit_data;
+  app._data.miss_data = miss_data;
+  app._data.hit_ratio_data = hit_ratio_data;
   
   console.log("Contador: " + FA_Data_contador_LRU);
   console.log("EXECUTION INDEX: " + execution_index);
   console.log("Posicion :" + posicion);
-  console.log("Hit: " + hit_data);
-  console.log("Miss: " +miss_data);
+  console.log("Hit DATA: " + hit_data);
+  console.log("Miss DATA: " +miss_data);
+  console.log("Hit Ratio DATA: " + hit_ratio_data);
   console.log("-----------------");
     
   
@@ -8525,8 +8610,9 @@ function FSA_LRU_datos(direccion){
   }
     
   
-  console.log("Hit: " + FSA_arrayHM_data[setToDecimal_data][0]);
-  console.log("Miss: " +FSA_arrayHM_data[setToDecimal_data][1]);
+  console.log("Hit DATA: " + FSA_arrayHM_data[setToDecimal_data][0]);
+  console.log("Miss DATA: " +FSA_arrayHM_data[setToDecimal_data][1]);
+  //console.log("Set DATA: " + setToDecimal_data);
   console.log("Posicion: " + posicion);
   console.log("TiempoUnix: " + tiempoUnix);
   console.log("Minimo: " + minimo); 

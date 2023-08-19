@@ -29,7 +29,10 @@
                   total_stats:             { type: Number, required: true },
                   memory_access_counter:   { type: Number, required: true },
                   memory_read_counter:     { type: Number, required: true },
-                  memory_write_counter:    { type: Number, required: true }
+                  memory_write_counter:    { type: Number, required: true },
+
+                  hit_ratio:               { type: Number, required: true },
+                  hit_ratio_data:          { type: Number, required: true }
                 },
                 
     data:       function () {
@@ -53,7 +56,7 @@
 
                 '     <tr>'+
                 '       <td></td>'+
-                '       <td>Hit Ratio:</td>'+
+                '       <td>Hit Ratio: {{hit_ratio}} %</td>'+
                 '     </tr>'+
 
                 '   </table>'+
@@ -85,7 +88,7 @@
 
                 '     <tr>'+
                 '       <td></td>'+
-                '       <td>Hit Ratio:</td>'+
+                '       <td>Hit Ratio Data: {{hit_ratio_data}} %</td>'+
                 '     </tr>'+
 
                 '   </table>'+

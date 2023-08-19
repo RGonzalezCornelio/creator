@@ -47,11 +47,15 @@ var setToDecimal = 0;
 var hit = 0;
 var miss = 0;
 
+
+
+
+
 //Esta funcion nos devuelve un array inicializado a -1
 function array_length(cache_size, line_size)
 {
   cache_size = cache_size * 1024;
-  const array = new Array(cache_size/line_size).fill("-1");
+  var array = new Array(cache_size/line_size).fill("-1");
 
   return array;
 }
@@ -86,7 +90,12 @@ function DM_pasarDireccionA32Bits ( direc )
   return etiqueta;
 }
 
+//var DM_L1 = array_length(cache_size, line_size);
+//var DM_L1 = new Array(16).fill("-1");
+
 var DM_L1 = array_length(cache_size, line_size);
+
+
 var DM_contador_LRU = 0;
 
 function DM_LRU_instrucciones(direccion) //212
@@ -107,12 +116,17 @@ function DM_LRU_instrucciones(direccion) //212
     DM_contador_LRU++;
     
   }
-  
-  
+
+  hit_ratio = address_hit_ratio(hit, miss);
+  app._data.hit = hit;
+  app._data.miss = miss;
+  app._data.hit_ratio = hit_ratio;
+
   console.log("Contador: " + DM_contador_LRU);
   console.log("EXECUTION INDEX: " + execution_index);
   console.log("Hit: " + hit);
   console.log("Miss: " +miss);
+  console.log("Hit Ratio: " + hit_ratio);
   console.log("-----------------");
     
   
@@ -200,12 +214,18 @@ function FA_LRU_instrucciones(direccion)
     FA_contador_LRU++;
     
   }
+
+  hit_ratio = address_hit_ratio(hit, miss);
+  app._data.hit = hit;
+  app._data.miss = miss;
+  app._data.hit_ratio = hit_ratio;
   
   console.log("Contador: " + FA_contador_LRU);
   console.log("EXECUTION INDEX: " + execution_index);
   console.log("Posicion :" + posicion);
   console.log("Hit: " + hit);
   console.log("Miss: " +miss);
+  console.log("Hit Ratio: " + hit_ratio);
   console.log("-----------------");
     
   
@@ -260,6 +280,8 @@ var FSA_Length = cache_size/line_size;
 
 var array_set_size = FSA_Length / numero_conjuntos; 
 
+
+
 for(var i = 0; i < array_set_size; i++){
   var array = [];
   for(var j = 0; j < numero_conjuntos; j++){
@@ -267,6 +289,8 @@ for(var i = 0; i < array_set_size; i++){
   }
   FSA_L1.push(array);
 }
+
+
 
 //Para llevar la cuenta, usare un array de contadores, tendra tantas posiciones como "subarrays" se hayan creado
 var FSA_counter_array = new Array(array_set_size).fill(0);
@@ -356,6 +380,9 @@ function FSA_LRU_instrucciones(direccion){
   
   return FSA_L1;
 }
+
+
+
 
 
 /*function printAddress( direc )

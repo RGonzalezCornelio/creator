@@ -349,6 +349,13 @@ try
       line_data: line_data,
       offset_data: offset_data,
 
+      hit: hit,
+      miss: miss,
+
+      hit_data: hit_data,
+      miss_data: miss_data,
+      
+
 
 
 
@@ -382,7 +389,8 @@ try
       memory_read_counter: memory_read_counter,
       memory_write_counter: memory_write_counter,
       memory_access_counter: memory_access_counter,
-
+      hit_ratio: hit_ratio,
+      hit_ratio_data: hit_ratio_data,
 
       //
       //Power Consumption

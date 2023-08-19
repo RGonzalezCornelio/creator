@@ -30,6 +30,8 @@ var execution_init = 1;
 
 
 
+
+
 /*
  * Execution
  */
@@ -151,12 +153,14 @@ function execute_instruction ( )
     app._data.line = line;
     app._data.offset = offset;
 
+    
+
 
     //printAddress(instruction_address);
     // console.log("execIndex: " + execution_index + " address: " + instruction_address + " instExecParts: " + instructionExecParts);
     //DM_LRU_instrucciones(instruction_address);
-    //FA_LRU_instrucciones(instruction_address);
-    FSA_LRU_instrucciones(instruction_address);
+    FA_LRU_instrucciones(instruction_address);
+    //FSA_LRU_instrucciones(instruction_address);
 
     
 
@@ -511,15 +515,24 @@ function reset ()
 
 
   //CACHE DEFINTION
-  miss = 0;
-  hit = 0;
-  contador_LRU = 0;
+  
 
   app._data.instruction_address = 0x0;
   app._data.address_32_bits = '00000000000000000000000000000000'
   app._data.tag = 0;
   app._data.line = 0;
   app._data.offset = 0;
+
+
+  //RESET CACHE POLICIES
+
+  //----- Direct Mapped ------
+  //DM = array_length (cache_size, line_size);
+  //DM_contador_LRU = 0;
+  //execution_index = 0;
+
+
+
 
 
   // Reset stats

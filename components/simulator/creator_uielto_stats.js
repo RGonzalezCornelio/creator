@@ -27,10 +27,13 @@
                 stats:       { type: Array,  required: true },
                 stats_value: { type: Number, required: true },
 
-                total_stats:              { type: Number, required: true },
+                total_stats:             { type: Number, required: true },
                 memory_access_counter:   { type: Number, required: true },
                 memory_read_counter:     { type: Number, required: true },
-                memory_write_counter:    { type: Number, required: true }
+                memory_write_counter:    { type: Number, required: true },
+
+                hit_ratio:               { type: Number, required: true },
+                hit_ratio_data:               { type: Number, required: true }
               },
 
   data:       function () {
@@ -93,7 +96,7 @@
 
               '       <plot-stats :stats_value="stats_value" v-if="stat_representation == \'graphic\'"></plot-stats>  ' +
               '       <table-stats :stats="stats" v-if="stat_representation == \'table\'"></table-stats> ' +
-              '       <cache-stats :total_stats="total_stats" :memory_access_counter="memory_access_counter" :memory_read_counter="memory_read_counter" :memory_write_counter="memory_write_counter"  v-if="stat_representation == \'cache\'"></cache-stats>'+
+              '       <cache-stats :total_stats="total_stats" :memory_access_counter="memory_access_counter" :memory_read_counter="memory_read_counter" :memory_write_counter="memory_write_counter" :hit_ratio="hit_ratio" :hit_ratio_data="hit_ratio_data" v-if="stat_representation == \'cache\'"></cache-stats>'+
               
               '     </b-col>' +
               '   </b-row>' +

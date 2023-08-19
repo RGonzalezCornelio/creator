@@ -28,6 +28,39 @@ var memory_write_counter = -1;
 
 var memory_access_counter = 0;
 
+var hit_ratio = 0;
+
+function address_hit_ratio (hit, miss){
+
+        var hit_rt = 0;
+
+        if((hit + miss) == 0){
+                hit_rt = 0;
+        }else{
+                hit_rt = (hit / (hit + miss)) * 100;
+                hit_rt = hit_rt.toFixed(2);
+        }
+        
+
+        return hit_rt;
+}
+
+var hit_ratio_data = 0;
+function address_hit_ratio_data (hit_data, miss_data){
+
+        var hit_rt_data = 0;
+
+        if((hit_data + miss_data) == 0){
+                hit_rt_data = 0;
+        }else{
+                hit_rt_data = (hit_data / (hit_data + miss_data)) * 100;
+                hit_rt_data = hit_rt_data.toFixed(2);
+        }
+        
+
+        return hit_rt_data;
+}
+
 
 var word_size_bits  = 32 ;
     // TODO: load from architecture
@@ -770,8 +803,8 @@ function writeMemory ( value, addr, type )
 
 
         //DM_LRU_datos(addr);
-        //FA_LRU_Datos(addr);
-        FSA_LRU_datos(addr);
+        FA_LRU_Datos(addr);
+        //FSA_LRU_datos(addr);
 
         //Counter access
         memory_write_counter++;
@@ -824,8 +857,8 @@ function readMemory ( addr, type )
 
 
         //DM_LRU_datos(addr);
-        //FA_LRU_Datos(addr);
-        FSA_LRU_datos(addr);
+        FA_LRU_Datos(addr);
+        //FSA_LRU_datos(addr);
 
 
         app._data.memory_read_counter++;
