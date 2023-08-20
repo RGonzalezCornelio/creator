@@ -26,12 +26,18 @@ var instruction_address = 0x0; //Esta variable es la direccion que se va a mostr
 var cache_size = 1; //Este numero esta en KB, asi que en la funcion lo multiplicaremos por 1024 (2^10) y se dividira entre line_size
 var line_size = 64;
 
+var numero_conjuntos = 4;
+
 var address_32_bits = '00000000000000000000000000000000';
 
-var offset_size_address = Math.log2(line_size);
-var line_size_address = Math.log2((cache_size*1024)/line_size);
-var tag_size_address = 32 - line_size_address - offset_size_address;
 
+
+
+//DM
+
+var line_size_address = Math.log2((cache_size*1024)/line_size);
+var offset_size_address = Math.log2(line_size);
+var tag_size_address = 32 - line_size_address - offset_size_address;
 var array_32_bits = 0;
 var tag_array = 0;
 var line_array = 0;
@@ -40,6 +46,24 @@ var offset_array = 0;
 var tag = 0;
 var line = 0;
 var offset = 0;
+
+//FA
+var FA_tag_size_address = 32 - offset_size_address;
+var FA_tag_array = 0;
+var FA_tag = 0;
+
+//FSA
+var set_size = Math.log2(numero_conjuntos);
+var FSA_tag_size_address = 32 - set_size - offset_size_address;
+
+var FSA_tag_array = 0;
+var FSA_set_array = 0;
+
+var FSA_tag = 0;
+var FSA_set = 0;
+
+
+
 
 var setToDecimal = 0;
 
@@ -142,8 +166,8 @@ function DM_LRU_instrucciones(direccion) //212
 function FA_pasarDireccionA32Bits ( direc ) 
 {
   tamaño_offset = Math.log2(line_size);
-  tamaño_linea = Math.log2((cache_size*1024)/line_size);
-  tamaño_tag = 32 - tamaño_linea - tamaño_offset;
+  //tamaño_linea = Math.log2((cache_size*1024)/line_size);
+  tamaño_tag = 32 - tamaño_offset;
 
   dirA32Bits = parseInt(direc, 16).toString(2).padStart(32, '0');
 
@@ -151,12 +175,14 @@ function FA_pasarDireccionA32Bits ( direc )
   var array_bits = dirA32Bits.split("");
 
   var array_tag = array_bits.slice(0,tamaño_tag);
-  var array_line = array_bits.slice(tamaño_tag,(tamaño_linea + tamaño_tag));
-  var array_offset = array_bits.slice((tamaño_linea + tamaño_tag), array_bits.length);
+  //var array_line = array_bits.slice(tamaño_tag,(tamaño_linea + tamaño_tag));
+  var array_offset = array_bits.slice((tamaño_tag), array_bits.length);
 
   etiqueta = array_tag.join('');
-  linea = array_line.join('');
+  //linea = array_line.join('');
   offset = array_offset.join('');
+
+  
 
 
   return etiqueta;
@@ -221,6 +247,7 @@ function FA_LRU_instrucciones(direccion)
   app._data.hit_ratio = hit_ratio;
   
   console.log("Contador: " + FA_contador_LRU);
+  console.log("ETIQUETA: " + tag);
   console.log("EXECUTION INDEX: " + execution_index);
   console.log("Posicion :" + posicion);
   console.log("Hit: " + hit);
@@ -264,9 +291,7 @@ function FSA_pasarDireccionA32Bits ( direc )
 
 
 
-//Ponemos el numero de conjuntos (esto sera un parametro que introducira el alumno)
-var numero_conjuntos = 4;
-var set_size = Math.log2(numero_conjuntos);
+
 
 //Ahora sustituiremos el array que sacabamos de la funcion array_length y usaremos tantos arrays como necesitemos para la configuracion
 //Habra que hace un array de arrays 

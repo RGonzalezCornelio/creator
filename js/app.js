@@ -329,6 +329,7 @@ try
 
       address_32_bits: address_32_bits,
 
+      //DM
       tag_size_address:tag_size_address,
       line_size_address:line_size_address,
       offset_size_address: offset_size_address,
@@ -336,6 +337,16 @@ try
       tag: tag,
       line: line,
       offset: offset,
+
+      //FA
+      FA_tag_size_address: FA_tag_size_address,
+      FA_tag: FA_tag,
+
+      //FSA
+      FSA_tag_size_address:FSA_tag_size_address,
+      set_size: set_size,
+      FSA_tag:FSA_tag,
+      FSA_set:FSA_set,
 
 
       data_address: data_address,

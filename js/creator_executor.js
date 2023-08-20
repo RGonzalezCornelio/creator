@@ -133,6 +133,8 @@ function execute_instruction ( )
     address_32_bits = parseInt(instruction_address, 16).toString(2).padStart(32, '0');
 
     array_32_bits = address_32_bits.split("");
+
+
     tag_array = array_32_bits.slice(0, tag_size_address);
     line_array = array_32_bits.slice(tag_size_address, (line_size_address + tag_size_address));
     offset_array = array_32_bits.slice((line_size_address + tag_size_address), (array_32_bits.length));
@@ -145,6 +147,7 @@ function execute_instruction ( )
     app._data.address_32_bits = address_32_bits;
 
 
+    //DM
     app._data.offset_size_address = offset_size_address;
     app._data.line_size_address = line_size_address;
     app._data.tag_size_address = tag_size_address;
@@ -153,14 +156,32 @@ function execute_instruction ( )
     app._data.line = line;
     app._data.offset = offset;
 
-    
+    //FA ---- TAG = TAG + LINE; el offset es el mismo
 
+    FA_tag_array = array_32_bits.slice(0, FA_tag_size_address);
+    
+    FA_tag = FA_tag_array.join('');
+    
+    app._data.FA_tag_size_address = FA_tag_size_address;
+    app._data.FA_tag = FA_tag;
+
+    //FSA
+    FSA_tag_array = array_32_bits.slice(0, FSA_tag_size_address)
+    FSA_set_array = array_32_bits.slice(FSA_tag_size_address, (set_size + FSA_tag_size_address));
+    
+    FSA_tag = FSA_tag_array.join('');
+    FSA_set = FSA_set_array.join('');
+
+
+    app._data.set_size = set_size;
+    app._data.FSA_tag = FSA_tag;
+    app._data.FSA_set = FSA_set;
 
     //printAddress(instruction_address);
     // console.log("execIndex: " + execution_index + " address: " + instruction_address + " instExecParts: " + instructionExecParts);
     //DM_LRU_instrucciones(instruction_address);
-    FA_LRU_instrucciones(instruction_address);
-    //FSA_LRU_instrucciones(instruction_address);
+    //FA_LRU_instrucciones(instruction_address);
+    FSA_LRU_instrucciones(instruction_address);
 
     
 

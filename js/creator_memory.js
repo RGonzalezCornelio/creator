@@ -768,7 +768,7 @@ function writeMemory ( value, addr, type )
         // update view
         creator_memory_updaterow(addr);
 
-        console.log("Write -->  value: " + value + " addr: " + addr + " type: " + type);
+        //console.log("Write -->  value: " + value + " addr: " + addr + " type: " + type);
 
         data_address = pasarDireccionAHexadecimal(addr);
         app._data.data_address = data_address;
@@ -803,7 +803,7 @@ function writeMemory ( value, addr, type )
 
 
         //DM_LRU_datos(addr);
-        FA_LRU_Datos(addr);
+        //FA_LRU_Datos(addr);
         //FSA_LRU_datos(addr);
 
         //Counter access
@@ -822,7 +822,7 @@ function readMemory ( addr, type )
 
         var ret = main_memory_read_bydatatype ( addr, type )
 
-        console.log("Read -->  addr: " + addr + " type: " + type + " ret: " + ret);
+        //console.log("Read -->  addr: " + addr + " type: " + type + " ret: " + ret);
         data_address = pasarDireccionAHexadecimal(addr);
         app._data.data_address = data_address;
 
@@ -857,7 +857,7 @@ function readMemory ( addr, type )
 
 
         //DM_LRU_datos(addr);
-        FA_LRU_Datos(addr);
+        //FA_LRU_Datos(addr);
         //FSA_LRU_datos(addr);
 
 

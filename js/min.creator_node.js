@@ -2855,7 +2855,7 @@ function writeMemory ( value, addr, type )
         // update view
         creator_memory_updaterow(addr);
 
-        console.log("Write -->  value: " + value + " addr: " + addr + " type: " + type);
+        //console.log("Write -->  value: " + value + " addr: " + addr + " type: " + type);
 
         data_address = pasarDireccionAHexadecimal(addr);
         app._data.data_address = data_address;
@@ -2890,7 +2890,7 @@ function writeMemory ( value, addr, type )
 
 
         //DM_LRU_datos(addr);
-        FA_LRU_Datos(addr);
+        //FA_LRU_Datos(addr);
         //FSA_LRU_datos(addr);
 
         //Counter access
@@ -2909,7 +2909,7 @@ function readMemory ( addr, type )
 
         var ret = main_memory_read_bydatatype ( addr, type )
 
-        console.log("Read -->  addr: " + addr + " type: " + type + " ret: " + ret);
+        //console.log("Read -->  addr: " + addr + " type: " + type + " ret: " + ret);
         data_address = pasarDireccionAHexadecimal(addr);
         app._data.data_address = data_address;
 
@@ -2944,7 +2944,7 @@ function readMemory ( addr, type )
 
 
         //DM_LRU_datos(addr);
-        FA_LRU_Datos(addr);
+        //FA_LRU_Datos(addr);
         //FSA_LRU_datos(addr);
 
 
@@ -6861,6 +6861,8 @@ function execute_instruction ( )
     address_32_bits = parseInt(instruction_address, 16).toString(2).padStart(32, '0');
 
     array_32_bits = address_32_bits.split("");
+
+
     tag_array = array_32_bits.slice(0, tag_size_address);
     line_array = array_32_bits.slice(tag_size_address, (line_size_address + tag_size_address));
     offset_array = array_32_bits.slice((line_size_address + tag_size_address), (array_32_bits.length));
@@ -6873,6 +6875,7 @@ function execute_instruction ( )
     app._data.address_32_bits = address_32_bits;
 
 
+    //DM
     app._data.offset_size_address = offset_size_address;
     app._data.line_size_address = line_size_address;
     app._data.tag_size_address = tag_size_address;
@@ -6881,14 +6884,32 @@ function execute_instruction ( )
     app._data.line = line;
     app._data.offset = offset;
 
-    
+    //FA ---- TAG = TAG + LINE; el offset es el mismo
 
+    FA_tag_array = array_32_bits.slice(0, FA_tag_size_address);
+    
+    FA_tag = FA_tag_array.join('');
+    
+    app._data.FA_tag_size_address = FA_tag_size_address;
+    app._data.FA_tag = FA_tag;
+
+    //FSA
+    FSA_tag_array = array_32_bits.slice(0, FSA_tag_size_address)
+    FSA_set_array = array_32_bits.slice(FSA_tag_size_address, (set_size + FSA_tag_size_address));
+    
+    FSA_tag = FSA_tag_array.join('');
+    FSA_set = FSA_set_array.join('');
+
+
+    app._data.set_size = set_size;
+    app._data.FSA_tag = FSA_tag;
+    app._data.FSA_set = FSA_set;
 
     //printAddress(instruction_address);
     // console.log("execIndex: " + execution_index + " address: " + instruction_address + " instExecParts: " + instructionExecParts);
     //DM_LRU_instrucciones(instruction_address);
-    FA_LRU_instrucciones(instruction_address);
-    //FSA_LRU_instrucciones(instruction_address);
+    //FA_LRU_instrucciones(instruction_address);
+    FSA_LRU_instrucciones(instruction_address);
 
     
 
@@ -7849,12 +7870,18 @@ var instruction_address = 0x0; //Esta variable es la direccion que se va a mostr
 var cache_size = 1; //Este numero esta en KB, asi que en la funcion lo multiplicaremos por 1024 (2^10) y se dividira entre line_size
 var line_size = 64;
 
+var numero_conjuntos = 4;
+
 var address_32_bits = '00000000000000000000000000000000';
 
-var offset_size_address = Math.log2(line_size);
-var line_size_address = Math.log2((cache_size*1024)/line_size);
-var tag_size_address = 32 - line_size_address - offset_size_address;
 
+
+
+//DM
+
+var line_size_address = Math.log2((cache_size*1024)/line_size);
+var offset_size_address = Math.log2(line_size);
+var tag_size_address = 32 - line_size_address - offset_size_address;
 var array_32_bits = 0;
 var tag_array = 0;
 var line_array = 0;
@@ -7863,6 +7890,24 @@ var offset_array = 0;
 var tag = 0;
 var line = 0;
 var offset = 0;
+
+//FA
+var FA_tag_size_address = 32 - offset_size_address;
+var FA_tag_array = 0;
+var FA_tag = 0;
+
+//FSA
+var set_size = Math.log2(numero_conjuntos);
+var FSA_tag_size_address = 32 - set_size - offset_size_address;
+
+var FSA_tag_array = 0;
+var FSA_set_array = 0;
+
+var FSA_tag = 0;
+var FSA_set = 0;
+
+
+
 
 var setToDecimal = 0;
 
@@ -7965,8 +8010,8 @@ function DM_LRU_instrucciones(direccion) //212
 function FA_pasarDireccionA32Bits ( direc ) 
 {
   tamaño_offset = Math.log2(line_size);
-  tamaño_linea = Math.log2((cache_size*1024)/line_size);
-  tamaño_tag = 32 - tamaño_linea - tamaño_offset;
+  //tamaño_linea = Math.log2((cache_size*1024)/line_size);
+  tamaño_tag = 32 - tamaño_offset;
 
   dirA32Bits = parseInt(direc, 16).toString(2).padStart(32, '0');
 
@@ -7974,12 +8019,14 @@ function FA_pasarDireccionA32Bits ( direc )
   var array_bits = dirA32Bits.split("");
 
   var array_tag = array_bits.slice(0,tamaño_tag);
-  var array_line = array_bits.slice(tamaño_tag,(tamaño_linea + tamaño_tag));
-  var array_offset = array_bits.slice((tamaño_linea + tamaño_tag), array_bits.length);
+  //var array_line = array_bits.slice(tamaño_tag,(tamaño_linea + tamaño_tag));
+  var array_offset = array_bits.slice((tamaño_tag), array_bits.length);
 
   etiqueta = array_tag.join('');
-  linea = array_line.join('');
+  //linea = array_line.join('');
   offset = array_offset.join('');
+
+  
 
 
   return etiqueta;
@@ -8044,6 +8091,7 @@ function FA_LRU_instrucciones(direccion)
   app._data.hit_ratio = hit_ratio;
   
   console.log("Contador: " + FA_contador_LRU);
+  console.log("ETIQUETA: " + tag);
   console.log("EXECUTION INDEX: " + execution_index);
   console.log("Posicion :" + posicion);
   console.log("Hit: " + hit);
@@ -8087,9 +8135,7 @@ function FSA_pasarDireccionA32Bits ( direc )
 
 
 
-//Ponemos el numero de conjuntos (esto sera un parametro que introducira el alumno)
-var numero_conjuntos = 4;
-var set_size = Math.log2(numero_conjuntos);
+
 
 //Ahora sustituiremos el array que sacabamos de la funcion array_length y usaremos tantos arrays como necesitemos para la configuracion
 //Habra que hace un array de arrays 
