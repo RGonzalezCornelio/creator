@@ -2883,6 +2883,27 @@ function writeMemory ( value, addr, type )
         app._data.line_data = line_data;
         app._data.offset_data = offset_data;
 
+        //FA ---- TAG = TAG + LINE; el offset es el mismo
+
+        FA_tag_array_data = array_32_bits_data.slice(0, FA_tag_size_address_data);
+        
+        FA_tag_data = FA_tag_array_data.join('');
+        
+        app._data.FA_tag_size_address_data = FA_tag_size_address_data;
+        app._data.FA_tag_data = FA_tag_data;
+
+        //FSA
+        FSA_tag_array_data = array_32_bits_data.slice(0, FSA_tag_size_address_data)
+        FSA_set_array_data = array_32_bits_data.slice(FSA_tag_size_address_data, (set_size_data + FSA_tag_size_address_data));
+        
+        FSA_tag_data = FSA_tag_array_data.join('');
+        FSA_set_data = FSA_set_array_data.join('');
+
+
+        app._data.set_size_data = set_size_data;
+        app._data.FSA_tag_data = FSA_tag_data;
+        app._data.FSA_set_data = FSA_set_data;
+
 
 
 
@@ -2890,7 +2911,7 @@ function writeMemory ( value, addr, type )
 
 
         //DM_LRU_datos(addr);
-        //FA_LRU_Datos(addr);
+        FA_LRU_Datos(addr);
         //FSA_LRU_datos(addr);
 
         //Counter access
@@ -2939,12 +2960,33 @@ function readMemory ( addr, type )
         app._data.line_data = line_data;
         app._data.offset_data = offset_data;
 
+        //FA ---- TAG = TAG + LINE; el offset es el mismo
+
+        FA_tag_array_data = array_32_bits_data.slice(0, FA_tag_size_address_data);
+        
+        FA_tag_data = FA_tag_array_data.join('');
+        
+        app._data.FA_tag_size_address_data = FA_tag_size_address_data;
+        app._data.FA_tag_data = FA_tag_data;
+
+        //FSA
+        FSA_tag_array_data = array_32_bits_data.slice(0, FSA_tag_size_address_data)
+        FSA_set_array_data = array_32_bits_data.slice(FSA_tag_size_address_data, (set_size_data + FSA_tag_size_address_data));
+        
+        FSA_tag_data = FSA_tag_array_data.join('');
+        FSA_set_data = FSA_set_array_data.join('');
+
+
+        app._data.set_size_data = set_size_data;
+        app._data.FSA_tag_data = FSA_tag_data;
+        app._data.FSA_set_data = FSA_set_data;
+
 
 
 
 
         //DM_LRU_datos(addr);
-        //FA_LRU_Datos(addr);
+        FA_LRU_Datos(addr);
         //FSA_LRU_datos(addr);
 
 
@@ -6908,8 +6950,8 @@ function execute_instruction ( )
     //printAddress(instruction_address);
     // console.log("execIndex: " + execution_index + " address: " + instruction_address + " instExecParts: " + instructionExecParts);
     //DM_LRU_instrucciones(instruction_address);
-    //FA_LRU_instrucciones(instruction_address);
-    FSA_LRU_instrucciones(instruction_address);
+    FA_LRU_instrucciones(instruction_address);
+    //FSA_LRU_instrucciones(instruction_address);
 
     
 
@@ -8310,6 +8352,9 @@ function FSA_LRU_instrucciones(direccion){
 var cache_size_data = 1; //Este numero esta en KB, asi que en la funcion lo multiplicaremos por 1024 (2^10) y se dividira entre line_size
 var line_size_data = 32;
 
+var numero_conjuntos_datos = 4;
+
+
 /*var etiqueta_data = 0;
 var linea_data = 0;
 var offset_data = 0;*/
@@ -8329,6 +8374,21 @@ var offset_array_data = 0;
 var tag_data = 0;
 var line_data = 0;
 var offset_data = 0;
+
+//FA
+var FA_tag_size_address_data = 32 - offset_size_address_data;
+var FA_tag_array_data = 0;
+var FA_tag_data = 0;
+
+//FSA
+var set_size_data = Math.log2(numero_conjuntos_datos);
+var FSA_tag_size_address_data = 32 - set_size_data - offset_size_address_data;
+
+var FSA_tag_array_data = 0;
+var FSA_set_array_data = 0;
+
+var FSA_tag_data = 0;
+var FSA_set_data = 0;
 
 
 //Esta funcion nos devuelve un array inicializado a -1
@@ -8555,7 +8615,6 @@ function FSA_Data_pasarDireccionA32Bits ( dir )
 
 
 //Ponemos el numero de conjuntos (esto sera un parametro que introducira el alumno)
-var numero_conjuntos_datos = 4;
 var set_data_size = Math.log2(numero_conjuntos_datos);
 
 //Ahora sustituiremos el array que sacabamos de la funcion array_length y usaremos tantos arrays como necesitemos para la configuracion

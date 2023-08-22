@@ -24,44 +24,52 @@
   var uielto_memory = {
 
     props:    {
-                main_memory:             { type: Array,  required: true },
-                memory_segment:          { type: String, required: true },
-                track_stack_names:       { type: Array,  required: true }, // TODO: optional
-                callee_subrutine:        { type: String, required: true }, // TODO: optional
-                caller_subrutine:        { type: String, required: true },  // TODO: optional
+                main_memory:                  { type: Array,  required: true },
+                memory_segment:               { type: String, required: true },
+                track_stack_names:            { type: Array,  required: true }, // TODO: optional
+                callee_subrutine:             { type: String, required: true }, // TODO: optional
+                caller_subrutine:             { type: String, required: true },  // TODO: optional
   
-                instruction_address:     { type: String, required: true },
-                address_32_bits:         { type: String, required: true },
-                tag_size_address:        { type: Number, required: true },
-                line_size_address:       { type: Number, required: true },
-                offset_size_address:     { type: Number, required: true },
-                tag:                     { type: String, required: true },
-                line:                    { type: String, required: true },
-                offset:                  { type: String, required: true },
+                instruction_address:          { type: String, required: true },
+                address_32_bits:              { type: String, required: true },
+                tag_size_address:             { type: Number, required: true },
+                line_size_address:            { type: Number, required: true },
+                offset_size_address:          { type: Number, required: true },
+                tag:                          { type: String, required: true },
+                line:                         { type: String, required: true },
+                offset:                       { type: String, required: true },
 
-                FA_tag_size_address:     { type: Number, required: true },
-                FA_tag:                  { type: String, required: true },
+                FA_tag_size_address:          { type: Number, required: true },
+                FA_tag:                       { type: String, required: true },
 
-                FSA_tag_size_address:    { type: Number, required: true },
-                set_size:                { type: Number, required: true },
-                FSA_tag:                 { type: String, required: true },
-                FSA_set:                 { type: String, required: true },
+                FSA_tag_size_address:         { type: Number, required: true },
+                set_size:                     { type: Number, required: true },
+                FSA_tag:                      { type: String, required: true },
+                FSA_set:                      { type: String, required: true },
                 
                 
-                data_address:            { type: String, required: true },
-                address_32_bits_data:    { type: String, required: true },
-                tag_size_address_data:   { type: Number, required: true },
-                line_size_address_data:  { type: Number, required: true },
-                offset_size_address_data:{ type: Number, required: true },
-                tag_data:                { type: String, required: true },
-                line_data:               { type: String, required: true },
-                offset_data:             { type: String, required: true },
+                data_address:                 { type: String, required: true },
+                address_32_bits_data:         { type: String, required: true },
+                tag_size_address_data:        { type: Number, required: true },
+                line_size_address_data:       { type: Number, required: true },
+                offset_size_address_data:     { type: Number, required: true },
+                tag_data:                     { type: String, required: true },
+                line_data:                    { type: String, required: true },
+                offset_data:                  { type: String, required: true },
 
-                hit:                     { type: Number, required: true },
-                miss:                    { type: Number, required: true },
+                FA_tag_size_address_data:     { type: Number, required: true },
+                FA_tag_data:                  { type: String, required: true },
 
-                hit_data:                { type: Number, required: true },
-                miss_data:               { type: Number, required: true }
+                FSA_tag_size_address_data:    { type: Number, required: true },
+                set_size_data:                { type: Number, required: true },
+                FSA_tag_data:                 { type: String, required: true },
+                FSA_set_data:                 { type: String, required: true },
+
+                hit:                          { type: Number, required: true },
+                miss:                         { type: Number, required: true },
+
+                hit_data:                     { type: Number, required: true },
+                miss_data:                    { type: Number, required: true }
 
               },
   
@@ -109,7 +117,7 @@
               '     <b-col>'+
               '         <div class="border m-1 py-1 px-4">'+
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">' +
-              '             <b>Policy: Fully Set Associative</b>'+
+              '             <b>Policy: Fully Associattive</b>'+
               '           </b-row>'+
               '         </div>'+
               '         <div class="border m-1 py-1 px-4">'+
@@ -120,11 +128,8 @@
               '             ADDRESS 32 BITS: {{address_32_bits}}'+
               '           </b-row>'+
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
-              '             TAG: {{app._data.FSA_tag_size_address}} bits  ({{app._data.FSA_tag}})'+
-              '           </b-row>'+
-              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
-              '             SET: {{set_size}} bits ({{app._data.FSA_set}})'+
-              '           </b-row>'+
+              '             TAG: {{app._data.FA_tag_size_address}} bits  ({{app._data.FA_tag}})'+
+              '           </b-row>'+  
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
               '             OFFSET: {{offset_size_address}} bits ({{offset}})'+
               '           </b-row>'+
@@ -144,10 +149,7 @@
               '             ADDRESS 32 BITS DATA: {{address_32_bits_data}}'+
               '           </b-row>'+
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
-              '             TAG: {{tag_size_address_data}} bits  ({{tag_data}})'+
-              '           </b-row>'+
-              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
-              '             LINE: {{line_size_address_data}} bits ({{line_data}})'+
+              '             TAG: {{app._data.FA_tag_size_address_data}} bits  ({{app._data.FA_tag_data}})'+
               '           </b-row>'+
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
               '             OFFSET: {{offset_size_address_data}} bits ({{offset_data}})'+
@@ -240,6 +242,91 @@
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
               '             Miss: {{miss}}'+
               '           </b-row>'+
-              '          </div>'+*/
+              '          </div>'+
+
+              '         <div class="border m-1 py-1 px-4">'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">' +
+              '             <b>Policy: Fully Set Associative</b>'+
+              '           </b-row>'+
+              '         </div>'+
+              '         <div class="border m-1 py-1 px-4">'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">' +
+              '             Last Instruction Address: {{instruction_address}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             ADDRESS 32 BITS: {{address_32_bits}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             TAG: {{app._data.FSA_tag_size_address}} bits  ({{app._data.FSA_tag}})'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             SET: {{set_size}} bits ({{app._data.FSA_set}})'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             OFFSET: {{offset_size_address}} bits ({{offset}})'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             Hit: {{hit}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             Miss: {{miss}}'+
+              '           </b-row>'+
+              '          </div>'+
+              
+           ---- DATOS ------
+           DIRECT MAPPED   
+              '         <div class="border m-1 py-1 px-4">'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             Last Data Address: 0x0{{data_address}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             ADDRESS 32 BITS DATA: {{address_32_bits_data}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             TAG: {{tag_size_address_data}} bits  ({{tag_data}})'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             LINE: {{line_size_address_data}} bits ({{line_data}})'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             OFFSET: {{offset_size_address_data}} bits ({{offset_data}})'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             Hit Data: {{hit_data}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             Miss Data: {{miss_data}}'+
+              '           </b-row>'+
+              '         </div >' +
+
+            FULLY ASSOCIATIVE
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              */
 
 

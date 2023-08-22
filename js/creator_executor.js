@@ -180,8 +180,8 @@ function execute_instruction ( )
     //printAddress(instruction_address);
     // console.log("execIndex: " + execution_index + " address: " + instruction_address + " instExecParts: " + instructionExecParts);
     //DM_LRU_instrucciones(instruction_address);
-    //FA_LRU_instrucciones(instruction_address);
-    FSA_LRU_instrucciones(instruction_address);
+    FA_LRU_instrucciones(instruction_address);
+    //FSA_LRU_instrucciones(instruction_address);
 
     
 

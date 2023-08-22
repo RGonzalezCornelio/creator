@@ -23,6 +23,9 @@
 var cache_size_data = 1; //Este numero esta en KB, asi que en la funcion lo multiplicaremos por 1024 (2^10) y se dividira entre line_size
 var line_size_data = 32;
 
+var numero_conjuntos_datos = 4;
+
+
 /*var etiqueta_data = 0;
 var linea_data = 0;
 var offset_data = 0;*/
@@ -42,6 +45,21 @@ var offset_array_data = 0;
 var tag_data = 0;
 var line_data = 0;
 var offset_data = 0;
+
+//FA
+var FA_tag_size_address_data = 32 - offset_size_address_data;
+var FA_tag_array_data = 0;
+var FA_tag_data = 0;
+
+//FSA
+var set_size_data = Math.log2(numero_conjuntos_datos);
+var FSA_tag_size_address_data = 32 - set_size_data - offset_size_address_data;
+
+var FSA_tag_array_data = 0;
+var FSA_set_array_data = 0;
+
+var FSA_tag_data = 0;
+var FSA_set_data = 0;
 
 
 //Esta funcion nos devuelve un array inicializado a -1
@@ -268,7 +286,6 @@ function FSA_Data_pasarDireccionA32Bits ( dir )
 
 
 //Ponemos el numero de conjuntos (esto sera un parametro que introducira el alumno)
-var numero_conjuntos_datos = 4;
 var set_data_size = Math.log2(numero_conjuntos_datos);
 
 //Ahora sustituiremos el array que sacabamos de la funcion array_length y usaremos tantos arrays como necesitemos para la configuracion

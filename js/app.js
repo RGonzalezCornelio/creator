@@ -352,6 +352,7 @@ try
       data_address: data_address,
       address_32_bits_data: address_32_bits_data,
 
+      //DM Data
       tag_size_address_data:tag_size_address_data,
       line_size_address_data:line_size_address_data,
       offset_size_address_data: offset_size_address_data,
@@ -360,6 +361,18 @@ try
       line_data: line_data,
       offset_data: offset_data,
 
+      //FA Data
+      FA_tag_size_address_data: FA_tag_size_address_data,
+      FA_tag_data: FA_tag_data,
+
+      //FSA Data
+      FSA_tag_size_address_data:FSA_tag_size_address_data,
+      set_size_data: set_size_data,
+      FSA_tag_data:FSA_tag_data,
+      FSA_set_data:FSA_set_data,
+
+
+      
       hit: hit,
       miss: miss,
 

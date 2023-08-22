@@ -796,6 +796,27 @@ function writeMemory ( value, addr, type )
         app._data.line_data = line_data;
         app._data.offset_data = offset_data;
 
+        //FA ---- TAG = TAG + LINE; el offset es el mismo
+
+        FA_tag_array_data = array_32_bits_data.slice(0, FA_tag_size_address_data);
+        
+        FA_tag_data = FA_tag_array_data.join('');
+        
+        app._data.FA_tag_size_address_data = FA_tag_size_address_data;
+        app._data.FA_tag_data = FA_tag_data;
+
+        //FSA
+        FSA_tag_array_data = array_32_bits_data.slice(0, FSA_tag_size_address_data)
+        FSA_set_array_data = array_32_bits_data.slice(FSA_tag_size_address_data, (set_size_data + FSA_tag_size_address_data));
+        
+        FSA_tag_data = FSA_tag_array_data.join('');
+        FSA_set_data = FSA_set_array_data.join('');
+
+
+        app._data.set_size_data = set_size_data;
+        app._data.FSA_tag_data = FSA_tag_data;
+        app._data.FSA_set_data = FSA_set_data;
+
 
 
 
@@ -803,7 +824,7 @@ function writeMemory ( value, addr, type )
 
 
         //DM_LRU_datos(addr);
-        //FA_LRU_Datos(addr);
+        FA_LRU_Datos(addr);
         //FSA_LRU_datos(addr);
 
         //Counter access
@@ -852,12 +873,33 @@ function readMemory ( addr, type )
         app._data.line_data = line_data;
         app._data.offset_data = offset_data;
 
+        //FA ---- TAG = TAG + LINE; el offset es el mismo
+
+        FA_tag_array_data = array_32_bits_data.slice(0, FA_tag_size_address_data);
+        
+        FA_tag_data = FA_tag_array_data.join('');
+        
+        app._data.FA_tag_size_address_data = FA_tag_size_address_data;
+        app._data.FA_tag_data = FA_tag_data;
+
+        //FSA
+        FSA_tag_array_data = array_32_bits_data.slice(0, FSA_tag_size_address_data)
+        FSA_set_array_data = array_32_bits_data.slice(FSA_tag_size_address_data, (set_size_data + FSA_tag_size_address_data));
+        
+        FSA_tag_data = FSA_tag_array_data.join('');
+        FSA_set_data = FSA_set_array_data.join('');
+
+
+        app._data.set_size_data = set_size_data;
+        app._data.FSA_tag_data = FSA_tag_data;
+        app._data.FSA_set_data = FSA_set_data;
+
 
 
 
 
         //DM_LRU_datos(addr);
-        //FA_LRU_Datos(addr);
+        FA_LRU_Datos(addr);
         //FSA_LRU_datos(addr);
 
 
