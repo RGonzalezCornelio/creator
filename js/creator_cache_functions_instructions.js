@@ -23,7 +23,14 @@
 var instruction_address = 0x0; //Esta variable es la direccion que se va a mostrar en el creator en la pestaña de memory
 
 
+function inicializar(){
+  console.log("INICIALIZAR");
+  cache_size = parseInt(architecture.cache_definition_L1[0].value);
+}
+
 var cache_size = 1; //Este numero esta en KB, asi que en la funcion lo multiplicaremos por 1024 (2^10) y se dividira entre line_size
+//var cache_size = parseInt(architecture.cache_definition_L1[0].value);
+
 var line_size = 64;
 
 var numero_conjuntos = 4;

@@ -7265,7 +7265,7 @@
   "cache_definition_L1": [
     {
       "name": "Unified Cache Size",
-      "value": "1"
+      "value": "4"
     },
     {
       "name": "Unified Lines Set",

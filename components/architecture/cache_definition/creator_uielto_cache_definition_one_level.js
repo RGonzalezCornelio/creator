@@ -54,6 +54,16 @@
                     //Confirm cache definition fields
                     confirm_cache_definition()
                     {
+                        if(this.cache_type == "unified"){
+                            console.log("UNIFIED CACHE");
+                        }
+                        if(this.cache_type == "split"){
+                            console.log("SPLIT CACHE");
+                        }
+
+
+
+                        inicializar();
                         this.show_modal = false;
 
                         show_notification('Cache definition correctly saved!', 'success');
