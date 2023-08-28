@@ -56,12 +56,42 @@
                     {
                         if(this.cache_type == "unified"){
                             console.log("UNIFIED CACHE");
+                            architecture.cache_definition_L1[7].value = 0;
+
+                            architecture.cache_definition_L1[0].value = this.unified_cache_size;
+                            architecture.cache_definition_L1[6].value = this.cache_line;
+                            if(this.cache_policy == "direct_mapped"){
+                                architecture.cache_definition_L1[8].value = 0;
+                            }
+                            if(this.cache_policy == "fully_associative"){
+                                architecture.cache_definition_L1[8].value = 1;
+                            }
+                            if(this.cache_policy == "set_associative"){
+                                architecture.cache_definition_L1[8].value = 2;
+                                architecture.cache_definition_L1[1].value = this.unified_lines_set;
+                            }
+
                         }
                         if(this.cache_type == "split"){
                             console.log("SPLIT CACHE");
+                            architecture.cache_definition_L1[7].value = 1;
+
+                            architecture.cache_definition_L1[2].value = this.instruction_cache;
+                            architecture.cache_definition_L1[3].value = this.data_cache;
+                            architecture.cache_definition_L1[6].value = this.cache_line;
+                            if(this.cache_policy == "direct_mapped"){
+                                architecture.cache_definition_L1[8].value = 0;
+                            }
+                            if(this.cache_policy == "fully_associative"){
+                                architecture.cache_definition_L1[8].value = 1;
+                            }
+                            if(this.cache_policy == "set_associative"){
+                                architecture.cache_definition_L1[8].value = 2;
+                                architecture.cache_definition_L1[4].value = this.lines_set_instruction_cache;
+                                architecture.cache_definition_L1[5].value = this.lines_set_data_cache;
+                            }
+
                         }
-
-
 
                         inicializar();
                         this.show_modal = false;

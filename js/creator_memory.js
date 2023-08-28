@@ -818,15 +818,26 @@ function writeMemory ( value, addr, type )
         app._data.FSA_set_data = FSA_set_data;
 
 
-
-
-
-
-
         //DM_LRU_datos(addr);
-        FA_LRU_Datos(addr);
+        //FA_LRU_Datos(addr);
         //FSA_LRU_datos(addr);
-
+        if(architecture.cache_definition_L1[7].value == 1){
+                switch(architecture.cache_definition_L1[8].value) {
+                        case 0: 
+                            DM_LRU_datos(addr);
+                            console.log("DIRECT MAPPED");
+                            break;
+                        case 1: 
+                            FA_LRU_Datos(addr);
+                            console.log("FULLY ASSOCIATIVE");
+                            break;
+                        case 2:
+                            FSA_LRU_datos(addr);
+                            console.log("FULLY SET ASSOCIATIVE");
+                            break;
+                }
+        }
+        
         //Counter access
         memory_write_counter++;
         memory_access_counter++;
@@ -899,9 +910,27 @@ function readMemory ( addr, type )
 
 
         //DM_LRU_datos(addr);
-        FA_LRU_Datos(addr);
+        //FA_LRU_Datos(addr);
         //FSA_LRU_datos(addr);
-
+        if(architecture.cache_definition_L1[7].value == 1){
+                switch(architecture.cache_definition_L1[8].value) {
+                        case 0: 
+                            DM_LRU_datos(addr);
+                            console.log("DIRECT MAPPED");
+                            break;
+                        case 1: 
+                            FA_LRU_Datos(addr);
+                            console.log("FULLY ASSOCIATIVE");
+                            break;
+                        case 2:
+                            FSA_LRU_datos(addr);
+                            console.log("FULLY SET ASSOCIATIVE");
+                            break;
+                }
+        }
+        
+        
+        
 
         app._data.memory_read_counter++;
         app._data.memory_access_counter++;

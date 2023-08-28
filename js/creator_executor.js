@@ -180,8 +180,24 @@ function execute_instruction ( )
     //printAddress(instruction_address);
     // console.log("execIndex: " + execution_index + " address: " + instruction_address + " instExecParts: " + instructionExecParts);
     //DM_LRU_instrucciones(instruction_address);
-    FA_LRU_instrucciones(instruction_address);
+    //FA_LRU_instrucciones(instruction_address);
     //FSA_LRU_instrucciones(instruction_address);
+
+    
+    switch(architecture.cache_definition_L1[8].value) {
+      case 0: 
+          DM_LRU_instrucciones(instruction_address);
+          console.log("DIRECT MAPPED");
+          break;
+      case 1: 
+          FA_LRU_instrucciones(instruction_address);
+          console.log("FULLY ASSOCIATIVE");
+          break;
+      case 2:
+          FSA_LRU_instrucciones(instruction_address);
+          console.log("FULLY SET ASSOCIATIVE");
+          break;
+    }
 
     
 

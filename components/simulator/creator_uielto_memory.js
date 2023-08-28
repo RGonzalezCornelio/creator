@@ -75,6 +75,10 @@
   
     data:     function () {
                 return {
+
+                  cache_type: architecture.cache_definition_L1[7].value,
+                  cache_policy: architecture.cache_definition_L1[8].value,
+
                   //Memory view
                   mem_representation: "data_memory",
                   mem_representation_options: [
@@ -115,6 +119,40 @@
               
 
               '     <b-col>'+
+
+              '      <b-form-group v-if="cache_type==\'0\'">'+
+
+              '       <b-form-group v-if="cache_policy==\'0\'">'+
+              '         <div class="border m-1 py-1 px-4">'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">' +
+              '             <b>Policy: Direct Mapped</b>'+
+              '           </b-row>'+
+              '         </div>'+
+              '         <div class="border m-1 py-1 px-4">'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">' +
+              '             Last Instruction Address: {{instruction_address}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             ADDRESS 32 BITS: {{address_32_bits}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             TAG: {{tag_size_address}} bits  ({{tag}})'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             LINE: {{line_size_address}} bits ({{line}})'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             OFFSET: {{offset_size_address}} bits ({{offset}})'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             Hit: {{hit}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             Miss: {{miss}}'+
+              '          </div>'+
+              '        </b-form-group>'+
+
+              '       <b-form-group v-if="cache_policy==\'1\'">'+
               '         <div class="border m-1 py-1 px-4">'+
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">' +
               '             <b>Policy: Fully Associattive</b>'+
@@ -129,7 +167,8 @@
               '           </b-row>'+
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
               '             TAG: {{app._data.FA_tag_size_address}} bits  ({{app._data.FA_tag}})'+
-              '           </b-row>'+  
+              '           </b-row>'+
+              
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
               '             OFFSET: {{offset_size_address}} bits ({{offset}})'+
               '           </b-row>'+
@@ -140,7 +179,132 @@
               '             Miss: {{miss}}'+
               '           </b-row>'+
               '          </div>'+
+              '        </b-form-group>'+
 
+              '       <b-form-group v-if="cache_policy==\'2\'">'+
+              '         <div class="border m-1 py-1 px-4">'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">' +
+              '             <b>Policy: Fully Set Associative</b>'+
+              '           </b-row>'+
+              '         </div>'+
+              '         <div class="border m-1 py-1 px-4">'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">' +
+              '             Last Instruction Address: {{instruction_address}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             ADDRESS 32 BITS: {{address_32_bits}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             TAG: {{app._data.FSA_tag_size_address}} bits  ({{app._data.FSA_tag}})'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             SET: {{set_size}} bits ({{app._data.FSA_set}})'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             OFFSET: {{offset_size_address}} bits ({{offset}})'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             Hit: {{hit}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             Miss: {{miss}}'+
+              '           </b-row>'+
+              '          </div>'+
+              '        </b-form-group>'+
+
+              '       </b-form-group>'+
+
+
+
+
+
+              
+
+              '      <b-form-group v-if="cache_type==\'1\'">'+
+
+              '       <b-form-group v-if="cache_policy==\'0\'">'+
+              '         <div class="border m-1 py-1 px-4">'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">' +
+              '             <b>Policy: Direct Mapped</b>'+
+              '           </b-row>'+
+              '         </div>'+
+              '         <div class="border m-1 py-1 px-4">'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">' +
+              '             Last Instruction Address: {{instruction_address}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             ADDRESS 32 BITS: {{address_32_bits}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             TAG: {{tag_size_address}} bits  ({{tag}})'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             LINE: {{line_size_address}} bits ({{line}})'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             OFFSET: {{offset_size_address}} bits ({{offset}})'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             Hit: {{hit}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             Miss: {{miss}}'+
+              '          </div>'+
+           
+              '         <div class="border m-1 py-1 px-4">'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             Last Data Address: 0x0{{data_address}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             ADDRESS 32 BITS DATA: {{address_32_bits_data}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             TAG: {{tag_size_address_data}} bits  ({{tag_data}})'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             LINE: {{line_size_address_data}} bits ({{line_data}})'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             OFFSET: {{offset_size_address_data}} bits ({{offset_data}})'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             Hit Data: {{hit_data}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             Miss Data: {{miss_data}}'+
+              '           </b-row>'+
+              '         </div >' +
+              '       </b-form-group>'+
+
+
+              '       <b-form-group v-if="cache_policy==\'1\'">'+
+              '         <div class="border m-1 py-1 px-4">'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">' +
+              '             <b>Policy: Fully Associattive</b>'+
+              '           </b-row>'+
+              '         </div>'+
+              '         <div class="border m-1 py-1 px-4">'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">' +
+              '             Last Instruction Address: {{instruction_address}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             ADDRESS 32 BITS: {{address_32_bits}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             TAG: {{app._data.FA_tag_size_address}} bits  ({{app._data.FA_tag}})'+
+              '           </b-row>'+
+              
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             OFFSET: {{offset_size_address}} bits ({{offset}})'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             Hit: {{hit}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             Miss: {{miss}}'+
+              '           </b-row>'+
+              '          </div>'+
+           
               '         <div class="border m-1 py-1 px-4">'+
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
               '             Last Data Address: 0x0{{data_address}}'+
@@ -161,6 +325,68 @@
               '             Miss Data: {{miss_data}}'+
               '           </b-row>'+
               '         </div >' +
+              '       </b-form-group>'+
+
+
+              '       <b-form-group v-if="cache_policy==\'2\'">'+
+              '         <div class="border m-1 py-1 px-4">'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">' +
+              '             <b>Policy: Fully Set Associative</b>'+
+              '           </b-row>'+
+              '         </div>'+
+              '         <div class="border m-1 py-1 px-4">'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">' +
+              '             Last Instruction Address: {{instruction_address}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             ADDRESS 32 BITS: {{address_32_bits}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             TAG: {{app._data.FSA_tag_size_address}} bits  ({{app._data.FSA_tag}})'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             SET: {{set_size}} bits ({{app._data.FSA_set}})'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             OFFSET: {{offset_size_address}} bits ({{offset}})'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             Hit: {{hit}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             Miss: {{miss}}'+
+              '           </b-row>'+
+              '          </div>'+
+           
+              '         <div class="border m-1 py-1 px-4">'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             Last Data Address: 0x0{{data_address}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             ADDRESS 32 BITS DATA: {{address_32_bits_data}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             TAG: {{app._data.FSA_tag_size_address_data}} bits  ({{app._data.FSA_tag_data}})'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             SET: {{app._data.set_size_data}} bits ({{app._data.FSA_set_data}})'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             OFFSET: {{offset_size_address_data}} bits ({{offset_data}})'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             Hit Data: {{hit_data}}'+
+              '           </b-row>'+
+              '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
+              '             Miss Data: {{miss_data}}'+
+              '           </b-row>'+
+              '         </div >' +
+              '       </b-form-group>'+
+
+
+              '      </b-form-group>'+
+
+
               '     </b-col>'+
 
   
@@ -214,7 +440,7 @@
               '             Hit: {{hit}}'+
               '           </b-row>'+
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
-              '             Miss: {{miss}}'+ocks (lines) per Set
+              '             Miss: {{miss}}'+
               '          </div>'+
               
               '         <div class="border m-1 py-1 px-4">'+

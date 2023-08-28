@@ -7290,6 +7290,14 @@
     {
       "name": "Common Cache Line",
       "value": "64"
+    },
+    {
+      "name": "Cache Type",
+      "value": "0"
+    },
+    {
+      "name": "Cache Policy",
+      "value": "0"
     }
   ]
 }

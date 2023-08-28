@@ -21,28 +21,150 @@
 //COMMON FUNCTIONS AND VARIABLES
 
 var instruction_address = 0x0; //Esta variable es la direccion que se va a mostrar en el creator en la pestaña de memory
-
-
-function inicializar(){
-  console.log("INICIALIZAR");
-  cache_size = parseInt(architecture.cache_definition_L1[0].value);
-}
-
 var cache_size = 1; //Este numero esta en KB, asi que en la funcion lo multiplicaremos por 1024 (2^10) y se dividira entre line_size
 //var cache_size = parseInt(architecture.cache_definition_L1[0].value);
 
-var line_size = 64;
+var line_size = 1;
 
 var numero_conjuntos = 4;
 
-var address_32_bits = '00000000000000000000000000000000';
+function inicializar(){
+  console.log("INICIALIZAR");
+  //Unified
+  if(architecture.cache_definition_L1[7].value == 0){
+    cache_size = parseInt(architecture.cache_definition_L1[0].value);
+    line_size = parseInt(architecture.cache_definition_L1[6].value);
+    numero_conjuntos = parseInt(architecture.cache_definition_L1[1].value);
+  }
+  
+  //Split
+  if(architecture.cache_definition_L1[7].value == 1){
+    cache_size = parseInt(architecture.cache_definition_L1[2].value);
+    cache_size_data = parseInt(architecture.cache_definition_L1[3].value);
+    line_size = parseInt(architecture.cache_definition_L1[6].value);
+    numero_conjuntos = parseInt(architecture.cache_definition_L1[4].value);
+    numero_conjuntos_datos = parseInt(architecture.cache_definition_L1[5].value);
+  }
 
+
+  //DM
+  line_size_address = Math.log2((cache_size*1024)/line_size);
+  offset_size_address = Math.log2(line_size);
+  tag_size_address = 32 - line_size_address - offset_size_address;
+
+  app._data.tag_size_address = 32 - line_size_address - offset_size_address;
+  app._data.offset_size_address = Math.log2(line_size);
+  app._data.line_size_address = Math.log2((cache_size*1024)/line_size); 
+  DM_L1 = array_length(cache_size, line_size);
+
+
+  offset_size_address_data = Math.log2(line_size);
+  line_size_address_data = Math.log2((cache_size_data*1024)/line_size);
+  tag_size_address_data = 32 - line_size_address_data - offset_size_address_data;
+
+  app._data.offset_size_address_data = offset_size_address_data;
+  app._data.line_size_address_data = line_size_address_data;
+  app._data.tag_size_address_data = tag_size_address_data;
+  DM_L1_data = array_length_datos(cache_size_data, line_size);
+
+  //FA
+  app._data.FA_tag_size_address = 32 - offset_size_address
+  L1_time = array_length_time(cache_size, line_size);
+  FA_L1 = array_length(cache_size, line_size);
+
+  app._data.FA_tag_size_address_data = 32 - offset_size_address_data;
+  L1_Data_time = array_length_data_time(cache_size_data, line_size);
+  FA_Data_L1 = array_length_datos(cache_size_data, line_size);
+
+ //FSA
+ set_size = Math.log2(numero_conjuntos);
+ app._data.set_size = Math.log2(numero_conjuntos);
+ app._data.FSA_tag_size_address = 32 - set_size - offset_size_address;
+
+ FSA_Length = cache_size*1024/line_size;
+ array_set_size = FSA_Length / numero_conjuntos; 
+  for(var i = 0; i < array_set_size; i++){
+    array = [];
+    for(var j = 0; j < numero_conjuntos; j++){
+      array.push("-1");
+    }
+    FSA_L1.push(array);
+  }
+
+ FSA_counter_array = new Array(array_set_size).fill(0);
+
+  FSA_arrayHM = [];
+  for(var k = 0; k < array_set_size; k++){
+    arrayHM_posiciones = [];
+    for(var m = 0; m < 2; m++){
+      arrayHM_posiciones.push(0);
+    }
+    FSA_arrayHM.push(arrayHM_posiciones);
+  }
+
+  FSA_L1_time = []
+  for(var i = 0; i < array_set_size; i++){
+    array_time = [];
+    for(var j = 0; j < numero_conjuntos; j++){
+      array_time.push(0);
+    }
+    FSA_L1_time.push(array_time);
+  }
+
+
+  set_size_data = Math.log2(numero_conjuntos_datos);
+  app._data.set_size_data = Math.log2(numero_conjuntos_datos);
+  app._data.FSA_tag_size_address_data = 32 - set_size_data - offset_size_address_data;
+
+  FSA_data_Length = cache_size_data*1024/line_size;
+
+  array_set_data_size = FSA_data_Length / numero_conjuntos_datos; 
+  
+  for(var i = 0; i < array_set_data_size; i++){
+    array_data = [];
+    for(var j = 0; j < numero_conjuntos_datos; j++){
+      array_data.push("-1");
+    }
+    FSA_Data_L1.push(array_data);
+  }
+  
+  FSA_counter_data_array = new Array(array_set_data_size).fill(0);
+  
+  FSA_arrayHM_data = [];
+  for(var k = 0; k < array_set_data_size; k++){
+    arrayHM_posiciones_datos = [];
+    for(var m = 0; m < 2; m++){
+      arrayHM_posiciones_datos.push(0);
+    }
+    FSA_arrayHM_data.push(arrayHM_posiciones_datos);
+  }
+
+  FSA_L1_time_data = []
+  for(var i = 0; i < array_set_data_size; i++){
+    array_time_data = [];
+    for(var j = 0; j < numero_conjuntos_datos; j++){
+      array_time_data.push(0);
+    }
+    FSA_L1_time_data.push(array_time_data);
+  }
+  
+
+}
+
+
+
+
+
+
+
+var address_32_bits = '00000000000000000000000000000000';
 
 
 
 //DM
 
 var line_size_address = Math.log2((cache_size*1024)/line_size);
+
 var offset_size_address = Math.log2(line_size);
 var tag_size_address = 32 - line_size_address - offset_size_address;
 var array_32_bits = 0;
@@ -90,6 +212,7 @@ function array_length(cache_size, line_size)
 
   return array;
 }
+
 
 
 //--------------------------- DIRECT MAPPED --------------------------------------

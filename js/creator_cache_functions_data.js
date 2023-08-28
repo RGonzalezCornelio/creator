@@ -21,7 +21,7 @@
 //Algoritmo LRU datos
 
 var cache_size_data = 1; //Este numero esta en KB, asi que en la funcion lo multiplicaremos por 1024 (2^10) y se dividira entre line_size
-var line_size_data = 32;
+
 
 var numero_conjuntos_datos = 4;
 
@@ -33,8 +33,8 @@ var offset_data = 0;*/
 
 var address_32_bits_data = '00000000000000000000000000000000';
 
-var offset_size_address_data = Math.log2(line_size_data);
-var line_size_address_data = Math.log2((cache_size_data*1024)/line_size_data);
+var offset_size_address_data = Math.log2(line_size);
+var line_size_address_data = Math.log2((cache_size_data*1024)/line_size);
 var tag_size_address_data = 32 - line_size_address_data - offset_size_address_data;
 
 var array_32_bits_data = 0;
@@ -63,10 +63,10 @@ var FSA_set_data = 0;
 
 
 //Esta funcion nos devuelve un array inicializado a -1
-function array_length_datos(cache_size_data, line_size_data)
+function array_length_datos(cache_size_data, line_size)
 {
   cache_size_data = cache_size_data * 1024;
-  const array = new Array(cache_size_data/line_size_data).fill("-1");
+  const array = new Array(cache_size_data/line_size).fill("-1");
 
   return array;
 }
@@ -80,7 +80,7 @@ function pasarDireccionAHexadecimal(numero){
 
 var hit_data = 0;
 var miss_data = -1;
-//var L1_data = array_length_datos(cache_size_data, line_size_data);
+//var L1_data = array_length_datos(cache_size_data, line_size);
 var contador_LRU_data = -1;
 
 
@@ -92,8 +92,8 @@ function DM_Data_PasarDireccionA32bits( dir )
   //El numero esta en decimal, lo pasamos a hexadecimal
   direc = pasarDireccionAHexadecimal(dir)
 
-  const tamaño_offset_data = Math.log2(line_size_data);
-  const tamaño_linea_data = Math.log2((cache_size_data*1024)/line_size_data);
+  const tamaño_offset_data = Math.log2(line_size);
+  const tamaño_linea_data = Math.log2((cache_size_data*1024)/line_size);
   const tamaño_tag_data = 32 - tamaño_linea_data - tamaño_offset_data;
 
   var dirA32Bits = parseInt(direc, 16).toString(2).padStart(32, '0');
@@ -112,7 +112,7 @@ function DM_Data_PasarDireccionA32bits( dir )
   return etiqueta_data;
 }
 
-var DM_L1_data = array_length_datos(cache_size_data, line_size_data);
+var DM_L1_data = array_length_datos(cache_size_data, line_size);
 
 function DM_LRU_datos(direccion){
 
@@ -180,16 +180,16 @@ function FA_Data_pasarDireccionA32Bits ( dir )
   return etiqueta;
 }
 
-function array_length_data_time(cache_size_data, line_size_data)
+function array_length_data_time(cache_size_data, line_size)
 {
   cache_size_data = cache_size_data * 1024;
-  const array_data_time = new Array(cache_size_data/line_size_data).fill(0);
+  const array_data_time = new Array(cache_size_data/line_size).fill(0);
 
   return array_data_time;
 }
-var L1_Data_time = array_length_data_time(cache_size_data, line_size_data);
+var L1_Data_time = array_length_data_time(cache_size_data, line_size);
 
-var FA_Data_L1 = array_length_datos(cache_size_data, line_size_data);
+var FA_Data_L1 = array_length_datos(cache_size_data, line_size);
 var FA_Data_contador_LRU = 0;
 
 
@@ -295,8 +295,8 @@ var FSA_Data_L1 = []
 
 //Creamos los arrays para introducirlos en el array y crear asi un array de arrays
 
-cache_size_data = cache_size_data * 1024;
-var FSA_data_Length = cache_size_data/line_size_data;
+
+var FSA_data_Length = cache_size_data*1024/line_size;
 
 var array_set_data_size = FSA_data_Length / numero_conjuntos_datos; 
 
@@ -406,8 +406,8 @@ function FSA_LRU_datos(direccion){
   //El numero esta en decimal, lo pasamos a hexadecimal
   direc = pasarDireccionAHexadecimal(numero)
 
-  const tamaño_offset_data = Math.log2(line_size_data);
-  const tamaño_linea_data = Math.log2((cache_size_data*1024)/line_size_data);
+  const tamaño_offset_data = Math.log2(line_size);
+  const tamaño_linea_data = Math.log2((cache_size_data*1024)/line_size);
   const tamaño_tag_data = 32 - tamaño_linea_data - tamaño_offset_data;
 
   var dirA32Bits = parseInt(direc, 16).toString(2).padStart(32, '0');
