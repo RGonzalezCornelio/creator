@@ -376,8 +376,14 @@ try
       hit: hit,
       miss: miss,
 
+      FSA_hit: FSA_hit,
+      FSA_miss: FSA_miss,
+
       hit_data: hit_data,
       miss_data: miss_data,
+
+      FSA_hit_data: FSA_hit_data,
+      FSA_miss_data: FSA_miss_data,
       
 
 

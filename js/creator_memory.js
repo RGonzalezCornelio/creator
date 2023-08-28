@@ -45,6 +45,7 @@ function address_hit_ratio (hit, miss){
         return hit_rt;
 }
 
+
 var hit_ratio_data = 0;
 function address_hit_ratio_data (hit_data, miss_data){
 

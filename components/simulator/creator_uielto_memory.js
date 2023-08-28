@@ -68,6 +68,9 @@
                 hit:                          { type: Number, required: true },
                 miss:                         { type: Number, required: true },
 
+                FSA_hit:                      { type: Number, required: true },
+                FSA_miss:                      { type: Number, required: true },
+
                 hit_data:                     { type: Number, required: true },
                 miss_data:                    { type: Number, required: true }
 
@@ -204,10 +207,10 @@
               '             OFFSET: {{offset_size_address}} bits ({{offset}})'+
               '           </b-row>'+
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
-              '             Hit: {{hit}}'+
+              '             Hit: {{app._data.FSA_hit}}'+
               '           </b-row>'+
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
-              '             Miss: {{miss}}'+
+              '             Miss: {{app._data.FSA_miss}}'+
               '           </b-row>'+
               '          </div>'+
               '        </b-form-group>'+
@@ -351,10 +354,10 @@
               '             OFFSET: {{offset_size_address}} bits ({{offset}})'+
               '           </b-row>'+
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
-              '             Hit: {{hit}}'+
+              '             Hit: {{FSA_hit}}'+
               '           </b-row>'+
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
-              '             Miss: {{miss}}'+
+              '             Miss: {{FSA_miss}}'+
               '           </b-row>'+
               '          </div>'+
            

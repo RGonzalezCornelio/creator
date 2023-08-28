@@ -80,6 +80,10 @@ function pasarDireccionAHexadecimal(numero){
 
 var hit_data = 0;
 var miss_data = -1;
+
+var FSA_hit_data = 0;
+var FSA_miss_data = 0;
+
 //var L1_data = array_length_datos(cache_size_data, line_size);
 var contador_LRU_data = -1;
 
@@ -384,10 +388,13 @@ function FSA_LRU_datos(direccion){
     //miss = FSA_counter_array[setToDecimal];
     //FSA_contador ++;
   }
+
+  FSA_hit_data = FSA_arrayHM_data[setToDecimal_data][0];
+  FSA_miss_data = FSA_arrayHM_data[setToDecimal_data][1];
     
   
-  console.log("Hit DATA: " + FSA_arrayHM_data[setToDecimal_data][0]);
-  console.log("Miss DATA: " +FSA_arrayHM_data[setToDecimal_data][1]);
+  console.log("Hit DATA: " + FSA_hit_data);
+  console.log("Miss DATA: " + FSA_miss_data);
   //console.log("Set DATA: " + setToDecimal_data);
   console.log("Posicion: " + posicion);
   console.log("TiempoUnix: " + tiempoUnix);

@@ -67,21 +67,30 @@ function inicializar(){
   app._data.tag_size_address_data = tag_size_address_data;
   DM_L1_data = array_length_datos(cache_size_data, line_size);
 
+
+
   //FA
+  FA_tag_size_address = 32 - offset_size_address
   app._data.FA_tag_size_address = 32 - offset_size_address
   L1_time = array_length_time(cache_size, line_size);
   FA_L1 = array_length(cache_size, line_size);
 
+
+  FA_tag_size_address_data = 32 - offset_size_address_data;
   app._data.FA_tag_size_address_data = 32 - offset_size_address_data;
   L1_Data_time = array_length_data_time(cache_size_data, line_size);
   FA_Data_L1 = array_length_datos(cache_size_data, line_size);
 
+
+
  //FSA
  set_size = Math.log2(numero_conjuntos);
+ FSA_tag_size_address = 32 - set_size - offset_size_address;
  app._data.set_size = Math.log2(numero_conjuntos);
  app._data.FSA_tag_size_address = 32 - set_size - offset_size_address;
 
- FSA_Length = cache_size*1024/line_size;
+ var FSA_cache_size = cache_size * 1024;
+ FSA_Length = FSA_cache_size/line_size;
  array_set_size = FSA_Length / numero_conjuntos; 
   for(var i = 0; i < array_set_size; i++){
     array = [];
@@ -199,6 +208,9 @@ var setToDecimal = 0;
 
 var hit = 0;
 var miss = 0;
+
+var FSA_hit = 0;
+var FSA_miss = 0;
 
 
 
@@ -522,9 +534,14 @@ function FSA_LRU_instrucciones(direccion){
     //FSA_contador ++;
   }
     
+  FSA_hit = FSA_arrayHM[setToDecimal][0];
+  FSA_miss = FSA_arrayHM[setToDecimal][1];
+
+  app._data.FSA_hit = FSA_hit;
+  app._data.FSA_miss = FSA_miss;
   
-  console.log("Hit: " + FSA_arrayHM[setToDecimal][0]);
-  console.log("Miss: " +FSA_arrayHM[setToDecimal][1]);
+  console.log("Hit: " + FSA_hit);
+  console.log("Miss: " +FSA_miss);
   console.log("Posicion: " + posicion);
   console.log("TiempoUnix: " + tiempoUnix);
   console.log("Minimo: " + minimo); 
