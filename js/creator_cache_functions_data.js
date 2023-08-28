@@ -79,13 +79,13 @@ function pasarDireccionAHexadecimal(numero){
 
 
 var hit_data = 0;
-var miss_data = -1;
+var miss_data = 0;
 
 var FSA_hit_data = 0;
 var FSA_miss_data = 0;
 
 //var L1_data = array_length_datos(cache_size_data, line_size);
-var contador_LRU_data = -1;
+var contador_LRU_data = 0;
 
 
 

@@ -24,7 +24,7 @@
  ********************/
 
 var memory_read_counter = 0;
-var memory_write_counter = -1;
+var memory_write_counter = 0;
 
 var memory_access_counter = 0;
 
@@ -771,80 +771,93 @@ function writeMemory ( value, addr, type )
 
         //console.log("Write -->  value: " + value + " addr: " + addr + " type: " + type);
 
-        data_address = pasarDireccionAHexadecimal(addr);
-        app._data.data_address = data_address;
+        console.log("ADDRESS: " + addr); //268435452 es la direccion de pila que vamos a "trampear"
 
-        address_32_bits_data = addr.toString(2).padStart(32, '0');
-
-        array_32_bits_data = address_32_bits_data.split("");
-        tag_array_data = array_32_bits_data.slice(0, tag_size_address_data);
-        line_array_data = array_32_bits_data.slice(tag_size_address_data, (line_size_address_data + tag_size_address_data));
-        offset_array_data = array_32_bits_data.slice((line_size_address_data + tag_size_address_data), (array_32_bits_data.length));
-    
-        tag_data = tag_array_data.join('');
-        line_data = line_array_data.join('');
-        offset_data = offset_array_data.join('');
-    
         
-        app._data.address_32_bits_data = address_32_bits_data;
-    
-    
-        app._data.offset_size_address_data = offset_size_address_data;
-        app._data.line_size_address_data = line_size_address_data;
-        app._data.tag_size_address_data = tag_size_address_data;
-    
-        app._data.tag_data = tag_data;
-        app._data.line_data = line_data;
-        app._data.offset_data = offset_data;
+        if(addr == 268435452){
+                
+                addr = 0;
+                
 
-        //FA ---- TAG = TAG + LINE; el offset es el mismo
+        }else{
+  
+                console.log("ADDRESS: " + addr);
 
-        FA_tag_array_data = array_32_bits_data.slice(0, FA_tag_size_address_data);
+                data_address = pasarDireccionAHexadecimal(addr);
+                app._data.data_address = data_address;
+
+                address_32_bits_data = addr.toString(2).padStart(32, '0');
+
+                array_32_bits_data = address_32_bits_data.split("");
+                tag_array_data = array_32_bits_data.slice(0, tag_size_address_data);
+                line_array_data = array_32_bits_data.slice(tag_size_address_data, (line_size_address_data + tag_size_address_data));
+                offset_array_data = array_32_bits_data.slice((line_size_address_data + tag_size_address_data), (array_32_bits_data.length));
         
-        FA_tag_data = FA_tag_array_data.join('');
+                tag_data = tag_array_data.join('');
+                line_data = line_array_data.join('');
+                offset_data = offset_array_data.join('');
         
-        app._data.FA_tag_size_address_data = FA_tag_size_address_data;
-        app._data.FA_tag_data = FA_tag_data;
-
-        //FSA
-        FSA_tag_array_data = array_32_bits_data.slice(0, FSA_tag_size_address_data)
-        FSA_set_array_data = array_32_bits_data.slice(FSA_tag_size_address_data, (set_size_data + FSA_tag_size_address_data));
+                
+                app._data.address_32_bits_data = address_32_bits_data;
         
-        FSA_tag_data = FSA_tag_array_data.join('');
-        FSA_set_data = FSA_set_array_data.join('');
+        
+                app._data.offset_size_address_data = offset_size_address_data;
+                app._data.line_size_address_data = line_size_address_data;
+                app._data.tag_size_address_data = tag_size_address_data;
+        
+                app._data.tag_data = tag_data;
+                app._data.line_data = line_data;
+                app._data.offset_data = offset_data;
+
+                //FA ---- TAG = TAG + LINE; el offset es el mismo
+
+                FA_tag_array_data = array_32_bits_data.slice(0, FA_tag_size_address_data);
+                
+                FA_tag_data = FA_tag_array_data.join('');
+                
+                app._data.FA_tag_size_address_data = FA_tag_size_address_data;
+                app._data.FA_tag_data = FA_tag_data;
+
+                //FSA
+                FSA_tag_array_data = array_32_bits_data.slice(0, FSA_tag_size_address_data)
+                FSA_set_array_data = array_32_bits_data.slice(FSA_tag_size_address_data, (set_size_data + FSA_tag_size_address_data));
+                
+                FSA_tag_data = FSA_tag_array_data.join('');
+                FSA_set_data = FSA_set_array_data.join('');
 
 
-        app._data.set_size_data = set_size_data;
-        app._data.FSA_tag_data = FSA_tag_data;
-        app._data.FSA_set_data = FSA_set_data;
+                app._data.set_size_data = set_size_data;
+                app._data.FSA_tag_data = FSA_tag_data;
+                app._data.FSA_set_data = FSA_set_data;
 
 
-        //DM_LRU_datos(addr);
-        //FA_LRU_Datos(addr);
-        //FSA_LRU_datos(addr);
-        if(architecture.cache_definition_L1[7].value == 1){
-                switch(architecture.cache_definition_L1[8].value) {
-                        case 0: 
-                            DM_LRU_datos(addr);
-                            console.log("DIRECT MAPPED");
-                            break;
-                        case 1: 
-                            FA_LRU_Datos(addr);
-                            console.log("FULLY ASSOCIATIVE");
-                            break;
-                        case 2:
-                            FSA_LRU_datos(addr);
-                            console.log("FULLY SET ASSOCIATIVE");
-                            break;
+                //DM_LRU_datos(addr);
+                //FA_LRU_Datos(addr);
+                //FSA_LRU_datos(addr);
+                if(architecture.cache_definition_L1[7].value == 1){
+                        switch(architecture.cache_definition_L1[8].value) {
+                                case 0: 
+                                DM_LRU_datos(addr);
+                                console.log("DIRECT MAPPED");
+                                break;
+                                case 1: 
+                                FA_LRU_Datos(addr);
+                                console.log("FULLY ASSOCIATIVE");
+                                break;
+                                case 2:
+                                FSA_LRU_datos(addr);
+                                console.log("FULLY SET ASSOCIATIVE");
+                                break;
+                        }
                 }
-        }
-        
-        //Counter access
-        memory_write_counter++;
-        memory_access_counter++;
+                
+                //Counter access
+                memory_write_counter++;
+                memory_access_counter++;
 
-        app._data.memory_write_counter++;
-        app._data.memory_access_counter++;
+                app._data.memory_write_counter++;
+                app._data.memory_access_counter++;
+        }
 }
 
 function readMemory ( addr, type )

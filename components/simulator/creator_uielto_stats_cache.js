@@ -86,10 +86,7 @@
                 '       <td>Read accesses: {{memory_read_counter}}</td>'+
                 '     </tr>'+
 
-                '     <tr>'+
-                '       <td></td>'+
-                '       <td>Hit Ratio Data: {{hit_ratio_data}} %</td>'+
-                '     </tr>'+
+            
 
                 '   </table>'+
 
