@@ -187,7 +187,7 @@
               '       <b-form-group v-if="cache_policy==\'2\'">'+
               '         <div class="border m-1 py-1 px-4">'+
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">' +
-              '             <b>Policy: Fully Set Associative</b>'+
+              '             <b>Policy: Set Associative</b>'+
               '           </b-row>'+
               '         </div>'+
               '         <div class="border m-1 py-1 px-4">'+
@@ -334,7 +334,7 @@
               '       <b-form-group v-if="cache_policy==\'2\'">'+
               '         <div class="border m-1 py-1 px-4">'+
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">' +
-              '             <b>Policy: Fully Set Associative</b>'+
+              '             <b>Policy: Set Associative</b>'+
               '           </b-row>'+
               '         </div>'+
               '         <div class="border m-1 py-1 px-4">'+
@@ -475,7 +475,7 @@
 
               '         <div class="border m-1 py-1 px-4">'+
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">' +
-              '             <b>Policy: Fully Set Associative</b>'+
+              '             <b>Policy: Set Associative</b>'+
               '           </b-row>'+
               '         </div>'+
               '         <div class="border m-1 py-1 px-4">'+
