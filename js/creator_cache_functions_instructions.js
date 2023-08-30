@@ -46,8 +46,27 @@ function inicializar(){
     numero_conjuntos_datos = parseInt(architecture.cache_definition_L1[5].value);
   }
 
+  hit = 0;
+  miss = 0;
+
+  hit_data = 0;
+  miss_data = 0;
+
+  FSA_hit = 0;
+  FSA_miss = 0;
+
+  FSA_hit_data = 0;
+  FSA_miss_data = 0;
+
+  app._data.FSA_hit_data = 0;
+  app._data.FSA_miss_data = 0;
+
+  contador_LRU_data = 0;
 
   //DM
+  DM_contador_LRU = 0;
+
+
   line_size_address = Math.log2((cache_size*1024)/line_size);
   offset_size_address = Math.log2(line_size);
   tag_size_address = 32 - line_size_address - offset_size_address;
@@ -70,11 +89,14 @@ function inicializar(){
 
 
   //FA
+  FA_contador_LRU = 0;
+
   FA_tag_size_address = 32 - offset_size_address
   app._data.FA_tag_size_address = 32 - offset_size_address
   L1_time = array_length_time(cache_size, line_size);
   FA_L1 = array_length(cache_size, line_size);
 
+  FA_Data_contador_LRU = 0
 
   FA_tag_size_address_data = 32 - offset_size_address_data;
   app._data.FA_tag_size_address_data = 32 - offset_size_address_data;
@@ -84,21 +106,26 @@ function inicializar(){
 
 
  //FSA
+ setToDecimal = 0;
+ FSA_contador = 0;
+
  set_size = Math.log2(numero_conjuntos);
  FSA_tag_size_address = 32 - set_size - offset_size_address;
  app._data.set_size = Math.log2(numero_conjuntos);
  app._data.FSA_tag_size_address = 32 - set_size - offset_size_address;
 
- var FSA_cache_size = cache_size * 1024;
+ FSA_cache_size = cache_size * 1024
  FSA_Length = FSA_cache_size/line_size;
  array_set_size = FSA_Length / numero_conjuntos; 
-  for(var i = 0; i < array_set_size; i++){
-    array = [];
-    for(var j = 0; j < numero_conjuntos; j++){
-      array.push("-1");
-    }
-    FSA_L1.push(array);
+
+ FSA_L1 = []
+ for(var u = 0; u < array_set_size; u++){
+  FSAarray = [];
+  for(var v = 0; v < numero_conjuntos; v++){
+    FSAarray.push("-1");
   }
+  FSA_L1.push(FSAarray);
+}
 
  FSA_counter_array = new Array(array_set_size).fill(0);
 
@@ -120,8 +147,11 @@ function inicializar(){
     FSA_L1_time.push(array_time);
   }
 
+  FSA_contador_datos = 0;
+  setToDecimal_data = 0;
 
   set_size_data = Math.log2(numero_conjuntos_datos);
+  FSA_tag_size_address_data = 32 - set_size_data - offset_size_address_data;
   app._data.set_size_data = Math.log2(numero_conjuntos_datos);
   app._data.FSA_tag_size_address_data = 32 - set_size_data - offset_size_address_data;
 
@@ -129,6 +159,7 @@ function inicializar(){
 
   array_set_data_size = FSA_data_Length / numero_conjuntos_datos; 
   
+  FSA_Data_L1 = []
   for(var i = 0; i < array_set_data_size; i++){
     array_data = [];
     for(var j = 0; j < numero_conjuntos_datos; j++){
@@ -438,23 +469,24 @@ function FSA_pasarDireccionA32Bits ( direc )
 //Ahora sustituiremos el array que sacabamos de la funcion array_length y usaremos tantos arrays como necesitemos para la configuracion
 //Habra que hace un array de arrays 
 
-var FSA_L1 = []
+
 
 //Creamos los arrays para introducirlos en el array y crear asi un array de arrays
 
-cache_size = cache_size * 1024;
-var FSA_Length = cache_size/line_size;
+//cache_size = cache_size * 1024;
+var FSA_cache_size = cache_size * 1024;
+FSA_Length = FSA_cache_size/line_size;
 
 var array_set_size = FSA_Length / numero_conjuntos; 
 
 
-
-for(var i = 0; i < array_set_size; i++){
-  var array = [];
-  for(var j = 0; j < numero_conjuntos; j++){
-    array.push("-1");
+var FSA_L1 = []
+for(var u = 0; u < array_set_size; u++){
+  var FSAarray = [];
+  for(var v = 0; v < numero_conjuntos; v++){
+    FSAarray.push("-1");
   }
-  FSA_L1.push(array);
+  FSA_L1.push(FSAarray);
 }
 
 

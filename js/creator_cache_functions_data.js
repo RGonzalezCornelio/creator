@@ -164,7 +164,7 @@ function FA_Data_pasarDireccionA32Bits ( dir )
   direc = pasarDireccionAHexadecimal(dir);
 
   tamaño_offset = Math.log2(line_size);
-  tamaño_linea = Math.log2((cache_size*1024)/line_size);
+  tamaño_linea = Math.log2((cache_size_data*1024)/line_size);
   tamaño_tag = 32 - tamaño_linea - tamaño_offset;
 
   dirA32Bits = parseInt(direc, 16).toString(2).padStart(32, '0');
@@ -267,7 +267,7 @@ function FSA_Data_pasarDireccionA32Bits ( dir )
   direc = pasarDireccionAHexadecimal(dir);
 
   tamaño_offset = Math.log2(line_size);
-  tamaño_set = Math.log2(numero_conjuntos);
+  tamaño_set = Math.log2(numero_conjuntos_datos);
   tamaño_tag = 32 - tamaño_set - tamaño_offset;
 
   dirA32Bits = parseInt(direc, 16).toString(2).padStart(32, '0');
@@ -295,7 +295,7 @@ var set_data_size = Math.log2(numero_conjuntos_datos);
 //Ahora sustituiremos el array que sacabamos de la funcion array_length y usaremos tantos arrays como necesitemos para la configuracion
 //Habra que hace un array de arrays 
 
-var FSA_Data_L1 = []
+
 
 //Creamos los arrays para introducirlos en el array y crear asi un array de arrays
 
@@ -304,6 +304,7 @@ var FSA_data_Length = cache_size_data*1024/line_size;
 
 var array_set_data_size = FSA_data_Length / numero_conjuntos_datos; 
 
+var FSA_Data_L1 = []
 for(var i = 0; i < array_set_data_size; i++){
   var array_data = [];
   for(var j = 0; j < numero_conjuntos_datos; j++){
@@ -391,6 +392,9 @@ function FSA_LRU_datos(direccion){
 
   FSA_hit_data = FSA_arrayHM_data[setToDecimal_data][0];
   FSA_miss_data = FSA_arrayHM_data[setToDecimal_data][1];
+
+  app._data.FSA_hit_data = FSA_hit_data;
+  app._data.FSA_miss_data = FSA_miss_data;
     
   
   console.log("Hit DATA: " + FSA_hit_data);

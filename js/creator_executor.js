@@ -556,20 +556,47 @@ function reset ()
   
 
   app._data.instruction_address = 0x0;
+  app._data.data_address = 0;
+
+
   app._data.address_32_bits = '00000000000000000000000000000000'
+  app._data.address_32_bits_data = '00000000000000000000000000000000'
+
+  app._data.miss = 0;
+  app._data.hit = 0;
+
+  app._data.miss_data = 0;
+  app._data.hit_data = 0;
+
+  app._data.FSA_hit = 0;
+  app._data.FSA_miss = 0;
+
+  app._data.FSA_hit_data = 0;
+  app._data.FSA_miss_data = 0;
+  
+  //DM
   app._data.tag = 0;
   app._data.line = 0;
   app._data.offset = 0;
 
+  app._data.tag_data = 0;
+  app._data.line_data = 0;
+  app._data.offset_data = 0;
 
-  //RESET CACHE POLICIES
+  //FA
+  app._data.FA_tag = 0;
+  app._data.FA_tag_data = 0;
 
-  //----- Direct Mapped ------
-  //DM = array_length (cache_size, line_size);
-  //DM_contador_LRU = 0;
-  //execution_index = 0;
+  //FSA
+  app._data.FSA_tag = 0;
+  app._data.FSA_set = 0;
 
+  app._data.FSA_tag_data = 0;
+  app._data.FSA_set_data = 0;
 
+  
+
+  inicializar();
 
 
 

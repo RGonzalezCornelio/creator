@@ -69,7 +69,10 @@
                 miss:                         { type: Number, required: true },
 
                 FSA_hit:                      { type: Number, required: true },
-                FSA_miss:                      { type: Number, required: true },
+                FSA_miss:                     { type: Number, required: true },
+
+                FSA_hit_data:                 { type: Number, required: true },
+                FSA_miss_data:                { type: Number, required: true },
 
                 hit_data:                     { type: Number, required: true },
                 miss_data:                    { type: Number, required: true }
@@ -354,10 +357,10 @@
               '             OFFSET: {{offset_size_address}} bits ({{offset}})'+
               '           </b-row>'+
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
-              '             Hit: {{FSA_hit}}'+
+              '             Hit: {{app._data.FSA_hit}}'+
               '           </b-row>'+
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
-              '             Miss: {{FSA_miss}}'+
+              '             Miss: {{app._data.FSA_miss}}'+
               '           </b-row>'+
               '          </div>'+
            
@@ -378,10 +381,10 @@
               '             OFFSET: {{offset_size_address_data}} bits ({{offset_data}})'+
               '           </b-row>'+
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
-              '             Hit Data: {{hit_data}}'+
+              '             Hit Data: {{app._data.FSA_hit_data}}'+
               '           </b-row>'+
               '           <b-row cols-xl="2" cols-lg="1" cols-md="2" cols-sm="1" cols-xs="1" cols="1">'+
-              '             Miss Data: {{miss_data}}'+
+              '             Miss Data: {{app._data.FSA_miss_data}}'+
               '           </b-row>'+
               '         </div >' +
               '       </b-form-group>'+
