@@ -8599,5 +8599,43 @@
       "name": "stack end",
       "value": "0x0FFFFFFF"
     }
+  ],
+  "cache_definition_L1": [
+    {
+      "name": "Unified Cache Size",
+      "value": "4"
+    },
+    {
+      "name": "Unified Lines Set",
+      "value": "4"
+    },
+    {
+      "name": "Split Instruction Cache Size",
+      "value": "1"
+    },
+    {
+      "name": "Split Data Cache Size",
+      "value": "1"
+    },
+    {
+      "name": "Split Lines Set Instruction Cache",
+      "value": "4"
+    },
+    {
+      "name": "Split Lines Set Data Cache",
+      "value": "4"
+    },
+    {
+      "name": "Common Cache Line",
+      "value": "64"
+    },
+    {
+      "name": "Cache Type",
+      "value": "0"
+    },
+    {
+      "name": "Cache Policy",
+      "value": "0"
+    }
   ]
 }
