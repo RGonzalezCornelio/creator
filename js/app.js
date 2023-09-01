@@ -244,7 +244,7 @@ try
 
 
       //Cache Definition
-      number_cache_levels:3,
+      number_cache_levels:1,
 
       
       
